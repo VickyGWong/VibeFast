@@ -1,24 +1,34 @@
 import Hero from "@/components/landing/Hero"
-import Problem from "@/components/landing/Problem"
-import Features from "@/components/landing/Features"
-import Pricing from "@/components/landing/Pricing"
-import Testimonials from "@/components/landing/Testimonials"
+import PurchaseSteps from "@/components/landing/PurchaseSteps"
+import LandingCatalog from "@/components/landing/LandingCatalog"
+import KefirSpotlight from "@/components/landing/KefirSpotlight"
+import FermentComparison from "@/components/landing/FermentComparison"
+import ArtisanProcess from "@/components/landing/ArtisanProcess"
+import ConsumptionMoments from "@/components/landing/ConsumptionMoments"
+import BrandStory from "@/components/landing/BrandStory"
+import ContactSection from "@/components/landing/ContactSection"
 import FAQ from "@/components/landing/FAQ"
 import FinalCta from "@/components/landing/FinalCta"
-import Waitlist from "@/components/landing/Waitlist"
-import config from "@/config"
+import JsonLd from "@/components/landing/JsonLd"
+import { getProducts } from "@/lib/products/getProducts"
 
-export default function HomePage() {
+export default async function HomePage() {
+  const products = await getProducts()
+
   return (
     <>
+      <JsonLd products={products} />
       <Hero />
-      <Problem />
-      <Features />
-      {config.features.pricing && <Pricing />}
-      <Testimonials />
+      <PurchaseSteps />
+      <LandingCatalog products={products} />
+      <KefirSpotlight />
+      <FermentComparison />
+      <ArtisanProcess />
+      <ConsumptionMoments />
+      <BrandStory />
+      <ContactSection />
       <FAQ />
       <FinalCta />
-      {config.features.waitlist && <Waitlist />}
     </>
   )
 }

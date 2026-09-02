@@ -2,61 +2,63 @@
 @plugin "daisyui";
 
 /* ============================================================
-   Tema de marca VibeFast (Flat Design)
-   Paleta: azul cielo (primary/accent/CTA) + slate (neutral).
-   El primary real lo inyecta config.brand.primary desde layout.js
-   como --color-primary inline (config = fuente de verdad).
+   The Good Co. — tokens de marca (Brandbook)
+   Crema #F8F1E7 · Sky #4C9FF2 · Deep #1B4268
+   Amarillo #FFB636 · Naranja #FB6A40 · Coral #FF4A4A
    ============================================================ */
-@plugin "daisyui/theme" {
-  name: "vibefast";
-  default: true;
-  prefersdark: false;
-  color-scheme: light;
-  --color-primary: #0ea5e9;
-  --color-primary-content: #ffffff;
-  --color-secondary: #0284c7;
-  --color-secondary-content: #ffffff;
-  --color-accent: #0ea5e9;
-  --color-accent-content: #ffffff;
-  --color-neutral: #1e293b;
-  --color-neutral-content: #f8fafc;
-  --color-base-100: #ffffff;
-  --color-base-200: #f8fafc;
-  --color-base-300: #e2e8f0;
-  --color-base-content: #1e293b;
-  --color-info: #0ea5e9;
-  --color-success: #16a34a;
-  --color-warning: #f59e0b;
-  --color-error: #dc2626;
-  --radius-box: 1rem;
-  --radius-field: 0.5rem;
-  --radius-selector: 0.5rem;
+
+@theme {
+  --color-cream: #f8f1e7;
+  --color-sky: #4c9ff2;
+  --color-deep: #1b4268;
+  --color-yellow: #ffb636;
+  --color-orange: #fb6a40;
+  --color-coral: #ff4a4a;
+  --font-display: "Pally", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Basique", ui-sans-serif, system-ui, sans-serif;
+  --radius-3xl: 1.5rem;
+}
+
+@font-face {
+  font-family: "Pally";
+  src: url("/fonts/Pally-Variable.ttf") format("truetype");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Basique";
+  src: url("/fonts/Basique.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
 
 @plugin "daisyui/theme" {
-  name: "vibefast-dark";
-  default: false;
-  prefersdark: true;
-  color-scheme: dark;
-  --color-primary: #38bdf8;
-  --color-primary-content: #0f172a;
-  --color-secondary: #0ea5e9;
-  --color-secondary-content: #0f172a;
-  --color-accent: #38bdf8;
-  --color-accent-content: #0f172a;
-  --color-neutral: #e2e8f0;
-  --color-neutral-content: #0f172a;
-  --color-base-100: #0f172a;
-  --color-base-200: #1e293b;
-  --color-base-300: #334155;
-  --color-base-content: #e2e8f0;
-  --color-info: #38bdf8;
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-error: #f87171;
-  --radius-box: 1rem;
-  --radius-field: 0.5rem;
-  --radius-selector: 0.5rem;
+  name: "thegoodco";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-primary: #4c9ff2;
+  --color-primary-content: #f8f1e7;
+  --color-secondary: #1b4268;
+  --color-secondary-content: #f8f1e7;
+  --color-accent: #ff4a4a;
+  --color-accent-content: #f8f1e7;
+  --color-neutral: #1b4268;
+  --color-neutral-content: #f8f1e7;
+  --color-base-100: #f8f1e7;
+  --color-base-200: #f0e8dc;
+  --color-base-300: #e4d9c8;
+  --color-base-content: #1b4268;
+  --color-info: #4c9ff2;
+  --color-success: #16a34a;
+  --color-warning: #ffb636;
+  --color-error: #ff4a4a;
+  --radius-box: 1.5rem;
+  --radius-field: 0.75rem;
+  --radius-selector: 0.75rem;
 }
 
 html,
@@ -65,42 +67,28 @@ body {
 }
 
 body {
-  font-family: var(--font-dm-sans, ui-sans-serif, system-ui, sans-serif);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
+  background-color: var(--color-cream);
+  color: var(--color-deep);
 }
 
-/* Tipografía de display: headings con Space Grotesk */
 h1,
 h2,
 h3,
 h4,
-.font-heading {
-  font-family: var(--font-space-grotesk, var(--font-dm-sans, ui-sans-serif, system-ui, sans-serif));
+.font-display {
+  font-family: var(--font-display);
 }
 
-/* ============================================================
-   Primitivas UX globales (skill ui-ux-pro-max)
-   ============================================================ */
-
-/* Foco visible accesible en cualquier elemento interactivo (skill §1, High).
-   Anillo con offset que funciona sobre cualquier fondo del tema. */
 :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus-visible {
   outline: none;
   box-shadow:
-    0 0 0 2px var(--color-base-100),
-    0 0 0 4px var(--color-primary);
-  border-radius: var(--radius-field, 0.5rem);
+    0 0 0 2px var(--color-cream),
+    0 0 0 4px var(--color-sky);
+  border-radius: var(--radius-field, 0.75rem);
 }
 
-/* El input del modal de búsqueda no lleva anillo propio: el modal ya es el
-   contexto de foco (evita el doble contorno). Regla sin capa para ganarle a la
-   global de :focus-visible. */
-.docs-search-panel input:focus,
-.docs-search-panel input:focus-visible {
-  box-shadow: none;
-}
-
-/* Respeta prefers-reduced-motion: neutraliza animaciones/transiciones (skill §7). */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -112,28 +100,61 @@ h4,
   }
 }
 
-/* Modal de búsqueda: fondo opaco del tema (por encima del overlay oscuro). */
+/* Elevación en hover para tarjetas */
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px color-mix(in oklch, var(--color-deep) 12%, transparent);
+}
+
+/* Burbujas ascendentes decorativas */
+.bubble-field {
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 9999px;
+  background: color-mix(in oklch, var(--color-sky) 25%, transparent);
+  animation: bubble-rise linear infinite;
+}
+
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.5;
+  }
+  70% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.15);
+    opacity: 0;
+  }
+}
+
+/* Placeholder de imagen temporal */
+.image-placeholder {
+  background:
+    radial-gradient(circle at 30% 30%, color-mix(in oklch, var(--color-sky) 35%, transparent), transparent 55%),
+    radial-gradient(circle at 70% 60%, color-mix(in oklch, var(--color-yellow) 30%, transparent), transparent 50%),
+    linear-gradient(145deg, var(--color-base-200), var(--color-base-300));
+}
+
+/* Docs — conservar estilos existentes */
+.docs-search-panel input:focus,
+.docs-search-panel input:focus-visible {
+  box-shadow: none;
+}
+
 .docs-search-panel {
   background-color: var(--color-base-100);
 }
 
-/* Patrón de cuadrícula sutil para el fondo del Hero (se adapta al tema). */
-.hero-grid {
-  background-image:
-    linear-gradient(
-      to right,
-      color-mix(in oklch, var(--color-base-content) 7%, transparent) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      color-mix(in oklch, var(--color-base-content) 7%, transparent) 1px,
-      transparent 1px
-    );
-  background-size: 44px 44px;
-}
-
-/* Prose tweaks para /docs — jerarquía marcada y ritmo vertical amplio */
 .prose-vf h1 {
   @apply text-4xl md:text-5xl font-bold tracking-tight mt-2 mb-6;
 }
@@ -146,7 +167,6 @@ h4,
 .prose-vf p {
   @apply leading-8 my-6 text-base-content/80;
 }
-/* Lede: párrafo de entrada, más grande y suave (gana a .prose-vf p por orden). */
 .lede,
 .prose-vf .lede {
   @apply text-lg md:text-xl leading-relaxed text-base-content/60 my-5;
@@ -160,7 +180,6 @@ h4,
 .prose-vf li {
   @apply leading-8;
 }
-/* Primer bloque tras el encabezado: sin margen superior extra */
 .prose-vf > :first-child {
   @apply mt-0;
 }
@@ -170,22 +189,17 @@ h4,
 .prose-vf code:not(pre code) {
   @apply rounded bg-primary/10 px-1.5 py-0.5 text-sm font-mono text-primary;
 }
-/* El wrapper de CodeBlock pone borde/redondeo/margen y el fondo; el <pre> solo
-   padding+scroll (fondo transparente para no afectar al pre de PromptBox). */
 .prose-vf pre {
   @apply p-4 overflow-x-auto text-sm font-mono;
 }
 .prose-vf pre code {
-  @apply grid; /* cada línea en su fila, permite resaltar líneas */
+  @apply grid;
 }
 .prose-vf pre code span[data-line] {
   @apply px-1;
 }
 .prose-vf code[data-theme] span {
   color: var(--shiki-light);
-}
-[data-theme="vibefast-dark"] .prose-vf code[data-theme] span {
-  color: var(--shiki-dark);
 }
 .prose-vf table {
   @apply w-full text-sm my-6 border-collapse;

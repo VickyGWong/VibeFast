@@ -1,37 +1,33 @@
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
 import config from "@/config"
+import WhatsAppButton from "@/components/landing/WhatsAppButton"
 
 export default function FinalCta() {
-  const { eyebrow, title, subtitle, cta, ctaSecondary } = config.landing.finalCta
+  const { eyebrow, title, subtitle, cta, ctaOnline } = config.landing.finalCta
 
   return (
-    <section className="relative overflow-hidden border-t border-base-200 bg-base-100">
-      <div
-        className="pointer-events-none absolute inset-0 -z-10 [mask-image:radial-gradient(60%_60%_at_50%_100%,#000,transparent)]"
-        aria-hidden
-      >
-        <div className="absolute bottom-0 left-1/2 size-[500px] -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
-      </div>
-
-      <div className="mx-auto max-w-3xl px-4 py-20 text-center md:py-28">
-        {eyebrow && (
-          <p className="text-sm font-medium uppercase tracking-wider text-primary">{eyebrow}</p>
-        )}
-        <h2 className="mt-3 text-balance text-3xl font-bold tracking-tight md:text-5xl">{title}</h2>
-        {subtitle && (
-          <p className="mt-5 text-balance text-lg text-base-content/70">{subtitle}</p>
-        )}
-
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <Link href={cta.href} className="btn btn-accent btn-lg">
-            {cta.label}
-            <ArrowRight className="size-4" />
-          </Link>
-          {ctaSecondary && (
-            <Link href={ctaSecondary.href} className="btn btn-ghost btn-lg">
-              {ctaSecondary.label}
+    <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+      <div className="rounded-3xl bg-gradient-to-br from-sky via-sky/90 to-deep px-6 py-12 text-center text-cream md:px-12 md:py-16">
+        <p className="font-display text-sm font-bold uppercase tracking-wider text-cream/80">
+          {eyebrow}
+        </p>
+        <h2 className="font-display mt-3 text-balance text-3xl font-bold md:text-5xl">{title}</h2>
+        <p className="mx-auto mt-4 max-w-2xl text-lg text-cream/85">{subtitle}</p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          {ctaOnline && (
+            <Link
+              href={ctaOnline.href}
+              className="btn btn-lg min-h-12 rounded-full border-0 bg-cream font-display font-bold text-deep hover:bg-cream/90"
+            >
+              {ctaOnline.label}
             </Link>
+          )}
+          {cta.href === "whatsapp" && (
+            <WhatsAppButton
+              source="final_cta"
+              label="Pedir por WhatsApp"
+              className="btn-lg border-0 bg-coral text-cream hover:bg-coral/90"
+            />
           )}
         </div>
       </div>
