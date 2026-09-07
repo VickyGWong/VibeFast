@@ -14,7 +14,7 @@ export default function FAQ() {
         {items.map((item) => (
           <details
             key={item.q}
-            className="group rounded-3xl border border-base-300 bg-base-100 px-5 py-4 open:shadow-sm"
+            className="group rounded-[1.5rem] border border-base-300/70 bg-white px-5 py-4 open:shadow-sm"
           >
             <summary className="cursor-pointer list-none font-display font-bold text-deep marker:content-none [&::-webkit-details-marker]:hidden">
               <span className="flex items-center justify-between gap-4">

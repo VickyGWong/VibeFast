@@ -44,6 +44,15 @@ function getSeedProducts() {
 }
 
 /**
+ * @param {string} id
+ * @returns {Promise<import('@/data/products').Product | null>}
+ */
+export async function getProductById(id) {
+  const products = await getProducts()
+  return products.find((product) => product.id === id) ?? null
+}
+
+/**
  * @returns {Promise<import('@/data/products').Product[]>}
  */
 export async function getProducts() {

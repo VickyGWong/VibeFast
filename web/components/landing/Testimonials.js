@@ -3,59 +3,36 @@ import config from "@/config"
 
 export default function Testimonials() {
   const { eyebrow, title, subtitle, items } = config.landing.testimonials
-  const socialProof = config.landing.socialProof
 
   return (
-    <section className="border-t border-base-200 bg-base-200/40 py-20 md:py-28">
+    <section id="testimonios" className="bg-cream py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wider text-primary">{eyebrow}</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
-          {subtitle && <p className="mt-4 text-base-content/70">{subtitle}</p>}
+        <div className="max-w-2xl">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
+            {eyebrow}
+          </p>
+          <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-5xl">{title}</h2>
+          {subtitle && <p className="mt-4 text-deep/70">{subtitle}</p>}
         </div>
 
-        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+        <ul className="mt-10 grid gap-4 md:grid-cols-3">
           {items.map((item) => (
-            <li
-              key={item.author}
-              className="flex flex-col rounded-2xl border border-base-200 bg-base-100 p-6 transition hover:border-primary/40 hover:shadow-md"
-            >
-              <div className="flex gap-0.5 text-warning">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="size-4 fill-current" />
+            <li key={item.author} className="flex flex-col rounded-[1.5rem] bg-white p-6 shadow-sm">
+              <div className="flex gap-0.5 text-yellow">
+                {Array.from({ length: 5 }).map((_, index) => (
+                  <Star key={index} className="size-4 fill-current" />
                 ))}
               </div>
-              <blockquote className="mt-4 flex-1 text-sm leading-6 text-base-content/80">
+              <blockquote className="mt-4 flex-1 leading-relaxed text-deep/80">
                 “{item.quote}”
               </blockquote>
-              <div className="mt-5 flex items-center gap-3">
-                <span
-                  className="inline-flex size-9 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary"
-                  aria-hidden
-                >
-                  {item.author.charAt(0)}
-                </span>
-                <div>
-                  <p className="text-sm font-semibold">{item.author}</p>
-                  <p className="text-xs text-base-content/60">{item.role}</p>
-                </div>
+              <div className="mt-5">
+                <p className="font-display font-bold text-deep">{item.author}</p>
+                <p className="text-sm text-deep/55">{item.role}</p>
               </div>
             </li>
           ))}
         </ul>
-
-        {socialProof && (
-          <div className="mt-14 text-center">
-            <p className="text-sm text-base-content/60">{socialProof.text}</p>
-            <ul className="mt-5 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              {socialProof.logos.map((logo) => (
-                <li key={logo} className="text-sm font-semibold text-base-content/40">
-                  {logo}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </section>
   )

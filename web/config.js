@@ -18,8 +18,8 @@ const config = {
 
   brand: {
     primary: "#4c9ff2",
-    logoText: "The Good Co.",
-    logoSrc: "/logo.svg",
+    logoText: "THE GOOD CO.",
+    logoSrc: "/brand/icono-4.png",
     radius: "1.5rem",
   },
 
@@ -28,7 +28,7 @@ const config = {
     whatsappDisplay: "614 128 7489",
     instagram: "https://instagram.com/co.thegood",
     instagramHandle: "@co.thegood",
-    email: "vickygwong@gmail.com",
+    email: "hola@thegoodco.com.mx",
     city: "Chihuahua",
     postalCode: "31216",
     country: "MX",
@@ -90,38 +90,44 @@ const config = {
   },
 
   landing: {
-    topBar: "Elaborados en Chihuahua · Compra en línea o por WhatsApp · Entrega local",
+    topBar: "Hechos artesanalmente en Chihuahua",
     nav: [
-      { label: "Productos", href: "#productos" },
-      { label: "Kéfir", href: "#kefir-spotlight" },
-      { label: "Proceso", href: "#proceso" },
-      { label: "Historia", href: "#historia" },
-      { label: "FAQ", href: "#faq" },
+      { label: "Productos", href: "/#productos" },
+      { label: "Cómo comprar", href: "/#como-comprar" },
+      { label: "Entrega", href: "/#entrega" },
+      { label: "Historia", href: "/#historia" },
     ],
     hero: {
       eyebrow: "Fermentos muy vivitos",
-      title: "Buenos no, excelentes.",
+      title: "Algo cremoso, algo burbujeante, algo bien.",
       subtitle:
-        "Kéfir, kombucha y tíbicos artesanales en Chihuahua. Explora sabores y precios, elige tu presentación y compra en línea con Mercado Pago o pide por WhatsApp — sin vueltas.",
-      cta: { label: "Ver catálogo", href: "#productos" },
+        "Kéfir, kombucha y tíbicos artesanales, elaborados en Chihuahua para quienes quieren algo natural, rico y con mucha personalidad.",
+      cta: { label: "Conoce nuestros productos", href: "#productos" },
       ctaSecondary: { label: "Pedir por WhatsApp", href: "whatsapp" },
       ctaOnline: { label: "Comprar en línea", href: "#productos" },
       trust: [
-        "Pago seguro con Mercado Pago o WhatsApp",
-        "Ingredientes reales, cultivo vivo",
-        "Entrega local en Chihuahua",
+        "Elaboración artesanal",
+        "Pequeños lotes",
+        "Cultivos vivos",
+        "Hechos en Chihuahua",
       ],
     },
     purchaseSteps: {
       eyebrow: "Cómo comprar",
-      title: "Del catálogo a tu pedido en minutos",
-      subtitle: "Dos caminos, misma calidad: pago en línea o atención personalizada por WhatsApp.",
+      title: "Realiza tu pedido en minutos",
+      subtitle: "Dos caminos, misma calidad: pago en línea o conversación directa por WhatsApp.",
+      intro: {
+        title: "Descubre y compara",
+        body: "Conoce qué vendemos y por qué nuestros fermentos son diferentes. Explora kéfir, kombucha y tíbicos con sabores, tamaños y precios claros.",
+      },
       steps: [
-        { number: "01", title: "Descubre", body: "Conoce qué vendemos y por qué nuestros fermentos son diferentes." },
-        { number: "02", title: "Compara", body: "Explora kéfir, kombucha y tíbicos con sabores, tamaños y precios claros." },
-        { number: "03", title: "Elige", body: "Selecciona producto y variante (endulzado o sin endulzar, cuando aplique)." },
-        { number: "04", title: "Paga o escribe", body: "Compra en línea con Mercado Pago o inicia tu pedido por WhatsApp." },
-        { number: "05", title: "Confirma", body: "Recibe confirmación de pago o coordinamos entrega contigo por chat." },
+        { number: "01", title: "Elige", body: "Selecciona producto y variante (endulzado o sin endulzar, cuando aplique)." },
+        { number: "02", title: "Paga o escribe", body: "Compra en línea con Mercado Pago o inicia tu pedido por WhatsApp." },
+        {
+          number: "03",
+          title: "Confirma",
+          body: "Recibe confirmación de pago y recibe en casa. O elige la zona y hora de entrega y paga por WhatsApp.",
+        },
       ],
     },
     faq: {
@@ -150,9 +156,46 @@ const config = {
         },
         {
           q: "¿Puedo pedir kéfir sin endulzar?",
-          a: "Sí. En kéfir de fresa y mango puedes elegir la variante endulzada o sin endulzar antes de enviar tu mensaje por WhatsApp.",
+          a: "Sí. En kéfir natural, de fresa y de mango puedes elegir la variante endulzada o sin endulzar en la ficha del producto o antes de mandar tu WhatsApp.",
+        },
+        {
+          q: "¿Puedo armar un pedido con varias botellas?",
+          a: "Sí. Toca «Agregar al pedido» en cada producto, revisa tu carrito y confirma todo junto por WhatsApp. Así coordinamos una sola entrega.",
         },
       ],
+    },
+    testimonials: {
+      eyebrow: "Lo que se siente",
+      title: "Quienes ya tienen The Good Co. en el refri",
+      subtitle: "Voces de Chihuahua. El sabor se nota; el resto lo cuentas tú.",
+      items: [
+        {
+          quote:
+            "El kéfir natural se volvió parte del desayuno. Cremoso, ácido justito y sin esa sensación de producto industrial.",
+          author: "Mariana",
+          role: "Chihuahua capital",
+        },
+        {
+          quote:
+            "Pedí kombucha y tíbicos el mismo día. Llegaron fríos, con cara de lote fresco. Ya no compro las de súper.",
+          author: "Diego",
+          role: "Entrega local",
+        },
+        {
+          quote:
+            "Me encanta poder elegir endulzado o sin endulzar. Pedí por WhatsApp y en un rato ya estaba coordinada la entrega.",
+          author: "Ana",
+          role: "Cliente frecuente",
+        },
+      ],
+    },
+    newsletter: {
+      eyebrow: "Novedades",
+      title: "Entérate primero de sabores y entregas",
+      subtitle: "Te avisamos de lotes nuevos, sabores de temporada y horarios de entrega en Chihuahua.",
+      buttonLabel: "Suscribirme",
+      placeholder: "Tu correo",
+      successMessage: "Listo. Te escribimos cuando haya algo rico que contar.",
     },
     finalCta: {
       eyebrow: "¿Listo para probar?",
@@ -168,19 +211,26 @@ const config = {
         {
           title: "Productos",
           links: [
-            { label: "Catálogo", href: "#productos" },
-            { label: "Kéfir", href: "#kefir-spotlight" },
-            { label: "Kombucha", href: "#productos" },
-            { label: "Tíbicos", href: "#productos" },
+            { label: "Catálogo", href: "/#productos" },
+            { label: "Kéfir", href: "/#kefir-spotlight" },
+            { label: "Kombucha", href: "/#productos" },
+            { label: "Tíbicos", href: "/#productos" },
           ],
         },
         {
           title: "Marca",
           links: [
-            { label: "Proceso", href: "#proceso" },
-            { label: "Historia", href: "#historia" },
-            { label: "Contacto", href: "#contacto" },
-            { label: "FAQ", href: "#faq" },
+            { label: "Entrega", href: "/#entrega" },
+            { label: "Historia", href: "/#historia" },
+            { label: "Contacto", href: "/#contacto" },
+            { label: "FAQ", href: "/#faq" },
+          ],
+        },
+        {
+          title: "Legal",
+          links: [
+            { label: "Aviso de privacidad", href: "/aviso-privacidad" },
+            { label: "Términos de servicio", href: "/terminos" },
           ],
         },
         {

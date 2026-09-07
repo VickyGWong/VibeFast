@@ -4,6 +4,7 @@ import config from "@/config"
 import Logo from "@/components/Logo"
 import TopBar from "@/components/landing/TopBar"
 import WhatsAppButton from "@/components/landing/WhatsAppButton"
+import { CartButton } from "@/components/shop/CartDrawer"
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp"
 
 function NavLink({ item, className }) {
@@ -30,7 +31,7 @@ export default function Navbar() {
   return (
     <>
       <TopBar />
-      <header className="sticky top-0 z-40 w-full border-b border-base-300/80 bg-base-100/90 backdrop-blur">
+      <header className="sticky top-0 z-40 w-full border-b border-base-300/60 bg-cream/95 backdrop-blur">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
             <div className="dropdown md:hidden">
@@ -49,9 +50,9 @@ export default function Navbar() {
               </ul>
             </div>
 
-            <Link href="/" className="flex items-center gap-2">
-              <Logo className="size-8" />
-              <span className="font-display text-lg font-bold tracking-tight text-deep">
+            <Link href="/" className="flex items-center gap-2" aria-label={`${config.app.name} inicio`}>
+              <Logo className="size-10" />
+              <span className="font-brand text-lg tracking-tight text-deep md:text-xl">
                 {config.brand.logoText}
               </span>
             </Link>
@@ -68,8 +69,11 @@ export default function Navbar() {
             ))}
           </ul>
 
-          <div className="hidden md:block">
-            <WhatsAppButton source="navbar" className="btn-sm" />
+          <div className="flex items-center gap-1 md:gap-3">
+            <CartButton />
+            <div className="hidden md:block">
+              <WhatsAppButton source="navbar" className="btn-sm" />
+            </div>
           </div>
         </nav>
       </header>

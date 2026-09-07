@@ -33,13 +33,13 @@ export default function Footer() {
   const { tagline, columns = [] } = config.landing.footer
 
   return (
-    <footer className="border-t border-base-300 bg-base-100">
+    <footer className="border-t border-base-300 bg-white">
       <div className="mx-auto max-w-6xl px-4 py-12">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_repeat(3,1fr)]">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_repeat(4,1fr)]">
           <div>
             <div className="flex items-center gap-2">
               <Logo className="size-7" />
-              <span className="font-display text-lg font-bold text-deep">
+              <span className="font-brand text-lg tracking-tight text-deep">
                 {config.brand.logoText}
               </span>
             </div>
@@ -68,7 +68,14 @@ export default function Footer() {
           <span>
             © {new Date().getFullYear()} {config.brand.logoText} · {config.contact.city}, México
           </span>
-          <span>{config.app.domain}</span>
+          <div className="flex gap-4">
+            <Link href="/aviso-privacidad" className="hover:text-sky">
+              Privacidad
+            </Link>
+            <Link href="/terminos" className="hover:text-sky">
+              Términos
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

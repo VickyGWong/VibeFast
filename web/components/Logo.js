@@ -6,9 +6,9 @@ export default function Logo({ className = "size-8" }) {
     return (
       <Image
         src={config.brand.logoSrc}
-        alt={config.app.name}
-        width={32}
-        height={32}
+        alt=""
+        width={64}
+        height={64}
         className={className}
       />
     )

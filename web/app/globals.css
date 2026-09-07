@@ -12,11 +12,22 @@
   --color-sky: #4c9ff2;
   --color-deep: #1b4268;
   --color-yellow: #ffb636;
-  --color-orange: #fb6a40;
-  --color-coral: #ff4a4a;
+  --color-orange: #e57e58;
+  --color-coral: #ef6a55;
+  --font-brand: "Basique", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Pally", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Basique", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Pally", ui-sans-serif, system-ui, sans-serif;
+  --font-ui: "Bahnschrift", ui-sans-serif, system-ui, sans-serif;
+  --font-price: "Menlo", ui-monospace, monospace;
   --radius-3xl: 1.5rem;
+}
+
+@font-face {
+  font-family: "Basique";
+  src: url("/fonts/Basique.ttf") format("truetype");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
@@ -28,9 +39,17 @@
 }
 
 @font-face {
-  font-family: "Basique";
-  src: url("/fonts/Basique.ttf") format("truetype");
-  font-weight: 400;
+  font-family: "Bahnschrift";
+  src: url("/fonts/Bahnschrift.ttf") format("truetype");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Menlo";
+  src: url("/fonts/Menlo-Bold.ttf") format("truetype");
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
@@ -44,8 +63,8 @@
   --color-primary-content: #f8f1e7;
   --color-secondary: #1b4268;
   --color-secondary-content: #f8f1e7;
-  --color-accent: #ff4a4a;
-  --color-accent-content: #f8f1e7;
+  --color-accent: #ef6a55;
+  --color-accent-content: #fff8f4;
   --color-neutral: #1b4268;
   --color-neutral-content: #f8f1e7;
   --color-base-100: #f8f1e7;
@@ -68,17 +87,49 @@ body {
 
 body {
   font-family: var(--font-body);
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
   background-color: var(--color-cream);
   color: var(--color-deep);
 }
 
+/* Basique: nombre de marca y título principal */
 h1,
+.font-brand {
+  font-family: var(--font-brand);
+}
+
+/* Pally Bold: subtítulos y títulos de sección */
 h2,
 h3,
 h4,
 .font-display {
   font-family: var(--font-display);
+  font-weight: 700;
+}
+
+/* Bahnschrift: navegación, botones y etiquetas */
+nav,
+.btn,
+.font-ui,
+button:not(.font-display):not(.font-brand) {
+  font-family: var(--font-ui);
+}
+
+/* Menlo: precios y datos técnicos */
+.font-price {
+  font-family: var(--font-price);
+}
+
+.btn-whatsapp {
+  background-color: var(--color-yellow);
+  color: var(--color-deep);
+  border-color: transparent;
+}
+
+.btn-whatsapp:hover {
+  background-color: color-mix(in oklch, var(--color-yellow) 82%, var(--color-deep));
+  color: var(--color-deep);
 }
 
 :where(a, button, input, select, textarea, summary, [role="button"], [tabindex]):focus-visible {
@@ -108,6 +159,16 @@ h4,
 .card-lift:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 40px color-mix(in oklch, var(--color-deep) 12%, transparent);
+}
+
+/* Bloques de color al estilo Lovable */
+.hero-sky {
+  background:
+    radial-gradient(circle at 12% 18%, color-mix(in oklch, white 22%, transparent), transparent 28%),
+    radial-gradient(circle at 88% 12%, color-mix(in oklch, white 16%, transparent), transparent 24%),
+    radial-gradient(circle at 78% 78%, color-mix(in oklch, var(--color-deep) 16%, transparent), transparent 32%),
+    radial-gradient(circle at 18% 82%, color-mix(in oklch, white 12%, transparent), transparent 26%),
+    var(--color-sky);
 }
 
 /* Burbujas ascendentes decorativas */

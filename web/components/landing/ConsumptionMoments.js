@@ -1,39 +1,40 @@
 const moments = [
   {
     title: "Mañana activa",
-    body: "Kéfir natural con granola o en smoothie. Cremoso, probiótico y listo para arrancar el día.",
+    body: "Una idea: kéfir natural con granola o en un smoothie. Cremoso y vivo para quienes quieren empezar el día con algo suave.",
     accent: "bg-sky/15 text-sky",
   },
   {
     title: "Tarde con calor",
-    body: "Tíbicos bien fríos después del gym o en la terraza. Ligero, frutal y súper refrescante.",
+    body: "Puedes probar tíbicos bien fríos después de moverte o en la terraza. Ligero, frutal y refrescante — si ese es tu momento.",
     accent: "bg-orange/15 text-orange",
   },
   {
     title: "Comida o snack",
-    body: "Kombucha burbujeante para acompañar tu comida o esa pausa de media tarde con personalidad.",
+    body: "Hay quien acompaña la comida o la media tarde con kombucha. Es solo una sugerencia: elige el fermento que más te apetezca.",
     accent: "bg-yellow/20 text-deep",
   },
   {
     title: "Noche tranquila",
-    body: "Kéfir de fresa sin endulzar, frío y suave. Un ritual pequeño antes de descansar.",
+    body: "Si te gusta un ritual pequeño antes de descansar, el kéfir de fresa sin endulzar, frío y suave, puede ser una opción.",
     accent: "bg-deep/10 text-deep",
   },
 ]
 
 export default function ConsumptionMoments() {
   return (
-    <section className="bg-base-200/60 py-16 md:py-20">
+    <section className="bg-sky/10 py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-2xl">
-          <p className="font-display text-sm font-bold uppercase tracking-wider text-sky">
-            Momentos
+          <p className="font-ui text-sm font-bold uppercase tracking-wider text-sky">
+            Sugerencias de consumo
           </p>
           <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-4xl">
-            Cuándo tomarlos
+            Momentos en los que pueden acompañarte
           </h2>
           <p className="mt-4 text-deep/70">
-            No hay un solo momento perfecto — hay el fermento perfecto para cada momento.
+            Estas son ideas, no reglas. Cada persona encuentra su ritmo; úsalas como inspiración
+            para integrar los fermentos a tu día.
           </p>
         </div>
 
@@ -41,7 +42,7 @@ export default function ConsumptionMoments() {
           {moments.map((moment) => (
             <article
               key={moment.title}
-              className="card-lift rounded-3xl border border-base-300 bg-base-100 p-6"
+              className="card-lift rounded-[1.5rem] border border-sky/20 bg-white p-6"
             >
               <span
                 className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider ${moment.accent}`}

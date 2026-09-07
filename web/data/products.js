@@ -32,7 +32,7 @@ export const products = [
     name: "Kéfir natural",
     flavor: "natural",
     description:
-      "Cremoso, vivo y sin azúcar añadida. El punto de partida perfecto para conocer nuestros fermentos.",
+      "Cremoso y vivo. El punto de partida perfecto para conocer nuestros fermentos. Disponible endulzado o sin endulzar.",
     size: "500 ml",
     weight: "390 g",
     priceCents: 9500,
@@ -47,7 +47,10 @@ export const products = [
     seasonal: false,
     temporaryImage: true,
     sortOrder: 1,
-    variants: [],
+    variants: [
+      { id: "endulzado", label: "Endulzado", messageLabel: "endulzado" },
+      { id: "sin-endulzar", label: "Sin endulzar", messageLabel: "sin endulzar" },
+    ],
   },
   {
     id: "kefir-fresa",
@@ -126,18 +129,18 @@ export const products = [
   {
     id: "kombucha-betabel",
     category: "kombucha",
-    name: "Kombucha de betabel",
-    flavor: "betabel",
-    description: "Notas terrosas y dulces del betabel en cada burbuja.",
+    name: "Kombucha de betabel-arándano",
+    flavor: "betabel-arándano",
+    description: "Betabel y arándano en un té fermentado con notas terrosas, frutales y burbujas vivas.",
     size: "750 ml",
     weight: null,
     priceCents: 12000,
     currency: "MXN",
     imageUrl: "/images/kombucha-betabel.jpg",
-    imageAlt: "Botella de kombucha de betabel The Good Co. de 750 ml",
+    imageAlt: "Botella de kombucha de betabel-arándano The Good Co. de 750 ml",
     featured: false,
     active: true,
-    whatsappName: "Kombucha de betabel",
+    whatsappName: "Kombucha de betabel-arándano",
     sku: "KOM-BET-750",
     stock: null,
     seasonal: false,
@@ -257,6 +260,33 @@ export const products = [
   },
 ]
 
+export const categoryDetails = {
+  kefir: {
+    keep: "Mantener refrigerado. Es un producto vivo: consúmelo frío y dentro de los días que te indicamos al confirmar tu pedido.",
+    benefits: [
+      "Textura cremosa, tipo yogurt bebible",
+      "Cultivo vivo sin pasteurizar",
+      "Ideal para desayuno, smoothie o snack",
+    ],
+  },
+  kombucha: {
+    keep: "Mantener refrigerado. Las burbujas son naturales; ábrela con cuidado y consúmela fría.",
+    benefits: [
+      "Té fermentado burbujeante",
+      "Sin conservadores",
+      "Ideal para comida o media tarde",
+    ],
+  },
+  tibicos: {
+    keep: "Mantener refrigerado. Ligero y refrescante: perfecto bien frío.",
+    benefits: [
+      "Agua de kefir de frutos",
+      "Muy ligero y hidratante",
+      "Ideal para el calor o después de moverte",
+    ],
+  },
+}
+
 export const categoryLabels = {
   kefir: "Kéfir",
   kombucha: "Kombucha",
@@ -278,7 +308,7 @@ export const experienceOptions = [
     title: "Algo burbujeante con té",
     subtitle: "Kombucha",
     description: "Fermento de té con burbujas, frescura y personalidad en cada sorbo.",
-    accent: "deep",
+    accent: "yellow",
   },
   {
     id: "tibicos",

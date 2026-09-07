@@ -14,7 +14,7 @@ insert into public.products (
   image_url, image_alt, featured, whatsapp_name, sku, temporary_image, sort_order
 ) values
   ('kefir-natural', 'kefir', 'Kéfir natural', 'natural',
-   'Cremoso, vivo y sin azúcar añadida. El punto de partida perfecto para conocer nuestros fermentos.',
+   'Cremoso y vivo. El punto de partida perfecto para conocer nuestros fermentos. Disponible endulzado o sin endulzar.',
    '500 ml', '390 g', 9500, '/images/kefir-natural.jpg',
    'Botella de kéfir natural The Good Co. de 500 ml', true, 'Kéfir natural', 'KEF-NAT-500', true, 1),
   ('kefir-fresa', 'kefir', 'Kéfir de fresa', 'fresa',
@@ -29,10 +29,10 @@ insert into public.products (
    'Té fermentado burbujeante, equilibrado y refrescante.',
    '750 ml', null, 12000, '/images/kombucha-natural.jpg',
    'Botella de kombucha natural The Good Co. de 750 ml', false, 'Kombucha natural', 'KOM-NAT-750', true, 4),
-  ('kombucha-betabel', 'kombucha', 'Kombucha de betabel', 'betabel',
-   'Notas terrosas y dulces del betabel en cada burbuja.',
+  ('kombucha-betabel', 'kombucha', 'Kombucha de betabel-arándano', 'betabel-arándano',
+   'Betabel y arándano en un té fermentado con notas terrosas, frutales y burbujas vivas.',
    '750 ml', null, 12000, '/images/kombucha-betabel.jpg',
-   'Botella de kombucha de betabel The Good Co. de 750 ml', false, 'Kombucha de betabel', 'KOM-BET-750', true, 5),
+   'Botella de kombucha de betabel-arándano The Good Co. de 750 ml', false, 'Kombucha de betabel-arándano', 'KOM-BET-750', true, 5),
   ('kombucha-mango', 'kombucha', 'Kombucha de mango', 'mango',
    'Mango tropical con el carácter burbujeante de la kombucha.',
    '750 ml', null, 12000, '/images/kombucha-mango.jpg',
@@ -56,6 +56,8 @@ insert into public.products (
 on conflict (id) do nothing;
 
 insert into public.product_variants (id, product_id, label, message_label, sort_order) values
+  ('endulzado', 'kefir-natural', 'Endulzado', 'endulzado', 1),
+  ('sin-endulzar', 'kefir-natural', 'Sin endulzar', 'sin endulzar', 2),
   ('endulzado', 'kefir-fresa', 'Endulzado', 'endulzado', 1),
   ('sin-endulzar', 'kefir-fresa', 'Sin endulzar', 'sin endulzar', 2),
   ('endulzado', 'kefir-mango', 'Endulzado', 'endulzado', 1),
