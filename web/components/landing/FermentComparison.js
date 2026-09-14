@@ -30,7 +30,7 @@ export default function FermentComparison() {
     <section className="bg-deep py-16 text-cream md:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-2xl">
-          <p className="font-ui text-sm font-bold uppercase tracking-wider text-sky">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
             Comparativa
           </p>
           <h2 className="font-display mt-3 text-3xl font-bold md:text-5xl">
@@ -54,7 +54,7 @@ export default function FermentComparison() {
             <tbody>
               {rows.map((row) => (
                 <tr key={row.trait} className="border-b border-cream/10 last:border-0">
-                  <th className="bg-cream/5 p-4 font-ui font-medium text-sky">{row.trait}</th>
+                  <th className="bg-cream/5 p-4 font-display font-medium text-sky">{row.trait}</th>
                   <td className="bg-sky/15 p-4 text-cream">{row.kefir}</td>
                   <td className="bg-yellow/15 p-4 text-cream">{row.kombucha}</td>
                   <td className="bg-orange/20 p-4 text-cream">{row.tibicos}</td>

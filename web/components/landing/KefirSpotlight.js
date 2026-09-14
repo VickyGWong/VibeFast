@@ -27,7 +27,7 @@ export default function KefirSpotlight() {
           />
         </div>
         <div>
-          <p className="font-ui text-xs font-bold uppercase tracking-[0.18em] text-deep/70">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
             Nuestra recomendación para empezar
           </p>
           <h2 className="font-display mt-3 text-3xl font-bold leading-tight md:text-5xl">
@@ -45,7 +45,7 @@ export default function KefirSpotlight() {
               </li>
             ))}
           </ul>
-          <p className="font-price mt-8 text-lg font-bold">
+          <p className="font-display mt-8 text-lg font-bold">
             Presentación 500 ml / 390 g · $95 MXN
           </p>
           <div className="mt-5">

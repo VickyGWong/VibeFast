@@ -28,10 +28,10 @@ export default function Hero() {
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-4 py-16 md:grid-cols-2 md:py-24">
         <div>
-          <p className="font-ui text-xs font-bold uppercase tracking-[0.2em] text-cream/80">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-cream/80">
             {eyebrow}
           </p>
-          <h1 className="font-brand mt-4 text-balance text-4xl leading-tight tracking-tight text-cream md:text-5xl lg:text-[3.4rem]">
+          <h1 className="font-display mt-3 text-balance text-3xl font-bold leading-tight text-cream md:text-5xl">
             {title}
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-cream/90 md:text-xl">

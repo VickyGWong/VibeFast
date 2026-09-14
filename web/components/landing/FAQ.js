@@ -6,8 +6,8 @@ export default function FAQ() {
   return (
     <section id="faq" className="mx-auto max-w-3xl px-4 py-16 md:py-20">
       <div className="text-center">
-        <p className="font-display text-sm font-bold uppercase tracking-wider text-sky">{eyebrow}</p>
-        <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-4xl">{title}</h2>
+        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">{eyebrow}</p>
+        <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-5xl">{title}</h2>
       </div>
 
       <div className="mt-10 space-y-3">

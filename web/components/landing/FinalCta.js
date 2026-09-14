@@ -8,7 +8,7 @@ export default function FinalCta() {
   return (
     <section id="novedades" className="mx-auto max-w-6xl px-4 py-16 md:py-20">
       <div className="rounded-[2rem] bg-gradient-to-br from-sky via-sky to-sky/80 px-6 py-12 text-center text-cream md:px-12 md:py-16">
-        <p className="font-ui text-sm font-bold uppercase tracking-wider text-cream/80">
+        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-cream/80">
           {eyebrow}
         </p>
         <h2 className="font-display mt-3 text-balance text-3xl font-bold md:text-5xl">{title}</h2>

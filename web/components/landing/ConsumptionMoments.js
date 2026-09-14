@@ -26,10 +26,10 @@ export default function ConsumptionMoments() {
     <section className="bg-sky/10 py-16 md:py-20">
       <div className="mx-auto max-w-6xl px-4">
         <div className="max-w-2xl">
-          <p className="font-ui text-sm font-bold uppercase tracking-wider text-sky">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
             Sugerencias de consumo
           </p>
-          <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-4xl">
+          <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-5xl">
             Momentos en los que pueden acompañarte
           </h2>
           <p className="mt-4 text-deep/70">

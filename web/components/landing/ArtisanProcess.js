@@ -25,10 +25,10 @@ export default function ArtisanProcess() {
   return (
     <section id="proceso" className="mx-auto max-w-6xl px-4 py-16 md:py-20">
       <div className="max-w-2xl">
-        <p className="font-ui text-sm font-bold uppercase tracking-wider text-sky">
+        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
           Proceso artesanal
         </p>
-        <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-4xl">
+        <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-5xl">
           De cultivo a botella, sin prisa
         </h2>
         <p className="mt-4 text-deep/70">

@@ -12,13 +12,12 @@
   --color-sky: #4c9ff2;
   --color-deep: #1b4268;
   --color-yellow: #ffb636;
-  --color-orange: #e57e58;
-  --color-coral: #ef6a55;
+  --color-orange: #fb6a40;
+  --color-coral: #ff4a4a;
   --font-brand: "Basique", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Pally", ui-sans-serif, system-ui, sans-serif;
   --font-body: "Pally", ui-sans-serif, system-ui, sans-serif;
   --font-ui: "Bahnschrift", ui-sans-serif, system-ui, sans-serif;
-  --font-price: "Menlo", ui-monospace, monospace;
   --radius-3xl: 1.5rem;
 }
 
@@ -46,14 +45,6 @@
   font-display: swap;
 }
 
-@font-face {
-  font-family: "Menlo";
-  src: url("/fonts/Menlo-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
 @plugin "daisyui/theme" {
   name: "thegoodco";
   default: true;
@@ -63,7 +54,7 @@
   --color-primary-content: #f8f1e7;
   --color-secondary: #1b4268;
   --color-secondary-content: #f8f1e7;
-  --color-accent: #ef6a55;
+  --color-accent: #fb6a40;
   --color-accent-content: #fff8f4;
   --color-neutral: #1b4268;
   --color-neutral-content: #f8f1e7;
@@ -93,17 +84,18 @@ body {
   color: var(--color-deep);
 }
 
-/* Basique: nombre de marca y título principal */
-h1,
+/* Basique: solo el logotipo THE GOOD CO. */
 .font-brand {
   font-family: var(--font-brand);
 }
 
-/* Pally Bold: subtítulos y títulos de sección */
+/* Pally Bold: títulos, subtítulos y números */
+h1,
 h2,
 h3,
 h4,
-.font-display {
+.font-display,
+.font-price {
   font-family: var(--font-display);
   font-weight: 700;
 }
@@ -114,11 +106,6 @@ nav,
 .font-ui,
 button:not(.font-display):not(.font-brand) {
   font-family: var(--font-ui);
-}
-
-/* Menlo: precios y datos técnicos */
-.font-price {
-  font-family: var(--font-price);
 }
 
 .btn-whatsapp {

@@ -75,20 +75,20 @@ export default function KnowledgeCarousel() {
       <div className="mx-auto max-w-4xl px-4">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="font-ui text-xs font-bold uppercase tracking-[0.18em] text-yellow">
+            <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-yellow">
               Para saber más
             </p>
             <h2 className="font-display mt-2 text-2xl font-bold md:text-3xl">
               Fermentos, con fuentes
             </h2>
           </div>
-          <p className="font-ui hidden text-sm text-cream/60 sm:block">
+          <p className="font-display hidden text-sm text-cream/60 sm:block">
             {index + 1} / {slides.length}
           </p>
         </div>
 
         <div className="mt-8 min-h-[22rem] rounded-[1.75rem] border border-cream/15 bg-cream/5 p-6 md:p-8">
-          <p className="font-ui text-xs font-bold uppercase tracking-[0.18em] text-sky">{slide.eyebrow}</p>
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">{slide.eyebrow}</p>
           <h3 className="font-display mt-3 text-2xl font-bold md:text-3xl">{slide.title}</h3>
           <p className="mt-4 leading-relaxed text-cream/85">{slide.body}</p>
           <ul className="mt-6 space-y-2">

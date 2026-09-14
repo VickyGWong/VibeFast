@@ -40,7 +40,7 @@ export default function ContactSection() {
     <section id="contacto" className="bg-cream py-16 md:py-20">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
         <div>
-          <p className="font-ui text-sm font-bold uppercase tracking-[0.18em] text-sky">Contacto</p>
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">Contacto</p>
           <h2 className="font-display mt-3 text-3xl font-bold text-deep md:text-5xl">
             Hablemos por WhatsApp
           </h2>

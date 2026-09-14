@@ -14,10 +14,28 @@ import {
   trackWhatsAppProduct,
 } from "@/lib/analytics/track"
 
+const categoryTheme = {
+  kefir: {
+    flavor: "bg-sky/15 text-sky",
+    border: "border-sky/35",
+    ring: "hover:border-sky",
+  },
+  kombucha: {
+    flavor: "bg-yellow/25 text-deep",
+    border: "border-yellow/60",
+    ring: "hover:border-yellow",
+  },
+  tibicos: {
+    flavor: "bg-orange/15 text-orange",
+    border: "border-orange/40",
+    ring: "hover:border-orange",
+  },
+}
+
 /**
- * @param {{ product: import('@/data/products').Product, compact?: boolean }} props
+ * @param {{ product: import('@/data/products').Product, featured?: boolean }} props
  */
-export default function ProductCard({ product, compact = false }) {
+export default function ProductCard({ product, featured = false }) {
   const [selectedVariant, setSelectedVariant] = useState(
     product.variants[0] ?? null
   )
@@ -27,6 +45,7 @@ export default function ProductCard({ product, compact = false }) {
   const checkoutUrl = getCheckoutUrl(product, selectedVariant)
   const onlineAvailable = hasOnlineCheckout(product, selectedVariant)
   const paymentsEnabled = config.features.payments && config.payments?.enabled
+  const theme = categoryTheme[product.category] ?? categoryTheme.kefir
 
   function handleVariantSelect(variant) {
     setSelectedVariant(variant)
@@ -43,9 +62,7 @@ export default function ProductCard({ product, compact = false }) {
             type="button"
             aria-pressed={pressed}
             onClick={() => handleVariantSelect(variant)}
-            className={`rounded-full border px-3 text-sm font-medium transition ${
-              compact ? "min-h-9" : "min-h-11 px-4"
-            } ${
+            className={`min-h-11 rounded-full border px-4 text-sm font-medium transition ${
               pressed
                 ? "border-deep bg-deep text-cream"
                 : "border-base-300 bg-base-100 text-deep hover:border-deep/30"
@@ -59,11 +76,11 @@ export default function ProductCard({ product, compact = false }) {
   )
 
   const actions = (
-    <div className={compact ? "flex flex-wrap gap-2" : "mt-5 flex flex-col gap-2"}>
+    <div className="mt-5 flex flex-col gap-2">
       <AddToCartButton
         product={product}
         variant={selectedVariant}
-        className={compact ? "min-h-10" : "w-full"}
+        className="w-full"
       />
       {paymentsEnabled && (
         onlineAvailable ? (
@@ -71,9 +88,7 @@ export default function ProductCard({ product, compact = false }) {
             href={checkoutUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className={`btn btn-primary gap-2 rounded-full font-ui font-bold ${
-              compact ? "min-h-10" : "min-h-11 w-full"
-            }`}
+            className="btn btn-primary min-h-11 w-full gap-2 rounded-full font-ui font-bold"
             onClick={() => trackBeginCheckout(product, selectedVariant)}
           >
             <CreditCard className="size-4" />
@@ -84,9 +99,7 @@ export default function ProductCard({ product, compact = false }) {
             type="button"
             disabled
             title="Configura el link de Mercado Pago en config.payments.links"
-            className={`btn btn-primary btn-disabled gap-2 rounded-full font-ui font-bold opacity-60 ${
-              compact ? "min-h-10" : "min-h-11 w-full"
-            }`}
+            className="btn btn-primary btn-disabled min-h-11 w-full gap-2 rounded-full font-ui font-bold opacity-60"
           >
             <CreditCard className="size-4" />
             Comprar en línea
@@ -97,9 +110,7 @@ export default function ProductCard({ product, compact = false }) {
         href={whatsappUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`btn gap-2 rounded-full border-0 bg-yellow font-ui font-bold text-deep hover:bg-yellow/85 ${
-          compact ? "min-h-10" : "min-h-11 w-full"
-        }`}
+        className="btn min-h-11 w-full gap-2 rounded-full border-0 bg-yellow font-ui font-bold text-deep hover:bg-yellow/85"
         onClick={() => trackWhatsAppProduct(product, selectedVariant)}
       >
         <MessageCircle className="size-4" />
@@ -108,12 +119,12 @@ export default function ProductCard({ product, compact = false }) {
     </div>
   )
 
-  if (compact) {
+  if (featured) {
     return (
-      <article className="flex gap-4 overflow-hidden rounded-[1.25rem] border border-base-300/70 bg-white p-3 shadow-sm md:p-4">
+      <article className="card-lift flex h-full flex-col overflow-hidden rounded-[2rem] border-2 border-coral bg-white shadow-sm md:flex-row">
         <Link
           href={`/producto/${product.id}`}
-          className="relative block size-24 shrink-0 overflow-hidden rounded-2xl md:size-28"
+          className="relative block aspect-[4/3] md:w-[46%] md:shrink-0 md:self-stretch md:aspect-auto"
         >
           <ProductImage
             src={product.imageUrl}
@@ -121,39 +132,39 @@ export default function ProductCard({ product, compact = false }) {
             category={product.category}
             temporary={product.temporaryImage}
           />
+          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-coral px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cream">
+            <Star className="size-3.5" aria-hidden />
+            Producto protagonista
+          </span>
         </Link>
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-start justify-between gap-2">
-            <div>
-              <h3 className="font-display text-lg font-bold leading-tight text-deep md:text-xl">
-                <Link href={`/producto/${product.id}`} className="hover:text-sky">
-                  {product.name}
-                </Link>
-              </h3>
-              <p className="mt-1 text-sm text-deep/60">
-                {product.size}
-                {product.weight ? ` · ${product.weight}` : ""}
-              </p>
-            </div>
-            <p className="font-price text-lg font-bold text-deep">${price} MXN</p>
-          </div>
-          {product.featured && (
-            <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-coral/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-coral">
-              <Star className="size-3" aria-hidden />
-              Recomendado
-            </span>
-          )}
-          <div className="mt-3 space-y-2">
-            {variants}
-            {actions}
-          </div>
+        <div className="flex flex-1 flex-col p-6 md:p-7">
+          <p className={`font-display inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${theme.flavor}`}>
+            {product.flavor}
+          </p>
+          <h3 className="font-display mt-2 text-2xl font-bold text-deep md:text-3xl">
+            <Link href={`/producto/${product.id}`} className="hover:text-sky">
+              {product.name}
+            </Link>
+          </h3>
+          <p className="mt-3 text-sm leading-relaxed text-deep/70 md:text-base">
+            {product.description}
+          </p>
+          <p className="mt-4 text-sm text-deep/60">
+            {product.size}
+            {product.weight ? ` / ${product.weight}` : ""}
+          </p>
+          <p className="font-display mt-2 text-3xl font-bold text-deep">${price} MXN</p>
+          {variants && <div className="mt-4">{variants}</div>}
+          {actions}
         </div>
       </article>
     )
   }
 
   return (
-    <article className="card-lift flex flex-col overflow-hidden rounded-[2rem] border border-base-300/70 bg-white shadow-sm">
+    <article
+      className={`card-lift flex h-full flex-col overflow-hidden rounded-[2rem] border bg-white shadow-sm ${theme.border} ${theme.ring}`}
+    >
       <Link href={`/producto/${product.id}`} className="relative block aspect-[4/3]">
         <ProductImage
           src={product.imageUrl}
@@ -161,16 +172,10 @@ export default function ProductCard({ product, compact = false }) {
           category={product.category}
           temporary={product.temporaryImage}
         />
-        {product.featured && (
-          <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-coral px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cream">
-            <Star className="size-3.5" aria-hidden />
-            Producto protagonista
-          </span>
-        )}
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
-        <p className="font-ui text-xs font-bold uppercase tracking-wider text-sky">
+        <p className={`font-display inline-flex w-fit rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${theme.flavor}`}>
           {product.flavor}
         </p>
         <h3 className="font-display mt-1 text-xl font-bold text-deep">
@@ -185,7 +190,7 @@ export default function ProductCard({ product, compact = false }) {
           {product.size}
           {product.weight ? ` · ${product.weight}` : ""}
         </p>
-        <p className="font-price mt-2 text-2xl font-bold text-deep">${price} MXN</p>
+        <p className="font-display mt-2 text-2xl font-bold text-deep">${price} MXN</p>
         {variants && <div className="mt-4">{variants}</div>}
         {actions}
       </div>

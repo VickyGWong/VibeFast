@@ -17,7 +17,7 @@ export default function DeliverySection() {
   return (
     <section id="entrega" className="bg-yellow py-16 text-deep md:py-20">
       <div className="mx-auto max-w-6xl px-4">
-        <p className="font-ui text-xs font-bold uppercase tracking-[0.18em] text-deep/70">
+        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
           Entrega
         </p>
         <h2 className="font-display mt-3 text-3xl font-bold md:text-5xl">
