@@ -65,7 +65,7 @@ export default function Hero() {
           <div className="absolute inset-0 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-cream/20">
             <HeroImage
               src="/images/hero-fermentos.jpg"
-              alt="Botellas de fermentos artesanales The Good Co. en Chihuahua"
+              alt="Botellas de kombucha The Good Co. con sticker de mascota sobre mesa soleada"
             />
           </div>
           <div className="absolute -bottom-3 left-4 flex flex-wrap gap-2 md:left-6">
