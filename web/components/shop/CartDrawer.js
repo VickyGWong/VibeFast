@@ -3,12 +3,10 @@
 import Link from "next/link"
 import { Minus, Plus, ShoppingBag, X } from "lucide-react"
 import { useCart } from "@/lib/cart/CartProvider"
-import { formatPrice, getCartWhatsAppUrl } from "@/lib/whatsapp"
-import { trackWhatsAppGeneral } from "@/lib/analytics/track"
+import { formatPrice } from "@/lib/whatsapp"
 
 export default function CartDrawer() {
   const { items, count, totalCents, open, setOpen, updateQuantity, removeItem } = useCart()
-  const whatsappUrl = getCartWhatsAppUrl(items, totalCents)
 
   return (
     <>
@@ -113,24 +111,12 @@ export default function CartDrawer() {
               <span>Total</span>
               <span>${formatPrice(totalCents)} MXN</span>
             </div>
-            <p className="mt-2 text-xs text-deep/60">
-              Completa entrega, horario y pago en la página. WhatsApp es opcional.
-            </p>
             <Link
               href="/compra"
               className="btn mt-4 min-h-12 w-full rounded-full bg-coral font-display font-bold text-cream hover:bg-coral/90"
               onClick={() => setOpen(false)}
             >
               Continuar con la compra
-            </Link>
-            <Link
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn mt-2 min-h-11 w-full rounded-full border-deep/15 bg-white font-ui font-bold text-deep"
-              onClick={() => trackWhatsAppGeneral("cart_optional")}
-            >
-              Prefiero WhatsApp
             </Link>
           </div>
         )}
@@ -140,14 +126,13 @@ export default function CartDrawer() {
 }
 
 export function CartButton() {
-  const { count, setOpen } = useCart()
+  const { count } = useCart()
 
   return (
-    <button
-      type="button"
-      onClick={() => setOpen(true)}
+    <Link
+      href="/carrito"
       className="btn btn-ghost relative min-h-11 rounded-full px-3 text-deep"
-      aria-label={`Abrir pedido, ${count} productos`}
+      aria-label={`Abrir carrito, ${count} productos`}
     >
       <ShoppingBag className="size-5" />
       {count > 0 && (
@@ -155,6 +140,6 @@ export function CartButton() {
           {count}
         </span>
       )}
-    </button>
+    </Link>
   )
 }

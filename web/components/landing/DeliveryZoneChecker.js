@@ -82,10 +82,11 @@ export default function DeliveryZoneChecker() {
     <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
       <div className="rounded-[2rem] border border-deep/10 bg-cream p-6 shadow-sm md:p-8">
         <h3 className="font-display text-2xl font-bold text-deep md:text-3xl">
-          ¿Llegamos a tu colonia?
+          ¿Estás en nuestra ruta?
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-deep/70 md:text-base">
-          Entregamos hasta la puerta de tu casa. Porque tu comodidad también es parte del fermento.
+          Entregamos hasta la puerta de tu casa. Porque tu comodidad también es parte de nuestro
+          proceso.
         </p>
 
         <form onSubmit={handleCheck} className="mt-6 space-y-3">

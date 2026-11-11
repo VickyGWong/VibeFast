@@ -1,8 +1,21 @@
 import { promises as fs } from "fs"
 import path from "path"
 
-const STORE_DIR = path.join(process.cwd(), ".data")
-const STORE_FILE = path.join(STORE_DIR, "checkout-store.json")
+/**
+ * En Vercel / serverless el filesystem del proyecto es de solo lectura.
+ * Persistimos en /tmp (efímero por instancia) o en web/.data en local.
+ */
+function resolveStorePaths() {
+  const useTmp = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME)
+  if (useTmp) {
+    return {
+      dir: "/tmp",
+      file: path.join("/tmp", "tgc-checkout-store.json"),
+    }
+  }
+  const dir = path.join(process.cwd(), ".data")
+  return { dir, file: path.join(dir, "checkout-store.json") }
+}
 
 /**
  * @typedef {{
@@ -17,25 +30,32 @@ function emptyStore() {
 }
 
 async function ensureStore() {
-  await fs.mkdir(STORE_DIR, { recursive: true })
+  const { dir, file } = resolveStorePaths()
+  await fs.mkdir(dir, { recursive: true })
   try {
-    await fs.access(STORE_FILE)
+    await fs.access(file)
   } catch {
-    await fs.writeFile(STORE_FILE, JSON.stringify(emptyStore(), null, 2), "utf8")
+    await fs.writeFile(file, JSON.stringify(emptyStore(), null, 2), "utf8")
   }
 }
 
 /** @returns {Promise<CheckoutStore>} */
 export async function readStore() {
-  await ensureStore()
-  const raw = await fs.readFile(STORE_FILE, "utf8")
   try {
-    const parsed = JSON.parse(raw)
-    return {
-      orders: Array.isArray(parsed.orders) ? parsed.orders : [],
-      blockedSlots: Array.isArray(parsed.blockedSlots) ? parsed.blockedSlots : [],
+    await ensureStore()
+    const { file } = resolveStorePaths()
+    const raw = await fs.readFile(file, "utf8")
+    try {
+      const parsed = JSON.parse(raw)
+      return {
+        orders: Array.isArray(parsed.orders) ? parsed.orders : [],
+        blockedSlots: Array.isArray(parsed.blockedSlots) ? parsed.blockedSlots : [],
+      }
+    } catch {
+      return emptyStore()
     }
-  } catch {
+  } catch (error) {
+    console.warn("[checkout-store] read fallback", error?.message || error)
     return emptyStore()
   }
 }
@@ -43,7 +63,8 @@ export async function readStore() {
 /** @param {CheckoutStore} store */
 export async function writeStore(store) {
   await ensureStore()
-  await fs.writeFile(STORE_FILE, JSON.stringify(store, null, 2), "utf8")
+  const { file } = resolveStorePaths()
+  await fs.writeFile(file, JSON.stringify(store, null, 2), "utf8")
 }
 
 export async function listBlockedSlots() {
