@@ -144,7 +144,7 @@ const config = {
         },
         {
           q: "¿Hacen entregas en Chihuahua?",
-          a: "Sí, coordinamos entrega local en Chihuahua por WhatsApp. Si estás fuera de la ciudad, escríbenos y vemos opciones.",
+          a: "Sí, en Chihuahua capital. Desde el CP 31216: hasta 8 km es gratis; de 8.1 a 10 km cuesta $20; después sube $10 cada 5 km hasta los límites de la ciudad. Otras ciudades solo con entrega especial. Puedes consultar tu zona en la sección Entrega.",
         },
         {
           q: "¿Cuánto duran los fermentos?",
