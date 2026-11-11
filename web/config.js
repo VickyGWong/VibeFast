@@ -177,7 +177,7 @@ const config = {
         },
         {
           q: "¿Hacen entregas en Chihuahua?",
-          a: "Sí, en Chihuahua capital. Desde el CP 31216: hasta 5 km es gratis; de 5.1 a 8 km cuesta $15; de 8.1 a 10 km $20; después sube $10 cada 5 km hasta los límites de la ciudad. Otras ciudades solo con entrega especial. Puedes consultar tu zona en la sección Entrega.",
+          a: "Sí, en Chihuahua capital. Entregamos hasta la puerta de tu casa: consulta tu colonia en la sección Entrega para ver si aplica envío gratis o el cargo de tu zona. Otras ciudades solo con entrega especial.",
         },
         {
           q: "¿Cuánto duran los fermentos?",
