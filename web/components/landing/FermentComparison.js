@@ -1,7 +1,7 @@
 const rows = [
   {
     trait: "Textura",
-    kefir: "Cremosa, tipo yogurt bebible",
+    kefir: "Cremosa, tipo yogurt griego",
     kombucha: "Burbujeante, ligera",
     tibicos: "Muy ligera, refrescante",
   },

@@ -5,7 +5,7 @@ import { getProductWhatsAppUrl } from "@/lib/whatsapp"
 import { products } from "@/data/products"
 
 const attributes = [
-  "Consistencia cremosa y textura tipo yogurt griego, suave y bebible.",
+  "Consistencia cremosa y textura tipo yogurt griego.",
   "Elaborado con leche entera adicionada con vitaminas, libre de hormonas, con certificación Kosher, y búlgaros vivos.",
   "Naturalmente bajo en lactosa.",
   "Sin conservadores.",

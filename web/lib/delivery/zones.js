@@ -3,7 +3,8 @@
  * Centro operativo: CP 31216 (Municipio de Chihuahua).
  *
  * Tarifas (km en línea recta desde el centro):
- * - 0–8 km → gratis
+ * - 0–5 km → gratis
+ * - 5.1–8 km → $15
  * - 8.1–10 km → $20
  * - 10.1–15 → $30, 15.1–20 → $40, … (+$10 cada 5 km)
  * Más allá del límite urbano → sin entrega regular.
@@ -24,13 +25,14 @@ export const MAX_CITY_RADIUS_KM = 40
 
 /** Anillos visibles en el mapa (km → cargo MXN). */
 export const DELIVERY_RINGS = [
-  { km: 8, fee: 0, label: "Gratis", color: "#16a34a", fillOpacity: 0.12 },
-  { km: 10, fee: 20, label: "$20", color: "#ffb636", fillOpacity: 0.1 },
-  { km: 15, fee: 30, label: "$30", color: "#fb6a40", fillOpacity: 0.08 },
-  { km: 20, fee: 40, label: "$40", color: "#fb6a40", fillOpacity: 0.07 },
-  { km: 25, fee: 50, label: "$50", color: "#ff4a4a", fillOpacity: 0.06 },
-  { km: 30, fee: 60, label: "$60", color: "#ff4a4a", fillOpacity: 0.05 },
-  { km: 35, fee: 70, label: "$70", color: "#1b4268", fillOpacity: 0.05 },
+  { km: 5, fee: 0, label: "Gratis", color: "#16a34a", fillOpacity: 0.14 },
+  { km: 8, fee: 15, label: "$15", color: "#ffb636", fillOpacity: 0.1 },
+  { km: 10, fee: 20, label: "$20", color: "#fb6a40", fillOpacity: 0.08 },
+  { km: 15, fee: 30, label: "$30", color: "#fb6a40", fillOpacity: 0.07 },
+  { km: 20, fee: 40, label: "$40", color: "#ff4a4a", fillOpacity: 0.06 },
+  { km: 25, fee: 50, label: "$50", color: "#ff4a4a", fillOpacity: 0.05 },
+  { km: 30, fee: 60, label: "$60", color: "#1b4268", fillOpacity: 0.05 },
+  { km: 35, fee: 70, label: "$70", color: "#1b4268", fillOpacity: 0.04 },
   { km: 40, fee: 80, label: "Hasta $80", color: "#1b4268", fillOpacity: 0.04 },
 ]
 
@@ -84,13 +86,23 @@ export function quoteDeliveryFee(distanceKm) {
     }
   }
 
-  if (distanceKm <= 8) {
+  if (distanceKm <= 5) {
     return {
       deliverable: true,
       feeCents: 0,
       feeLabel: "Gratis",
       status: "free",
       message: "¡Estás en zona de entrega a domicilio gratuita!",
+    }
+  }
+
+  if (distanceKm <= 8) {
+    return {
+      deliverable: true,
+      feeCents: 1500,
+      feeLabel: "$15 MXN",
+      status: "paid",
+      message: "Entregamos a tu zona con un cargo de $15 MXN sobre el total del pedido.",
     }
   }
 

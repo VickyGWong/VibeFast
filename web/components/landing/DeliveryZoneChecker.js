@@ -88,9 +88,9 @@ export default function DeliveryZoneChecker() {
           ¿Llegamos gratis a tu colonia?
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-deep/70 md:text-base">
-          Calculamos la distancia desde nuestro centro en CP <strong>31216</strong>. Hasta 8 km la
-          entrega es gratuita; después aplica un cargo según el radio. Solo Chihuahua capital por
-          ahora.
+          Calculamos la distancia desde nuestro centro en CP <strong>31216</strong>. Hasta 5 km la
+          entrega es gratuita; de 5.1 a 8 km suma $15 y después aplica el cargo según el radio. Solo
+          Chihuahua capital por ahora.
         </p>
 
         <form onSubmit={handleCheck} className="mt-6 space-y-3">
@@ -182,9 +182,9 @@ export default function DeliveryZoneChecker() {
         <div className="mt-6 rounded-2xl bg-white/70 p-4 text-sm text-deep/70">
           <p className="font-display font-bold text-deep">Cómo se cobra</p>
           <ul className="mt-2 space-y-1.5">
-            <li>• 0 a 8 km → entrega gratuita</li>
-            <li>• 8.1 a 10 km → $20</li>
-            <li>• 10.1 a 15 km → $30 · luego +$10 cada 5 km</li>
+            <li>• 0 a 5 km → entrega gratuita</li>
+            <li>• 5.1 a 8 km → $15</li>
+            <li>• 8.1 a 10 km → $20 · luego +$10 cada 5 km</li>
             <li>• Hasta ~40 km (límites de ciudad) · fuera = entrega especial</li>
           </ul>
         </div>
