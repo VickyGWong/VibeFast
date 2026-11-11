@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
-import { DELIVERY_HUB, DELIVERY_RINGS, MAX_CITY_RADIUS_KM } from "@/lib/delivery/zones"
+import { DELIVERY_HUB, DELIVERY_RINGS } from "@/lib/delivery/zones"
 
 /**
  * @param {{
@@ -158,23 +158,19 @@ export default function DeliveryMap({ destination = null, status = "idle" }) {
         ref={containerRef}
         className="h-72 w-full md:h-[22rem]"
         role="img"
-        aria-label={`Mapa de zonas de entrega desde ${DELIVERY_HUB.label}, hasta ${MAX_CITY_RADIUS_KM} km`}
+        aria-label={`Mapa de zonas de entrega The Good Co. desde ${DELIVERY_HUB.label}`}
       />
       <div className="flex flex-wrap gap-3 border-t border-deep/10 bg-white px-4 py-3 text-xs text-deep/70">
-        {DELIVERY_RINGS.slice(0, 5).map((ring) => (
+        {DELIVERY_RINGS.map((ring) => (
           <span key={ring.km} className="inline-flex items-center gap-1.5">
             <span
               className="size-2.5 rounded-full"
               style={{ backgroundColor: ring.color }}
               aria-hidden
             />
-            ≤ {ring.km} km · {ring.label}
+            {ring.label}
           </span>
         ))}
-        <span className="inline-flex items-center gap-1.5">
-          <span className="size-2.5 rounded-full bg-deep" aria-hidden />
-          Hasta {MAX_CITY_RADIUS_KM} km · límites de ciudad
-        </span>
       </div>
     </div>
   )
