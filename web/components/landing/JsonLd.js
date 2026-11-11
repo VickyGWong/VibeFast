@@ -33,7 +33,9 @@ export default function JsonLd({ products }) {
       "@type": "Offer",
       price: formatPrice(product.priceCents),
       priceCurrency: product.currency,
-      availability: "https://schema.org/InStock",
+      availability: product.comingSoon
+        ? "https://schema.org/PreOrder"
+        : "https://schema.org/InStock",
       url: `https://${config.app.domain}/#productos`,
     },
   }))

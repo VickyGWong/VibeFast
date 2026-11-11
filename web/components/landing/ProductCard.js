@@ -8,6 +8,7 @@ import ProductImage from "@/components/landing/ProductImage"
 import AddToCartButton from "@/components/shop/AddToCartButton"
 import { formatPrice, getProductWhatsAppUrl } from "@/lib/whatsapp"
 import { getCheckoutUrl, hasOnlineCheckout } from "@/lib/payments/checkout"
+import { isSizeVariant, resolvePriceCents, resolveSize } from "@/lib/products/pricing"
 import {
   trackBeginCheckout,
   trackVariantSelect,
@@ -40,20 +41,23 @@ export default function ProductCard({ product, featured = false }) {
     product.variants[0] ?? null
   )
 
-  const price = formatPrice(product.priceCents)
+  const price = formatPrice(resolvePriceCents(product, selectedVariant))
+  const size = resolveSize(product, selectedVariant)
   const whatsappUrl = getProductWhatsAppUrl(product, selectedVariant)
   const checkoutUrl = getCheckoutUrl(product, selectedVariant)
   const onlineAvailable = hasOnlineCheckout(product, selectedVariant)
   const paymentsEnabled = config.features.payments && config.payments?.enabled
   const theme = categoryTheme[product.category] ?? categoryTheme.kefir
+  const comingSoon = Boolean(product.comingSoon)
+  const usesSizeVariants = product.variants.some((variant) => isSizeVariant(variant))
 
   function handleVariantSelect(variant) {
     setSelectedVariant(variant)
     trackVariantSelect(product.id, variant.id)
   }
 
-  const variants = product.variants.length > 0 && (
-    <div className="flex flex-wrap gap-2" role="group" aria-label="Variante">
+  const variants = !comingSoon && product.variants.length > 0 && (
+    <div className="flex flex-wrap gap-2" role="group" aria-label={usesSizeVariants ? "Presentación" : "Variante"}>
       {product.variants.map((variant) => {
         const pressed = selectedVariant?.id === variant.id
         return (
@@ -69,13 +73,20 @@ export default function ProductCard({ product, featured = false }) {
             }`}
           >
             {variant.label}
+            {typeof variant.priceCents === "number" ? ` · $${formatPrice(variant.priceCents)}` : ""}
           </button>
         )
       })}
     </div>
   )
 
-  const actions = (
+  const actions = comingSoon ? (
+    <div className="mt-5">
+      <p className="rounded-full bg-deep/10 px-4 py-3 text-center font-ui text-sm font-bold uppercase tracking-wide text-deep">
+        Próximamente
+      </p>
+    </div>
+  ) : (
     <div className="mt-5 flex flex-col gap-2">
       <AddToCartButton
         product={product}
@@ -121,7 +132,7 @@ export default function ProductCard({ product, featured = false }) {
 
   if (featured) {
     return (
-      <article className="card-lift flex h-full flex-col overflow-hidden rounded-[2rem] border-2 border-coral bg-white shadow-sm md:flex-row">
+      <article className={`card-lift flex h-full flex-col overflow-hidden rounded-[2rem] border-2 border-coral bg-white shadow-sm md:flex-row ${comingSoon ? "opacity-95" : ""}`}>
         <Link
           href={`/producto/${product.id}`}
           className="relative block aspect-[4/3] md:w-[46%] md:shrink-0 md:self-stretch md:aspect-auto"
@@ -136,6 +147,11 @@ export default function ProductCard({ product, featured = false }) {
             <Star className="size-3.5" aria-hidden />
             Producto protagonista
           </span>
+          {comingSoon && (
+            <span className="absolute right-3 top-3 rounded-full bg-deep px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cream">
+              Próximamente
+            </span>
+          )}
         </Link>
         <div className="flex flex-1 flex-col p-6 md:p-7">
           <p className={`font-display inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] ${theme.flavor}`}>
@@ -149,11 +165,15 @@ export default function ProductCard({ product, featured = false }) {
           <p className="mt-3 text-sm leading-relaxed text-deep/70 md:text-base">
             {product.description}
           </p>
-          <p className="mt-4 text-sm text-deep/60">
-            {product.size}
-            {product.weight ? ` / ${product.weight}` : ""}
+          {!comingSoon && (
+            <p className="mt-4 text-sm text-deep/60">
+              {size}
+              {product.weight ? ` / ${product.weight}` : ""}
+            </p>
+          )}
+          <p className="font-display mt-2 text-3xl font-bold text-deep">
+            {comingSoon ? "Próximamente" : `$${price} MXN`}
           </p>
-          <p className="font-display mt-2 text-3xl font-bold text-deep">${price} MXN</p>
           {variants && <div className="mt-4">{variants}</div>}
           {actions}
         </div>
@@ -163,7 +183,7 @@ export default function ProductCard({ product, featured = false }) {
 
   return (
     <article
-      className={`card-lift flex h-full flex-col overflow-hidden rounded-[2rem] border bg-white shadow-sm ${theme.border} ${theme.ring}`}
+      className={`card-lift flex h-full flex-col overflow-hidden rounded-[2rem] border bg-white shadow-sm ${theme.border} ${comingSoon ? "" : theme.ring}`}
     >
       <Link href={`/producto/${product.id}`} className="relative block aspect-[4/3]">
         <ProductImage
@@ -172,6 +192,11 @@ export default function ProductCard({ product, featured = false }) {
           category={product.category}
           temporary={product.temporaryImage}
         />
+        {comingSoon && (
+          <span className="absolute left-3 top-3 rounded-full bg-deep px-3 py-1 text-[11px] font-bold uppercase tracking-wide text-cream">
+            Próximamente
+          </span>
+        )}
       </Link>
 
       <div className="flex flex-1 flex-col p-5">
@@ -186,11 +211,15 @@ export default function ProductCard({ product, featured = false }) {
         <p className="mt-2 flex-1 text-sm leading-relaxed text-deep/70">
           {product.description}
         </p>
-        <p className="mt-3 text-sm text-deep/60">
-          {product.size}
-          {product.weight ? ` · ${product.weight}` : ""}
+        {!comingSoon && (
+          <p className="mt-3 text-sm text-deep/60">
+            {size}
+            {product.weight ? ` · ${product.weight}` : ""}
+          </p>
+        )}
+        <p className="font-display mt-2 text-2xl font-bold text-deep">
+          {comingSoon ? "Próximamente" : `$${price} MXN`}
         </p>
-        <p className="font-display mt-2 text-2xl font-bold text-deep">${price} MXN</p>
         {variants && <div className="mt-4">{variants}</div>}
         {actions}
       </div>

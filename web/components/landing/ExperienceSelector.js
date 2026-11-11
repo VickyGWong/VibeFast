@@ -34,8 +34,13 @@ export default function ExperienceSelector({ onSelect }) {
               key={option.id}
               type="button"
               onClick={() => handleSelect(option.category)}
-              className={`card-lift flex min-h-44 flex-col justify-between rounded-[2rem] p-7 text-left transition ${accentClasses[option.accent]}`}
+              className={`card-lift relative flex min-h-44 flex-col justify-between rounded-[2rem] p-7 text-left transition ${accentClasses[option.accent]}`}
             >
+              {option.comingSoon && (
+                <span className="absolute right-4 top-4 rounded-full bg-cream/95 px-3 py-1 font-ui text-[11px] font-bold uppercase tracking-wide text-deep">
+                  Próximamente
+                </span>
+              )}
               <div>
                 <p className="font-display text-2xl font-bold leading-tight md:text-[1.7rem]">
                   {option.title}
