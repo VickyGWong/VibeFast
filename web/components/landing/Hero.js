@@ -73,7 +73,7 @@ export default function Hero() {
               Kombucha
             </span>
             <span className="rounded-full bg-cream px-4 py-2 font-display text-sm font-bold text-deep shadow-md">
-              Tíbicos
+              Tíbicos · Próximamente
             </span>
           </div>
         </div>

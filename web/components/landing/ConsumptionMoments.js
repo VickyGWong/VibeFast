@@ -10,7 +10,7 @@ const moments = [
   },
   {
     title: "Tarde con calor",
-    body: "Puedes probar tíbicos bien fríos después de moverte o en la terraza. Ligero, frutal y refrescante — si ese es tu momento.",
+    body: "Pronto: tíbicos bien fríos después de moverte o en la terraza. Ligero, frutal y refrescante — por ahora sigue con kombucha mientras llegan.",
     accent: "bg-orange/15 text-orange",
     image: "/images/textura-fermento.jpg",
     alt: "Textura viva y ámbar de un fermento The Good Co.",

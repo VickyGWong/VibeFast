@@ -1,4 +1,5 @@
 import config from "@/config"
+import { isSizeVariant, resolvePriceCents, resolveSize } from "@/lib/products/pricing"
 
 /**
  * @param {number} priceCents
@@ -9,14 +10,16 @@ export function formatPrice(priceCents) {
 
 /**
  * @param {import('@/data/products').Product} product
- * @param {{ messageLabel?: string } | null} [variant]
+ * @param {import('@/data/products').ProductVariant | null} [variant]
  * @param {number} [quantity]
  */
 export function buildProductWhatsAppMessage(product, variant = null, quantity = 1) {
-  const price = formatPrice(product.priceCents)
-  const variantText = variant?.messageLabel ? ` ${variant.messageLabel}` : ""
+  const price = formatPrice(resolvePriceCents(product, variant))
+  const size = resolveSize(product, variant)
+  const variantText =
+    variant?.messageLabel && !isSizeVariant(variant) ? ` ${variant.messageLabel}` : ""
   const qtyText = quantity > 1 ? `${quantity}x ` : ""
-  return `Hola, vi la página de The Good Co. y quiero pedir ${qtyText}${product.whatsappName}${variantText}, presentación de ${product.size}, con precio de $${price} MXN c/u. ¿Tienen disponibilidad y me ayudan a coordinar entrega?`
+  return `Hola, vi la página de The Good Co. y quiero pedir ${qtyText}${product.whatsappName}${variantText}, presentación de ${size}, con precio de $${price} MXN c/u. ¿Tienen disponibilidad y me ayudan a coordinar entrega?`
 }
 
 /**
@@ -45,7 +48,7 @@ export function buildWhatsAppUrl(message) {
 
 /**
  * @param {import('@/data/products').Product} product
- * @param {{ messageLabel?: string } | null} [variant]
+ * @param {import('@/data/products').ProductVariant | null} [variant]
  * @param {number} [quantity]
  */
 export function getProductWhatsAppUrl(product, variant = null, quantity = 1) {

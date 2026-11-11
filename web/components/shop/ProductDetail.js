@@ -9,6 +9,7 @@ import AddToCartButton from "@/components/shop/AddToCartButton"
 import { categoryDetails, categoryLabels } from "@/data/products"
 import { formatPrice, getProductWhatsAppUrl } from "@/lib/whatsapp"
 import { getCheckoutUrl, hasOnlineCheckout } from "@/lib/payments/checkout"
+import { isSizeVariant, resolvePriceCents, resolveSize } from "@/lib/products/pricing"
 import { trackBeginCheckout, trackVariantSelect, trackWhatsAppProduct } from "@/lib/analytics/track"
 
 /**
@@ -18,11 +19,14 @@ export default function ProductDetail({ product, related }) {
   const [selectedVariant, setSelectedVariant] = useState(product.variants[0] ?? null)
   const [quantity, setQuantity] = useState(1)
   const details = categoryDetails[product.category]
-  const price = formatPrice(product.priceCents)
+  const price = formatPrice(resolvePriceCents(product, selectedVariant))
+  const size = resolveSize(product, selectedVariant)
   const whatsappUrl = getProductWhatsAppUrl(product, selectedVariant, quantity)
   const checkoutUrl = getCheckoutUrl(product, selectedVariant)
   const onlineAvailable = hasOnlineCheckout(product, selectedVariant)
   const paymentsEnabled = config.features.payments && config.payments?.enabled
+  const comingSoon = Boolean(product.comingSoon)
+  const usesSizeVariants = product.variants.some((variant) => isSizeVariant(variant))
 
   return (
     <section className="bg-cream py-10 md:py-16">
@@ -40,6 +44,11 @@ export default function ProductDetail({ product, related }) {
               category={product.category}
               temporary={product.temporaryImage}
             />
+            {comingSoon && (
+              <span className="absolute left-4 top-4 rounded-full bg-deep px-4 py-2 text-xs font-bold uppercase tracking-wide text-cream">
+                Próximamente
+              </span>
+            )}
           </div>
 
           <div>
@@ -48,15 +57,21 @@ export default function ProductDetail({ product, related }) {
             </p>
             <h1 className="font-display mt-3 text-4xl font-bold text-deep md:text-5xl">{product.name}</h1>
             <p className="mt-4 text-lg leading-relaxed text-deep/75">{product.description}</p>
-            <p className="mt-3 text-sm text-deep/60">
-              {product.size}
-              {product.weight ? ` · ${product.weight}` : ""}
+            {!comingSoon && (
+              <p className="mt-3 text-sm text-deep/60">
+                {size}
+                {product.weight ? ` · ${product.weight}` : ""}
+              </p>
+            )}
+            <p className="font-display mt-4 text-3xl font-bold text-deep">
+              {comingSoon ? "Próximamente" : `$${price} MXN`}
             </p>
-            <p className="font-display mt-4 text-3xl font-bold text-deep">${price} MXN</p>
 
-            {product.variants.length > 0 && (
+            {!comingSoon && product.variants.length > 0 && (
               <div className="mt-6">
-                <p className="font-display text-sm font-bold text-deep">Variante</p>
+                <p className="font-display text-sm font-bold text-deep">
+                  {usesSizeVariants ? "Presentación" : "Variante"}
+                </p>
                 <div className="mt-2 flex flex-wrap gap-2">
                   {product.variants.map((variant) => {
                     const pressed = selectedVariant?.id === variant.id
@@ -76,6 +91,9 @@ export default function ProductDetail({ product, related }) {
                         }`}
                       >
                         {variant.label}
+                        {typeof variant.priceCents === "number"
+                          ? ` · $${formatPrice(variant.priceCents)}`
+                          : ""}
                       </button>
                     )
                   })}
@@ -83,53 +101,63 @@ export default function ProductDetail({ product, related }) {
               </div>
             )}
 
-            <div className="mt-6">
-              <p className="font-display text-sm font-bold text-deep">Cantidad</p>
-              <div className="mt-2 inline-flex items-center rounded-full border border-base-300 bg-white">
-                <button
-                  type="button"
-                  className="flex size-11 items-center justify-center"
-                  onClick={() => setQuantity((value) => Math.max(1, value - 1))}
-                  aria-label="Quitar una"
-                >
-                  <Minus className="size-4" />
-                </button>
-                <span className="min-w-8 text-center font-display font-bold">{quantity}</span>
-                <button
-                  type="button"
-                  className="flex size-11 items-center justify-center"
-                  onClick={() => setQuantity((value) => value + 1)}
-                  aria-label="Agregar una"
-                >
-                  <Plus className="size-4" />
-                </button>
+            {!comingSoon && (
+              <div className="mt-6">
+                <p className="font-display text-sm font-bold text-deep">Cantidad</p>
+                <div className="mt-2 inline-flex items-center rounded-full border border-base-300 bg-white">
+                  <button
+                    type="button"
+                    className="flex size-11 items-center justify-center"
+                    onClick={() => setQuantity((value) => Math.max(1, value - 1))}
+                    aria-label="Quitar una"
+                  >
+                    <Minus className="size-4" />
+                  </button>
+                  <span className="min-w-8 text-center font-display font-bold">{quantity}</span>
+                  <button
+                    type="button"
+                    className="flex size-11 items-center justify-center"
+                    onClick={() => setQuantity((value) => value + 1)}
+                    aria-label="Agregar una"
+                  >
+                    <Plus className="size-4" />
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="mt-6 flex flex-col gap-2">
-              <AddToCartButton product={product} variant={selectedVariant} quantity={quantity} />
-              {paymentsEnabled && onlineAvailable && (
-                <Link
-                  href={checkoutUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary min-h-11 gap-2 rounded-full font-display font-bold"
-                  onClick={() => trackBeginCheckout(product, selectedVariant)}
-                >
-                  <CreditCard className="size-5" />
-                  Comprar esta botella en línea
-                </Link>
+              {comingSoon ? (
+                <p className="rounded-full bg-deep/10 px-4 py-3 text-center font-ui text-sm font-bold uppercase tracking-wide text-deep">
+                  Próximamente
+                </p>
+              ) : (
+                <>
+                  <AddToCartButton product={product} variant={selectedVariant} quantity={quantity} />
+                  {paymentsEnabled && onlineAvailable && (
+                    <Link
+                      href={checkoutUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-primary min-h-11 gap-2 rounded-full font-display font-bold"
+                      onClick={() => trackBeginCheckout(product, selectedVariant)}
+                    >
+                      <CreditCard className="size-5" />
+                      Comprar esta botella en línea
+                    </Link>
+                  )}
+                  <Link
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline min-h-11 gap-2 rounded-full border-deep/20 font-display font-bold text-deep"
+                    onClick={() => trackWhatsAppProduct(product, selectedVariant)}
+                  >
+                    <MessageCircle className="size-5" />
+                    Pedir solo este por WhatsApp
+                  </Link>
+                </>
               )}
-              <Link
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-outline min-h-11 gap-2 rounded-full border-deep/20 font-display font-bold text-deep"
-                onClick={() => trackWhatsAppProduct(product, selectedVariant)}
-              >
-                <MessageCircle className="size-5" />
-                Pedir solo este por WhatsApp
-              </Link>
             </div>
 
             {details && (
@@ -158,7 +186,11 @@ export default function ProductDetail({ product, related }) {
                 >
                   <p className="text-xs font-bold uppercase tracking-wider text-sky">{item.flavor}</p>
                   <p className="font-display mt-1 text-lg font-bold text-deep">{item.name}</p>
-                  <p className="mt-1 text-sm text-deep/60">${formatPrice(item.priceCents)} MXN</p>
+                  <p className="mt-1 text-sm text-deep/60">
+                    {item.comingSoon
+                      ? "Próximamente"
+                      : `$${formatPrice(item.priceCents)} MXN`}
+                  </p>
                 </Link>
               ))}
             </div>
