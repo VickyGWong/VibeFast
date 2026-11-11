@@ -36,6 +36,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# Checkout local store (orders + availability blocks)
+web/.data/
+
 # Vercel
 .vercel
 

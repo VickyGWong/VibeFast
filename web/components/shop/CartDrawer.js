@@ -8,7 +8,7 @@ import { trackWhatsAppGeneral } from "@/lib/analytics/track"
 
 export default function CartDrawer() {
   const { items, count, totalCents, open, setOpen, updateQuantity, removeItem } = useCart()
-  const checkoutUrl = getCartWhatsAppUrl(items, totalCents)
+  const whatsappUrl = getCartWhatsAppUrl(items, totalCents)
 
   return (
     <>
@@ -114,16 +114,23 @@ export default function CartDrawer() {
               <span>${formatPrice(totalCents)} MXN</span>
             </div>
             <p className="mt-2 text-xs text-deep/60">
-              Coordinamos zona, horario y pago por WhatsApp. Los productos viajan refrigerados.
+              Completa entrega, horario y pago en la página. WhatsApp es opcional.
             </p>
             <Link
-              href={checkoutUrl}
+              href="/compra"
+              className="btn mt-4 min-h-12 w-full rounded-full bg-coral font-display font-bold text-cream hover:bg-coral/90"
+              onClick={() => setOpen(false)}
+            >
+              Continuar con la compra
+            </Link>
+            <Link
+              href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn mt-4 min-h-12 w-full rounded-full bg-coral font-display font-bold text-cream hover:bg-coral/90"
-              onClick={() => trackWhatsAppGeneral("cart")}
+              className="btn mt-2 min-h-11 w-full rounded-full border-deep/15 bg-white font-ui font-bold text-deep"
+              onClick={() => trackWhatsAppGeneral("cart_optional")}
             >
-              Confirmar pedido por WhatsApp
+              Prefiero WhatsApp
             </Link>
           </div>
         )}

@@ -67,6 +67,39 @@ const config = {
     },
   },
 
+  // Checkout on-site: entrega/recolección, horarios y métodos de pago locales.
+  checkout: {
+    timezone: "America/Chihuahua",
+    slotMinutes: 60,
+    horizonDays: 14,
+    // 0 = domingo … 6 = sábado
+    windows: {
+      0: { start: "12:00", end: "17:00" },
+      1: { start: "07:00", end: "20:00" },
+      2: { start: "07:00", end: "20:00" },
+      3: { start: "07:00", end: "20:00" },
+      4: { start: "07:00", end: "20:00" },
+      5: { start: "07:00", end: "20:00" },
+      6: { start: "09:00", end: "20:00" },
+    },
+    pickup: {
+      label: "Punto de entrega The Good Co.",
+      address: "Chihuahua, Chih. · CP 31216 (te confirmamos la ubicación exacta al agendar)",
+      notes: "Lleva tu número de pedido. El producto va refrigerado.",
+    },
+    bankTransfer: {
+      bank: "BBVA",
+      holder: "The Good Co.",
+      clabe: "012180001234567890",
+      conceptHint: "Usa tu número de pedido como concepto",
+    },
+    oxxo: {
+      enabled: true,
+      instructions:
+        "Te generamos una referencia para pagar en Oxxo. El pedido se prepara al confirmar el pago (hasta 24–48 h hábiles).",
+    },
+  },
+
   ai: {
     chatModel: "gpt-4o-mini",
     structuredModel: "gpt-4o-mini",
@@ -126,7 +159,7 @@ const config = {
         {
           number: "03",
           title: "Confirma",
-          body: "Recibe confirmación de pago y recibe en casa. O elige la zona y hora de entrega y paga por WhatsApp.",
+          body: "Completa entrega o recolección, agenda horario y paga por SPEI, Oxxo o al recibir — todo en la página. WhatsApp solo si lo prefieres.",
         },
       ],
     },
