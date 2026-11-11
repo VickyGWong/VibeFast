@@ -79,18 +79,13 @@ export default function DeliveryZoneChecker() {
     : null
 
   return (
-    <div className="mt-12 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+    <div className="mt-10 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
       <div className="rounded-[2rem] border border-deep/10 bg-cream p-6 shadow-sm md:p-8">
-        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
-          Revisa tu zona
-        </p>
-        <h3 className="font-display mt-3 text-2xl font-bold text-deep md:text-3xl">
-          ¿Llegamos gratis a tu colonia?
+        <h3 className="font-display text-2xl font-bold text-deep md:text-3xl">
+          ¿Llegamos a tu colonia?
         </h3>
         <p className="mt-3 text-sm leading-relaxed text-deep/70 md:text-base">
-          Calculamos la distancia desde nuestro centro en CP <strong>31216</strong>. Hasta 5 km la
-          entrega es gratuita; de 5.1 a 8 km suma $15 y después aplica el cargo según el radio. Solo
-          Chihuahua capital por ahora.
+          Entregamos hasta la puerta de tu casa. Porque tu comodidad también es parte del fermento.
         </p>
 
         <form onSubmit={handleCheck} className="mt-6 space-y-3">
@@ -118,7 +113,7 @@ export default function DeliveryZoneChecker() {
               {loading ? (
                 <>
                   <Loader2 className="size-4 animate-spin" />
-                  Calculando
+                  Consultando
                 </>
               ) : (
                 <>
@@ -140,12 +135,6 @@ export default function DeliveryZoneChecker() {
           <div className={`mt-5 rounded-2xl border px-4 py-4 ${statusStyles[quote.status]}`}>
             <p className="font-display text-lg font-bold">{quote.message}</p>
             <dl className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-              {result.distanceKm != null && (
-                <div>
-                  <dt className="text-deep/60">Distancia estimada</dt>
-                  <dd className="font-ui font-bold">{result.distanceKm} km</dd>
-                </div>
-              )}
               <div>
                 <dt className="text-deep/60">Cargo de entrega</dt>
                 <dd className="font-ui font-bold">{quote.feeLabel}</dd>
@@ -172,22 +161,11 @@ export default function DeliveryZoneChecker() {
             )}
             {quote.deliverable && (
               <p className="mt-4 text-xs leading-relaxed text-deep/65">
-                La distancia es aproximada en línea recta desde el CP 31216. Al confirmar tu pedido por
-                WhatsApp afinamos colonia, horario y el cargo final si aplica.
+                Al confirmar tu pedido afinamos colonia, horario y el cargo final si aplica.
               </p>
             )}
           </div>
         )}
-
-        <div className="mt-6 rounded-2xl bg-white/70 p-4 text-sm text-deep/70">
-          <p className="font-display font-bold text-deep">Cómo se cobra</p>
-          <ul className="mt-2 space-y-1.5">
-            <li>• 0 a 5 km → entrega gratuita</li>
-            <li>• 5.1 a 8 km → $15</li>
-            <li>• 8.1 a 10 km → $20 · luego +$10 cada 5 km</li>
-            <li>• Hasta ~40 km (límites de ciudad) · fuera = entrega especial</li>
-          </ul>
-        </div>
       </div>
 
       <DeliveryMap destination={destination} status={quote?.status || "idle"} />
