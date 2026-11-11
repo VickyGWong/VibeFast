@@ -5,7 +5,7 @@ import { getProductWhatsAppUrl } from "@/lib/whatsapp"
 import { products } from "@/data/products"
 
 const attributes = [
-  "Consistencia cremosa y textura tipo yogurt griego, suave y bebible.",
+  "Consistencia cremosa y textura tipo yogurt griego.",
   "Elaborado con leche entera adicionada con vitaminas, libre de hormonas, con certificación Kosher, y búlgaros vivos.",
   "Naturalmente bajo en lactosa.",
   "Sin conservadores.",
@@ -21,9 +21,10 @@ export default function KefirSpotlight() {
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 md:grid-cols-2">
         <div className="relative aspect-square overflow-hidden rounded-[2rem] shadow-xl">
           <ProductImage
-            src="/images/kefir-natural.jpg"
-            alt="Kéfir natural artesanal The Good Co. en botella de 500 ml"
+            src="/images/kefir-lineup.jpg"
+            alt="Línea de kéfir The Good Co. en sabores natural, mango y fresa"
             category="kefir"
+            temporary={false}
           />
         </div>
         <div>

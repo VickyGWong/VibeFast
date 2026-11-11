@@ -1,3 +1,5 @@
+import DeliveryZoneChecker from "@/components/landing/DeliveryZoneChecker"
+
 const zones = [
   {
     title: "Entrega en casa",
@@ -24,8 +26,8 @@ export default function DeliverySection() {
           Cómo llega a tu refri
         </h2>
         <p className="mt-4 max-w-2xl text-deep/75">
-          Hoy entregamos en Chihuahua. Tú eliges la zona y la hora; nosotros armamos el pedido y te
-          confirmamos por WhatsApp.
+          Hoy entregamos en Chihuahua capital. Consulta tu CP o colonia para ver si entras en zona
+          gratuita o cuánto suma el envío; luego afinamos horario por WhatsApp.
         </p>
 
         <div className="mt-10 grid gap-4 md:grid-cols-3">
@@ -36,6 +38,8 @@ export default function DeliverySection() {
             </article>
           ))}
         </div>
+
+        <DeliveryZoneChecker />
       </div>
     </section>
   )

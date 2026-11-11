@@ -1,7 +1,7 @@
 const rows = [
   {
     trait: "Textura",
-    kefir: "Cremosa, tipo yogurt bebible",
+    kefir: "Cremosa, tipo yogurt griego",
     kombucha: "Burbujeante, ligera",
     tibicos: "Muy ligera, refrescante",
   },
@@ -48,7 +48,12 @@ export default function FermentComparison() {
                 <th className="bg-cream/10 p-4 font-display font-bold">Característica</th>
                 <th className="bg-sky p-4 font-display font-bold text-cream">Kéfir</th>
                 <th className="bg-yellow p-4 font-display font-bold text-deep">Kombucha</th>
-                <th className="bg-orange p-4 font-display font-bold text-cream">Tíbicos</th>
+                <th className="bg-orange p-4 font-display font-bold text-cream">
+                  Tíbicos
+                  <span className="mt-1 block text-[11px] font-ui font-bold uppercase tracking-wide text-cream/85">
+                    Próximamente
+                  </span>
+                </th>
               </tr>
             </thead>
             <tbody>

@@ -47,7 +47,7 @@ export default function LandingCatalog({ products }) {
     { id: "all", label: "Todos", active: "border-deep bg-deep text-cream", idle: "border-deep/25 bg-white text-deep" },
     { id: "kefir", label: categoryLabels.kefir, active: "border-sky bg-sky text-cream", idle: "border-sky/40 bg-sky/10 text-deep" },
     { id: "kombucha", label: categoryLabels.kombucha, active: "border-yellow bg-yellow text-deep", idle: "border-yellow/50 bg-yellow/15 text-deep" },
-    { id: "tibicos", label: categoryLabels.tibicos, active: "border-orange bg-orange text-cream", idle: "border-orange/40 bg-orange/10 text-deep" },
+    { id: "tibicos", label: `${categoryLabels.tibicos} · Próximamente`, active: "border-orange bg-orange text-cream", idle: "border-orange/40 bg-orange/10 text-deep" },
   ]
 
   function handleFilter(id) {

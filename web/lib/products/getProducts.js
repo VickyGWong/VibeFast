@@ -13,6 +13,8 @@ function mapDbRow(row) {
       id: String(v.id),
       label: String(v.label),
       messageLabel: String(v.message_label),
+      ...(v.price_cents != null ? { priceCents: Number(v.price_cents) } : {}),
+      ...(v.size ? { size: String(v.size) } : {}),
     }))
 
   return {
@@ -29,6 +31,7 @@ function mapDbRow(row) {
     imageAlt: String(row.image_alt),
     featured: Boolean(row.featured),
     active: Boolean(row.active),
+    comingSoon: Boolean(row.coming_soon),
     whatsappName: String(row.whatsapp_name),
     sku: String(row.sku),
     stock: row.stock != null ? Number(row.stock) : null,
@@ -65,7 +68,7 @@ export async function getProducts() {
     const { data, error } = await supabase
       .from("products")
       .select(
-        "id, category, name, flavor, description, size, weight, price_cents, currency, image_url, image_alt, featured, active, whatsapp_name, sku, stock, seasonal, temporary_image, sort_order, product_variants(id, label, message_label, sort_order)"
+        "id, category, name, flavor, description, size, weight, price_cents, currency, image_url, image_alt, featured, active, coming_soon, whatsapp_name, sku, stock, seasonal, temporary_image, sort_order, product_variants(id, label, message_label, price_cents, size, sort_order)"
       )
       .eq("active", true)
       .order("sort_order")

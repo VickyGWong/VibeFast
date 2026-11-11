@@ -65,7 +65,7 @@ export default function Hero() {
           <div className="absolute inset-0 overflow-hidden rounded-[2rem] shadow-2xl ring-1 ring-cream/20">
             <HeroImage
               src="/images/hero-fermentos.jpg"
-              alt="Botellas de fermentos artesanales The Good Co. en Chihuahua"
+              alt="Kéfir natural y kombucha artesanal The Good Co. sobre mesa azul"
             />
           </div>
           <div className="absolute -bottom-3 left-4 flex flex-wrap gap-2 md:left-6">
@@ -73,7 +73,7 @@ export default function Hero() {
               Kombucha
             </span>
             <span className="rounded-full bg-cream px-4 py-2 font-display text-sm font-bold text-deep shadow-md">
-              Tíbicos
+              Tíbicos · Próximamente
             </span>
           </div>
         </div>

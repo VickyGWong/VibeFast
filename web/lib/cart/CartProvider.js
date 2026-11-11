@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { isSizeVariant, resolvePriceCents, resolveSize } from "@/lib/products/pricing"
 
 const STORAGE_KEY = "tgc-cart"
 const CartContext = createContext(null)
@@ -63,11 +64,14 @@ export function CartProvider({ children }) {
               key,
               productId: product.id,
               name: product.name,
-              size: product.size,
-              priceCents: product.priceCents,
+              size: resolveSize(product, variant),
+              priceCents: resolvePriceCents(product, variant),
               variantId: variant?.id ?? null,
               variantLabel: variant?.label ?? null,
-              variantMessage: variant?.messageLabel ?? null,
+              variantMessage:
+                variant?.messageLabel && !isSizeVariant(variant)
+                  ? variant.messageLabel
+                  : null,
               whatsappName: product.whatsappName,
               quantity,
               category: product.category,

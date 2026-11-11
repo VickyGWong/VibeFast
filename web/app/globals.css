@@ -71,6 +71,12 @@
   --radius-selector: 0.75rem;
 }
 
+/* Leaflet map inside DaisyUI / Tailwind layouts */
+.leaflet-container {
+  font: inherit;
+  z-index: 0;
+}
+
 html,
 body {
   height: 100%;
