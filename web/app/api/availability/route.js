@@ -8,7 +8,14 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url)
     const from = searchParams.get("from") || formatDateKey()
-    const [blocked, booked] = await Promise.all([listBlockedSlots(), listBookedSlotIds()])
+    let blocked = []
+    let booked = []
+    try {
+      ;[blocked, booked] = await Promise.all([listBlockedSlots(), listBookedSlotIds()])
+    } catch (storeError) {
+      console.warn("[availability] store unavailable, using open calendar", storeError)
+    }
+
     const base = generateBaseSlots(from)
     const slots = annotateSlots(base, blocked, booked)
 
@@ -18,10 +25,18 @@ export async function GET(request) {
       byDate[slot.dateKey].push(slot)
     }
 
+    const dates = Object.keys(byDate).sort()
+    if (!dates.length) {
+      return NextResponse.json(
+        { ok: false, error: "No hay horarios generados. Revisa la configuración." },
+        { status: 500 }
+      )
+    }
+
     return NextResponse.json({
       ok: true,
       from,
-      dates: Object.keys(byDate).sort(),
+      dates,
       byDate,
       slots,
     })

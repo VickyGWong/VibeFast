@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import {
@@ -19,6 +19,7 @@ import { useCart } from "@/lib/cart/CartProvider"
 import { PAYMENT_METHODS } from "@/lib/checkout/payments"
 import { formatPrice, getCartWhatsAppUrl } from "@/lib/whatsapp"
 import { trackEvent } from "@/lib/analytics/track"
+import SlotCalendar from "@/components/shop/SlotCalendar"
 
 const fulfillmentOptions = [
   {
@@ -39,8 +40,9 @@ const paymentIcons = {
   transfer: Building2,
   oxxo: Store,
   on_delivery: Banknote,
-  whatsapp: MessageCircle,
 }
+
+const PAGE_PAYMENT_METHODS = PAYMENT_METHODS.filter((method) => method.id !== "whatsapp")
 
 export default function CheckoutForm() {
   const router = useRouter()
@@ -60,8 +62,11 @@ export default function CheckoutForm() {
   const [zoneLoading, setZoneLoading] = useState(false)
   const [zoneError, setZoneError] = useState("")
   const [availability, setAvailability] = useState({ dates: [], byDate: {} })
+  const [availabilityLoading, setAvailabilityLoading] = useState(true)
+  const [availabilityError, setAvailabilityError] = useState("")
   const [selectedDate, setSelectedDate] = useState("")
   const [slotId, setSlotId] = useState("")
+  const [checkoutChannel, setCheckoutChannel] = useState(null) // 'page' | 'whatsapp'
   const [paymentMethod, setPaymentMethod] = useState("transfer")
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState("")
@@ -70,25 +75,34 @@ export default function CheckoutForm() {
     setOpen(false)
   }, [setOpen])
 
-  useEffect(() => {
-    let cancelled = false
-    async function loadAvailability() {
-      const response = await fetch("/api/availability")
+  const loadAvailability = useCallback(async () => {
+    setAvailabilityLoading(true)
+    setAvailabilityError("")
+    try {
+      const response = await fetch("/api/availability", { cache: "no-store" })
       const data = await response.json()
-      if (cancelled || !data.ok) return
+      if (!response.ok || !data.ok) {
+        setAvailability({ dates: [], byDate: {} })
+        setAvailabilityError(data.error || "No pudimos cargar el calendario.")
+        return
+      }
       setAvailability({ dates: data.dates, byDate: data.byDate })
       const firstOpen = data.dates.find((dateKey) =>
         (data.byDate[dateKey] || []).some((slot) => slot.available)
       )
       if (firstOpen) setSelectedDate(firstOpen)
-    }
-    loadAvailability()
-    return () => {
-      cancelled = true
+    } catch {
+      setAvailability({ dates: [], byDate: {} })
+      setAvailabilityError("Hubo un problema al cargar horarios.")
+    } finally {
+      setAvailabilityLoading(false)
     }
   }, [])
 
-  const daySlots = availability.byDate[selectedDate] || []
+  useEffect(() => {
+    loadAvailability()
+  }, [loadAvailability])
+
   const deliveryFeeCents = fulfillment === "delivery" ? delivery.feeCents || 0 : 0
   const grandTotal = totalCents + deliveryFeeCents
 
@@ -123,10 +137,7 @@ export default function CheckoutForm() {
         feeCents: data.quote?.feeCents || 0,
         feeLabel: data.quote?.feeLabel || "—",
         quoteStatus: data.quote?.status || null,
-        address:
-          prev.address.trim() ||
-          data.location?.label ||
-          prev.address,
+        address: prev.address.trim() || data.location?.label || prev.address,
       }))
       if (data.quote?.status === "out_of_zone") {
         setZoneError(data.quote.message)
@@ -144,15 +155,21 @@ export default function CheckoutForm() {
         return "Completa tu nombre y teléfono."
       }
     }
-    if (current === 2 && fulfillment === "delivery") {
-      if (delivery.address.trim().length < 5) return "Agrega la dirección de entrega."
-      if (delivery.quoteStatus === "out_of_zone") {
-        return "Esa zona no tiene entrega regular. Elige recolección o WhatsApp."
+    if (current === 2) {
+      if (fulfillment === "delivery") {
+        if (delivery.address.trim().length < 5) return "Agrega la dirección de entrega."
+        if (!delivery.quoteStatus) return "Cotiza tu zona de entrega para continuar."
+        if (delivery.quoteStatus === "out_of_zone") {
+          return "Esa zona no tiene entrega regular. Elige recolección."
+        }
       }
     }
-    if (current === 3 && !slotId) return "Elige fecha y horario."
-    if (current === 4 && paymentMethod === "whatsapp") {
-      return null
+    if (current === 3 && !slotId) return "Elige fecha y horario en el calendario."
+    if (current === 4 && !checkoutChannel) {
+      return "Elige si continúas en la página o por WhatsApp."
+    }
+    if (current === 4 && checkoutChannel === "page" && !paymentMethod) {
+      return "Elige un método de pago."
     }
     return null
   }
@@ -168,15 +185,15 @@ export default function CheckoutForm() {
   }
 
   async function submitOrder() {
-    if (paymentMethod === "whatsapp") {
-      trackEvent("checkout_whatsapp_redirect", { items: items.length })
-      window.open(whatsappHref, "_blank", "noopener,noreferrer")
+    const message = validateStep(4) || validateStep(3) || validateStep(1) || validateStep(2)
+    if (message) {
+      setError(message)
       return
     }
 
-    const message = validateStep(3) || validateStep(1) || validateStep(2)
-    if (message) {
-      setError(message)
+    if (checkoutChannel === "whatsapp") {
+      trackEvent("checkout_whatsapp_redirect", { items: items.length })
+      window.open(whatsappHref, "_blank", "noopener,noreferrer")
       return
     }
 
@@ -239,7 +256,7 @@ export default function CheckoutForm() {
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,0.9fr)]">
       <div className="space-y-6">
         <div className="flex flex-wrap gap-2">
-          {["Tus datos", "Entrega", "Horario", "Pago"].map((label, index) => {
+          {["Tus datos", "Entrega", "Horario", "Confirmar"].map((label, index) => {
             const n = index + 1
             const active = step === n
             const done = step > n
@@ -247,7 +264,9 @@ export default function CheckoutForm() {
               <button
                 key={label}
                 type="button"
-                onClick={() => setStep(n)}
+                onClick={() => {
+                  if (n <= step) setStep(n)
+                }}
                 className={`rounded-full px-4 py-2 text-sm font-ui font-bold ${
                   active
                     ? "bg-deep text-cream"
@@ -350,9 +369,7 @@ export default function CheckoutForm() {
                   />
                 </label>
                 <label className="grid gap-1 text-sm">
-                  <span className="font-ui font-bold text-deep">
-                    Instrucciones de entrega
-                  </span>
+                  <span className="font-ui font-bold text-deep">Instrucciones de entrega</span>
                   <textarea
                     className="textarea textarea-bordered rounded-2xl"
                     rows={3}
@@ -373,7 +390,6 @@ export default function CheckoutForm() {
                 {delivery.quoteStatus && delivery.quoteStatus !== "out_of_zone" && (
                   <p className="rounded-2xl bg-success/10 px-4 py-3 text-sm text-deep">
                     Envío: <strong>{delivery.feeLabel}</strong>
-                    {delivery.distanceKm != null ? ` · ${delivery.distanceKm} km` : ""}
                   </p>
                 )}
                 {zoneError && (
@@ -397,90 +413,87 @@ export default function CheckoutForm() {
               bloqueados no aparecen disponibles.
             </p>
 
-            <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-              {availability.dates.map((dateKey) => {
-                const hasOpen = (availability.byDate[dateKey] || []).some((slot) => slot.available)
-                const selected = selectedDate === dateKey
-                const label = (availability.byDate[dateKey] || [])[0]?.displayDate || dateKey
-                return (
-                  <button
-                    key={dateKey}
-                    type="button"
-                    disabled={!hasOpen}
-                    onClick={() => {
-                      setSelectedDate(dateKey)
-                      setSlotId("")
-                    }}
-                    className={`min-w-[9.5rem] rounded-2xl border px-3 py-3 text-left text-sm ${
-                      selected
-                        ? "border-deep bg-deep text-cream"
-                        : hasOpen
-                          ? "border-base-300 bg-cream text-deep"
-                          : "cursor-not-allowed border-base-200 bg-base-200 text-deep/40"
-                    }`}
-                  >
-                    {label}
-                  </button>
-                )
-              })}
-            </div>
-
-            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
-              {daySlots.map((slot) => {
-                const selected = slotId === slot.id
-                return (
-                  <button
-                    key={slot.id}
-                    type="button"
-                    disabled={!slot.available}
-                    onClick={() => setSlotId(slot.id)}
-                    className={`rounded-2xl border px-3 py-3 text-sm font-ui font-bold ${
-                      selected
-                        ? "border-coral bg-coral text-cream"
-                        : slot.available
-                          ? "border-base-300 bg-white text-deep hover:border-deep/40"
-                          : "cursor-not-allowed border-base-200 bg-base-200 text-deep/35 line-through"
-                    }`}
-                  >
-                    {slot.start}
-                  </button>
-                )
-              })}
-            </div>
+            <SlotCalendar
+              loading={availabilityLoading}
+              error={availabilityError}
+              dates={availability.dates}
+              byDate={availability.byDate}
+              selectedDate={selectedDate}
+              slotId={slotId}
+              onSelectDate={(dateKey) => {
+                setSelectedDate(dateKey)
+                setSlotId("")
+              }}
+              onSelectSlot={setSlotId}
+              onRetry={loadAvailability}
+            />
           </section>
         )}
 
         {step === 4 && (
           <section className="rounded-[2rem] border border-base-300 bg-white p-6">
-            <h2 className="font-display text-2xl font-bold text-deep">¿Cómo quieres pagar?</h2>
+            <h2 className="font-display text-2xl font-bold text-deep">¿Cómo quieres continuar?</h2>
             <p className="mt-2 text-sm text-deep/70">
-              Dinámica tipo tienda en línea mexicana: SPEI, Oxxo o pago al recibir. WhatsApp solo si
-              tú lo eliges.
+              Ya tienes entrega, zona y horario listos. Elige completar el pedido aquí o por WhatsApp.
             </p>
-            <div className="mt-5 grid gap-3">
-              {PAYMENT_METHODS.map((method) => {
-                const Icon = paymentIcons[method.id] || Banknote
-                const selected = paymentMethod === method.id
-                return (
-                  <button
-                    key={method.id}
-                    type="button"
-                    onClick={() => setPaymentMethod(method.id)}
-                    className={`flex gap-4 rounded-[1.5rem] border p-4 text-left ${
-                      selected ? "border-deep bg-deep/5" : "border-base-300"
-                    }`}
-                  >
-                    <Icon className="mt-0.5 size-5 text-sky" />
-                    <span>
-                      <span className="font-display block text-lg font-bold text-deep">
-                        {method.label}
-                      </span>
-                      <span className="mt-1 block text-sm text-deep/70">{method.description}</span>
-                    </span>
-                  </button>
-                )
-              })}
+
+            <div className="mt-5 grid gap-3 sm:grid-cols-2">
+              <button
+                type="button"
+                onClick={() => setCheckoutChannel("page")}
+                className={`rounded-[1.5rem] border p-4 text-left ${
+                  checkoutChannel === "page" ? "border-deep bg-deep/5" : "border-base-300"
+                }`}
+              >
+                <span className="font-display block text-lg font-bold text-deep">En la página</span>
+                <span className="mt-1 block text-sm text-deep/70">
+                  Paga por SPEI, Oxxo o al recibir, sin salir del sitio.
+                </span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setCheckoutChannel("whatsapp")}
+                className={`rounded-[1.5rem] border p-4 text-left ${
+                  checkoutChannel === "whatsapp" ? "border-deep bg-deep/5" : "border-base-300"
+                }`}
+              >
+                <span className="font-display flex items-center gap-2 text-lg font-bold text-deep">
+                  <MessageCircle className="size-5 text-sky" />
+                  Por WhatsApp
+                </span>
+                <span className="mt-1 block text-sm text-deep/70">
+                  Te llevamos el resumen del pedido al chat para coordinar.
+                </span>
+              </button>
             </div>
+
+            {checkoutChannel === "page" && (
+              <div className="mt-6 space-y-3 border-t border-base-200 pt-6">
+                <h3 className="font-display text-xl font-bold text-deep">Método de pago</h3>
+                {PAGE_PAYMENT_METHODS.map((method) => {
+                  const Icon = paymentIcons[method.id] || Banknote
+                  const selected = paymentMethod === method.id
+                  return (
+                    <button
+                      key={method.id}
+                      type="button"
+                      onClick={() => setPaymentMethod(method.id)}
+                      className={`flex w-full gap-4 rounded-[1.5rem] border p-4 text-left ${
+                        selected ? "border-deep bg-deep/5" : "border-base-300"
+                      }`}
+                    >
+                      <Icon className="mt-0.5 size-5 text-sky" />
+                      <span>
+                        <span className="font-display block text-lg font-bold text-deep">
+                          {method.label}
+                        </span>
+                        <span className="mt-1 block text-sm text-deep/70">{method.description}</span>
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </section>
         )}
 
@@ -511,8 +524,8 @@ export default function CheckoutForm() {
           ) : (
             <button
               type="button"
-              disabled={submitting}
-              className="btn min-h-12 gap-2 rounded-full border-0 bg-coral font-ui font-bold text-cream"
+              disabled={submitting || !checkoutChannel}
+              className="btn min-h-12 gap-2 rounded-full border-0 bg-coral font-ui font-bold text-cream disabled:opacity-50"
               onClick={submitOrder}
             >
               {submitting ? (
@@ -520,10 +533,10 @@ export default function CheckoutForm() {
                   <Loader2 className="size-4 animate-spin" />
                   Creando pedido…
                 </>
-              ) : paymentMethod === "whatsapp" ? (
+              ) : checkoutChannel === "whatsapp" ? (
                 <>
                   <MessageCircle className="size-4" />
-                  Ir a WhatsApp
+                  Continuar por WhatsApp
                 </>
               ) : (
                 <>
@@ -544,6 +557,7 @@ export default function CheckoutForm() {
               <span className="text-deep/80">
                 {item.quantity}× {item.name}
                 {item.variantLabel ? ` · ${item.variantLabel}` : ""}
+                {item.size ? ` · ${item.size}` : ""}
               </span>
               <span className="font-ui font-bold text-deep">
                 ${formatPrice(item.priceCents * item.quantity)}
