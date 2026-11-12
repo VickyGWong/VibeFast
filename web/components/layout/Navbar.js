@@ -1,9 +1,8 @@
 import Link from "next/link"
-import { Menu } from "lucide-react"
+import { Menu, ShoppingBag } from "lucide-react"
 import config from "@/config"
 import Logo from "@/components/Logo"
 import TopBar from "@/components/landing/TopBar"
-import WhatsAppButton from "@/components/landing/WhatsAppButton"
 import { CartButton } from "@/components/shop/CartDrawer"
 import { getGeneralWhatsAppUrl } from "@/lib/whatsapp"
 
@@ -71,9 +70,13 @@ export default function Navbar() {
 
           <div className="flex items-center gap-1 md:gap-3">
             <CartButton />
-            <div className="hidden md:block">
-              <WhatsAppButton source="navbar" className="btn-sm" />
-            </div>
+            <Link
+              href="/#productos"
+              className="btn btn-sm hidden min-h-11 gap-2 rounded-full border-0 bg-yellow px-5 font-ui font-bold text-deep hover:bg-yellow/85 md:inline-flex"
+            >
+              <ShoppingBag className="size-4" aria-hidden />
+              Hacer pedido
+            </Link>
           </div>
         </nav>
       </header>

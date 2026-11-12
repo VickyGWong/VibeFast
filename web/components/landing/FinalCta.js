@@ -1,6 +1,6 @@
 import Link from "next/link"
+import { ShoppingBag } from "lucide-react"
 import config from "@/config"
-import WhatsAppButton from "@/components/landing/WhatsAppButton"
 
 export default function FinalCta() {
   const { eyebrow, title, subtitle, cta, ctaOnline } = config.landing.finalCta
@@ -14,20 +14,22 @@ export default function FinalCta() {
         <h2 className="font-display mt-3 text-balance text-3xl font-bold md:text-5xl">{title}</h2>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-cream/85">{subtitle}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          {ctaOnline && (
+          {cta && (
+            <Link
+              href={cta.href}
+              className="btn btn-lg min-h-12 gap-2 rounded-full border-0 bg-yellow font-ui font-bold text-deep hover:bg-yellow/85"
+            >
+              <ShoppingBag className="size-5" aria-hidden />
+              {cta.label}
+            </Link>
+          )}
+          {ctaOnline && ctaOnline.href !== cta?.href && (
             <Link
               href={ctaOnline.href}
               className="btn btn-lg min-h-12 rounded-full border-0 bg-cream font-ui font-bold text-deep hover:bg-cream/90"
             >
               {ctaOnline.label}
             </Link>
-          )}
-          {cta.href === "whatsapp" && (
-            <WhatsAppButton
-              source="final_cta"
-              label="Pedir por WhatsApp"
-              className="btn-lg"
-            />
           )}
         </div>
       </div>

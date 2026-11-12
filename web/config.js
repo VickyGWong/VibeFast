@@ -136,7 +136,7 @@ const config = {
       subtitle:
         "Kéfir, kombucha y tíbicos artesanales, elaborados en Chihuahua para quienes quieren algo natural, rico y con mucha personalidad.",
       cta: { label: "Conoce nuestros productos", href: "#productos" },
-      ctaSecondary: { label: "Pedir por WhatsApp", href: "whatsapp" },
+      ctaSecondary: { label: "Hacer pedido", href: "#productos" },
       ctaOnline: { label: "Comprar en línea", href: "#productos" },
       trust: [
         "Elaboración artesanal",
@@ -169,7 +169,7 @@ const config = {
       items: [
         {
           q: "¿Cómo hago mi pedido?",
-          a: "Elige tu producto en el catálogo. Puedes pagar en línea con Mercado Pago (tarjeta, transferencia u otros medios) o tocar «Pedir por WhatsApp» para coordinar tu pedido con nosotros.",
+          a: "Elige tu producto en el catálogo, arma tu carrito y completa la compra en la página (entrega o recolección, horario y pago). WhatsApp queda como opción al final si lo prefieres.",
         },
         {
           q: "¿Qué métodos de pago aceptan?",
@@ -193,7 +193,7 @@ const config = {
         },
         {
           q: "¿Puedo armar un pedido con varias botellas?",
-          a: "Sí. Toca «Agregar al pedido» en cada producto, revisa tu carrito y confirma todo junto por WhatsApp. Así coordinamos una sola entrega.",
+          a: "Sí. Toca «Agregar al pedido» en cada producto, revisa tu carrito y completa la compra en la página. Así coordinamos una sola entrega.",
         },
       ],
     },
@@ -234,8 +234,8 @@ const config = {
       eyebrow: "¿Listo para probar?",
       title: "Tu próximo fermento favorito te espera.",
       subtitle:
-        "Compra en línea con Mercado Pago o escríbenos por WhatsApp. Te ayudamos a elegir el fermento perfecto.",
-      cta: { label: "Pedir por WhatsApp", href: "whatsapp" },
+        "Arma tu pedido en la página: entrega o recolección, horario y pago. WhatsApp solo si tú lo prefieres.",
+      cta: { label: "Hacer pedido", href: "#productos" },
       ctaOnline: { label: "Ver catálogo", href: "#productos" },
     },
     footer: {
