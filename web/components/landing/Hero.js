@@ -1,7 +1,6 @@
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, ShoppingBag } from "lucide-react"
 import config from "@/config"
-import WhatsAppButton from "@/components/landing/WhatsAppButton"
 import { HeroImage } from "@/components/landing/ProductImage"
 
 export default function Hero() {
@@ -46,12 +45,18 @@ export default function Hero() {
               {cta.label}
               <ArrowRight className="size-4" />
             </Link>
-            {ctaSecondary?.href === "whatsapp" && (
-              <WhatsAppButton source="hero" label="Pedir por WhatsApp" />
+            {ctaSecondary && (
+              <Link
+                href={ctaSecondary.href}
+                className="btn min-h-12 gap-2 rounded-full border-0 bg-yellow px-6 font-ui font-bold text-deep hover:bg-yellow/85"
+              >
+                <ShoppingBag className="size-5" aria-hidden />
+                {ctaSecondary.label}
+              </Link>
             )}
           </div>
 
-          <ul className="mt-10 grid grid-cols-2 gap-x-6 gap-y-3">
+          <ul className="mt-10 grid gap-x-6 gap-y-3 grid-cols-2">
             {trust.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm text-cream/90 md:text-base">
                 <span className="size-2 shrink-0 rounded-full bg-yellow" aria-hidden />

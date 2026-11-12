@@ -11,7 +11,7 @@ import { trackWhatsAppGeneral } from "@/lib/analytics/track"
 export default function WhatsAppButton({
   source = "general",
   className = "",
-  label = "Pedir por WhatsApp",
+  label = "WhatsApp",
 }) {
   const url = getGeneralWhatsAppUrl()
 
@@ -37,7 +37,7 @@ export function WhatsAppFab() {
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Pedir por WhatsApp"
+      aria-label="Contactar por WhatsApp"
       className="btn btn-circle fixed bottom-5 right-5 z-50 size-14 border-0 bg-yellow text-deep shadow-lg hover:bg-yellow/85 md:hidden"
       onClick={() => trackWhatsAppGeneral("fab_mobile")}
     >
