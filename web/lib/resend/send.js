@@ -74,7 +74,26 @@ export async function sendWelcome(to, name) {
 
 const PURCHASE_LABELS = {
   mercadopago: "Mercado Pago (en línea)",
+  en_linea: "En línea",
   whatsapp: "WhatsApp",
+  instagram: "Instagram",
+  muestra_gratis: "Muestra gratis",
+  otro: "Otro",
+}
+
+const FERMENTED_LABELS = {
+  si: "Sí",
+  no: "No",
+  no_conocia: "No los conocía / nunca los había escuchado",
+  escuchado_no_probado: "Los había escuchado, pero no los había probado",
+  probado_poco: "Los había probado, pero no los consumo frecuentemente",
+  consumo_habitual: "Ya los consumía de forma habitual",
+}
+
+const SAMPLE_CHANNEL_LABELS = {
+  evento: "Evento",
+  popup: "Pop Up",
+  mercadito: "Mercadito",
   otro: "Otro",
 }
 
@@ -83,21 +102,35 @@ export async function sendFeedbackNotification(row) {
   const to = config.email.supportEmail || config.email.replyTo
   if (!to) return { ok: false, skipped: true }
 
-  const fermentedLabel =
-    row.fermented_before === "si" ? "Sí" : row.fermented_before === "no" ? "No" : row.fermented_before
+  const isFreeSample = row.purchase_method === "muestra_gratis"
+  const sampleLabel = row.sample_channel
+    ? SAMPLE_CHANNEL_LABELS[row.sample_channel] || row.sample_channel
+    : null
 
   const lines = [
     `Producto: ${row.product_name} (${row.product_id})`,
-    `¿Había consumido fermentados antes?: ${fermentedLabel}`,
-    `Sabor: ${row.taste_rating}/10`,
+    `Experiencia con fermentados: ${FERMENTED_LABELS[row.fermented_before] || row.fermented_before}`,
+    row.acidity_rating != null ? `Acidez: ${row.acidity_rating}/10` : null,
+    row.creaminess_rating != null ? `Cremosidad: ${row.creaminess_rating}/10` : null,
+    row.sweetness_rating != null ? `Dulzor: ${row.sweetness_rating}/10` : null,
+    row.bubbles_rating != null ? `Burbujas: ${row.bubbles_rating}/10` : null,
+    `Sabor en general: ${row.taste_rating}/10`,
     row.taste_comment ? `  Comentario sabor: ${row.taste_comment}` : null,
     `Presentación: ${row.presentation_rating}/10`,
     row.presentation_comment
       ? `  Comentario presentación: ${row.presentation_comment}`
       : null,
-    `Método de compra: ${PURCHASE_LABELS[row.purchase_method] || row.purchase_method}`,
-    row.delivery_rating != null ? `Entrega: ${row.delivery_rating}/10` : "Entrega: (sin calificar)",
-    row.delivery_comment ? `  Comentario entrega: ${row.delivery_comment}` : null,
+    `Cómo lo obtuvo: ${PURCHASE_LABELS[row.purchase_method] || row.purchase_method}`,
+    isFreeSample
+      ? `Lugar de la muestra: ${sampleLabel}${
+          row.sample_channel_other ? ` (${row.sample_channel_other})` : ""
+        }`
+      : row.delivery_rating != null
+        ? `Entrega: ${row.delivery_rating}/10`
+        : "Entrega: (sin calificar)",
+    !isFreeSample && row.delivery_comment
+      ? `  Comentario entrega: ${row.delivery_comment}`
+      : null,
     row.name ? `Nombre: ${row.name}` : null,
     row.contact ? `Contacto: ${row.contact}` : null,
     row.extra_comment ? `Comentario extra: ${row.extra_comment}` : null,
