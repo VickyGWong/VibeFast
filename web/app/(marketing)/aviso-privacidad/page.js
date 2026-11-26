@@ -17,8 +17,9 @@ export default function PrivacyPage() {
         </p>
         <p>
           Recabamos nombre, teléfono, correo y datos de pedido cuando escribes por WhatsApp, te
-          suscribes al boletín o compras en línea. Los usamos para atender tu pedido, coordinar
-          entregas y, si lo aceptas, enviarte novedades de la marca.
+          suscribes al boletín, compras en línea o envías retroalimentación del producto. Los
+          usamos para atender tu pedido, coordinar entregas, mejorar sabor y presentación y, si
+          lo aceptas, enviarte novedades de la marca.
         </p>
         <p>
           No vendemos tu información. Podemos comunicarla a proveedores que nos ayudan a operar

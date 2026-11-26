@@ -66,6 +66,12 @@ function PurchaseSuccessContent() {
         <Link href="/#productos" className="btn btn-ghost min-h-11 rounded-full font-display font-bold">
           Seguir comprando
         </Link>
+        <Link
+          href="/retroalimentacion"
+          className="btn btn-ghost min-h-11 rounded-full font-display font-bold text-sky"
+        >
+          Dar retroalimentación
+        </Link>
       </div>
 
       <p className="mt-8 text-xs text-deep/50">
