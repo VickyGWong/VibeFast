@@ -1,14 +1,16 @@
 import { NextResponse, after } from "next/server"
 import { createClient } from "@/lib/supabase/server"
 import { sendFeedbackNotification } from "@/lib/resend/send"
-import { products } from "@/data/products"
+import { getAvailableProducts } from "@/data/products"
 
 const PURCHASE_METHODS = new Set(["mercadopago", "whatsapp", "otro"])
-const PRODUCT_IDS = new Set(products.map((p) => p.id))
+const FERMENTED_BEFORE = new Set(["si", "no"])
+const AVAILABLE_PRODUCTS = getAvailableProducts()
+const PRODUCT_IDS = new Set(AVAILABLE_PRODUCTS.map((p) => p.id))
 
 function asRating(value) {
   const n = Number(value)
-  if (!Number.isInteger(n) || n < 1 || n > 5) return null
+  if (!Number.isInteger(n) || n < 1 || n > 10) return null
   return n
 }
 
@@ -26,16 +28,26 @@ export async function POST(request) {
 
     const productId = typeof body.productId === "string" ? body.productId.trim() : ""
     if (!PRODUCT_IDS.has(productId)) {
-      return NextResponse.json({ error: "Producto inválido." }, { status: 400 })
+      return NextResponse.json({ error: "Producto inválido o no disponible." }, { status: 400 })
     }
 
-    const product = products.find((p) => p.id === productId)
+    const product = AVAILABLE_PRODUCTS.find((p) => p.id === productId)
+
+    const fermentedBefore =
+      typeof body.fermentedBefore === "string" ? body.fermentedBefore.trim() : ""
+    if (!FERMENTED_BEFORE.has(fermentedBefore)) {
+      return NextResponse.json(
+        { error: "Indica si habías consumido fermentados antes." },
+        { status: 400 }
+      )
+    }
+
     const tasteRating = asRating(body.tasteRating)
     const presentationRating = asRating(body.presentationRating)
 
     if (!tasteRating || !presentationRating) {
       return NextResponse.json(
-        { error: "Califica sabor y presentación del 1 al 5." },
+        { error: "Califica sabor y presentación del 1 al 10." },
         { status: 400 }
       )
     }
@@ -56,7 +68,7 @@ export async function POST(request) {
 
     if (body.deliveryRating != null && body.deliveryRating !== "" && !deliveryRating) {
       return NextResponse.json(
-        { error: "La calificación de entrega debe ser del 1 al 5." },
+        { error: "La calificación de entrega debe ser del 1 al 10." },
         { status: 400 }
       )
     }
@@ -64,6 +76,7 @@ export async function POST(request) {
     const row = {
       product_id: productId,
       product_name: product.name,
+      fermented_before: fermentedBefore,
       taste_rating: tasteRating,
       taste_comment: asOptionalText(body.tasteComment),
       presentation_rating: presentationRating,
@@ -97,7 +110,6 @@ export async function POST(request) {
     }
 
     return NextResponse.json({ ok: true })
-
   } catch (err) {
     console.error("[feedback] unexpected:", err)
     return NextResponse.json(

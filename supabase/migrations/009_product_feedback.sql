@@ -10,14 +10,15 @@ create table if not exists public.product_feedback (
   id                uuid primary key default gen_random_uuid(),
   product_id        text not null,
   product_name      text not null,
-  taste_rating      smallint not null check (taste_rating between 1 and 5),
+  fermented_before  text not null check (fermented_before in ('si', 'no')),
+  taste_rating      smallint not null check (taste_rating between 1 and 10),
   taste_comment     text,
-  presentation_rating smallint not null check (presentation_rating between 1 and 5),
+  presentation_rating smallint not null check (presentation_rating between 1 and 10),
   presentation_comment text,
   purchase_method   text not null check (
     purchase_method in ('mercadopago', 'whatsapp', 'otro')
   ),
-  delivery_rating   smallint check (delivery_rating between 1 and 5),
+  delivery_rating   smallint check (delivery_rating between 1 and 10),
   delivery_comment  text,
   name              text,
   contact           text,

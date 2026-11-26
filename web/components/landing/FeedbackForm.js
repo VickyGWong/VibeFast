@@ -2,9 +2,7 @@
 
 import { useState } from "react"
 import { CheckCircle2 } from "lucide-react"
-import { products, categoryLabels } from "@/data/products"
-
-const RATING_LABELS = ["Muy mal", "Mal", "Regular", "Bien", "Excelente"]
+import { categoryLabels, getAvailableProducts } from "@/data/products"
 
 const PURCHASE_OPTIONS = [
   { value: "mercadopago", label: "En línea con Mercado Pago" },
@@ -12,8 +10,14 @@ const PURCHASE_OPTIONS = [
   { value: "otro", label: "Otro" },
 ]
 
+const FERMENTED_BEFORE_OPTIONS = [
+  { value: "si", label: "Sí" },
+  { value: "no", label: "No" },
+]
+
 const emptyForm = {
   productId: "",
+  fermentedBefore: "",
   tasteRating: "",
   tasteComment: "",
   presentationRating: "",
@@ -29,14 +33,14 @@ const emptyForm = {
 function RatingScale({ id, name, value, onChange, required = false }) {
   return (
     <fieldset className="mt-3">
-      <legend className="sr-only">Calificación del 1 al 5</legend>
-      <div className="flex flex-wrap gap-2">
-        {[1, 2, 3, 4, 5].map((n) => {
+      <legend className="sr-only">Calificación del 1 al 10</legend>
+      <div className="flex flex-wrap gap-1.5 sm:gap-2">
+        {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
           const selected = Number(value) === n
           return (
             <label
               key={n}
-              className={`flex min-h-11 min-w-11 cursor-pointer flex-col items-center justify-center rounded-2xl border px-3 py-2 transition ${
+              className={`flex size-10 min-h-11 min-w-10 cursor-pointer items-center justify-center rounded-xl border transition sm:size-11 sm:rounded-2xl ${
                 selected
                   ? "border-sky bg-sky text-cream shadow-sm"
                   : "border-base-300 bg-white text-deep/80 hover:border-sky/50"
@@ -52,16 +56,13 @@ function RatingScale({ id, name, value, onChange, required = false }) {
                 onChange={() => onChange(String(n))}
                 aria-describedby={`${id}-hint`}
               />
-              <span className="font-display text-lg font-bold leading-none">{n}</span>
-              <span className={`mt-1 text-[10px] leading-tight ${selected ? "text-cream/85" : "text-deep/45"}`}>
-                {RATING_LABELS[n - 1]}
-              </span>
+              <span className="font-display text-base font-bold leading-none sm:text-lg">{n}</span>
             </label>
           )
         })}
       </div>
       <p id={`${id}-hint`} className="mt-2 text-xs text-deep/50">
-        1 = muy mal · 5 = excelente
+        1 = muy mal · 10 = excelente
       </p>
     </fieldset>
   )
@@ -72,7 +73,7 @@ export default function FeedbackForm() {
   const [status, setStatus] = useState("idle")
   const [error, setError] = useState(null)
 
-  const activeProducts = products.filter((p) => p.active)
+  const availableProducts = getAvailableProducts()
 
   function update(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -143,7 +144,7 @@ export default function FeedbackForm() {
           ¿Qué fermento probaste?
         </h2>
         <label htmlFor="productId" className="mt-4 block text-sm font-medium text-deep/80">
-          Producto
+          Producto disponible
         </label>
         <select
           id="productId"
@@ -155,12 +156,55 @@ export default function FeedbackForm() {
           disabled={status === "loading"}
         >
           <option value="">Elige un producto</option>
-          {activeProducts.map((p) => (
+          {availableProducts.map((p) => (
             <option key={p.id} value={p.id}>
               {categoryLabels[p.category]} · {p.name}
             </option>
           ))}
         </select>
+      </section>
+
+      {/* Experiencia previa */}
+      <section>
+        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
+          Experiencia
+        </p>
+        <h2 className="font-display mt-2 text-xl font-bold text-deep md:text-2xl">
+          ¿Habías consumido productos fermentados antes?
+        </h2>
+        <p className="mt-2 text-sm text-deep/65">
+          Kéfir, kombucha, yogurt vivo, chucrut u otros fermentos.
+        </p>
+        <div
+          className="mt-4 grid max-w-md gap-2 sm:grid-cols-2"
+          role="radiogroup"
+          aria-label="¿Habías consumido fermentados antes?"
+        >
+          {FERMENTED_BEFORE_OPTIONS.map((opt) => {
+            const selected = form.fermentedBefore === opt.value
+            return (
+              <label
+                key={opt.value}
+                className={`flex min-h-12 cursor-pointer items-center justify-center rounded-2xl border px-4 py-3 text-center text-sm font-medium transition ${
+                  selected
+                    ? "border-sky bg-sky text-cream shadow-sm"
+                    : "border-base-300 bg-white text-deep/75 hover:border-sky/50"
+                }`}
+              >
+                <input
+                  type="radio"
+                  className="sr-only"
+                  name="fermentedBefore"
+                  value={opt.value}
+                  checked={selected}
+                  required
+                  onChange={() => update("fermentedBefore", opt.value)}
+                />
+                {opt.label}
+              </label>
+            )
+          })}
+        </div>
       </section>
 
       {/* Sabor */}
