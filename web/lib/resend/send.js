@@ -71,3 +71,41 @@ export async function sendWelcome(to, name) {
   }
   return { ok: true }
 }
+
+const PURCHASE_LABELS = {
+  mercadopago: "Mercado Pago (en línea)",
+  whatsapp: "WhatsApp",
+  otro: "Otro",
+}
+
+/** Notifica al equipo cuando llega una retroalimentación de producto. */
+export async function sendFeedbackNotification(row) {
+  const to = config.email.supportEmail || config.email.replyTo
+  if (!to) return { ok: false, skipped: true }
+
+  const fermentedLabel =
+    row.fermented_before === "si" ? "Sí" : row.fermented_before === "no" ? "No" : row.fermented_before
+
+  const lines = [
+    `Producto: ${row.product_name} (${row.product_id})`,
+    `¿Había consumido fermentados antes?: ${fermentedLabel}`,
+    `Sabor: ${row.taste_rating}/10`,
+    row.taste_comment ? `  Comentario sabor: ${row.taste_comment}` : null,
+    `Presentación: ${row.presentation_rating}/10`,
+    row.presentation_comment
+      ? `  Comentario presentación: ${row.presentation_comment}`
+      : null,
+    `Método de compra: ${PURCHASE_LABELS[row.purchase_method] || row.purchase_method}`,
+    row.delivery_rating != null ? `Entrega: ${row.delivery_rating}/10` : "Entrega: (sin calificar)",
+    row.delivery_comment ? `  Comentario entrega: ${row.delivery_comment}` : null,
+    row.name ? `Nombre: ${row.name}` : null,
+    row.contact ? `Contacto: ${row.contact}` : null,
+    row.extra_comment ? `Comentario extra: ${row.extra_comment}` : null,
+  ].filter(Boolean)
+
+  return sendEmail({
+    to,
+    subject: `Nueva retroalimentación · ${row.product_name}`,
+    body: lines.join("\n"),
+  })
+}

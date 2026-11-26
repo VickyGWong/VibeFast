@@ -15,6 +15,7 @@
  * @property {string} imageAlt
  * @property {boolean} featured
  * @property {boolean} active
+ * @property {boolean} [comingSoon]
  * @property {string} whatsappName
  * @property {string} sku
  * @property {number | null} stock
@@ -23,6 +24,11 @@
  * @property {number} sortOrder
  * @property {ProductVariant[]} variants
  */
+
+/** Productos que ya se pueden pedir (excluye “próximamente”). */
+export function getAvailableProducts(list = products) {
+  return list.filter((p) => p.active && !p.comingSoon)
+}
 
 /** @type {Product[]} */
 export const products = [
@@ -41,6 +47,7 @@ export const products = [
     imageAlt: "Botella de kéfir natural The Good Co. de 500 ml",
     featured: true,
     active: true,
+    comingSoon: false,
     whatsappName: "Kéfir natural",
     sku: "KEF-NAT-500",
     stock: null,
@@ -67,6 +74,7 @@ export const products = [
     imageAlt: "Botella de kéfir de fresa The Good Co. de 500 ml",
     featured: false,
     active: true,
+    comingSoon: false,
     whatsappName: "Kéfir de fresa",
     sku: "KEF-FRE-500",
     stock: null,
@@ -93,6 +101,7 @@ export const products = [
     imageAlt: "Botella de kéfir de mango The Good Co. de 500 ml",
     featured: false,
     active: true,
+    comingSoon: false,
     whatsappName: "Kéfir de mango",
     sku: "KEF-MAN-500",
     stock: null,
@@ -118,6 +127,7 @@ export const products = [
     imageAlt: "Botella de kombucha natural The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: false,
     whatsappName: "Kombucha natural",
     sku: "KOM-NAT-750",
     stock: null,
@@ -140,6 +150,7 @@ export const products = [
     imageAlt: "Botella de kombucha de betabel-arándano The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: true,
     whatsappName: "Kombucha de betabel-arándano",
     sku: "KOM-BET-750",
     stock: null,
@@ -162,6 +173,7 @@ export const products = [
     imageAlt: "Botella de kombucha de mango The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: true,
     whatsappName: "Kombucha de mango",
     sku: "KOM-MAN-750",
     stock: null,
@@ -184,6 +196,7 @@ export const products = [
     imageAlt: "Botella de kombucha de fresa The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: true,
     whatsappName: "Kombucha de fresa",
     sku: "KOM-FRE-750",
     stock: null,
@@ -206,6 +219,7 @@ export const products = [
     imageAlt: "Botella de tíbicos naturales The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: true,
     whatsappName: "Tíbicos naturales",
     sku: "TIB-NAT-750",
     stock: null,
@@ -228,6 +242,7 @@ export const products = [
     imageAlt: "Botella de tíbicos de mango The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: true,
     whatsappName: "Tíbicos de mango",
     sku: "TIB-MAN-750",
     stock: null,
@@ -250,6 +265,7 @@ export const products = [
     imageAlt: "Botella de tíbicos de fresa The Good Co. de 750 ml",
     featured: false,
     active: true,
+    comingSoon: true,
     whatsappName: "Tíbicos de fresa",
     sku: "TIB-FRE-750",
     stock: null,

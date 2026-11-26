@@ -224,6 +224,7 @@ const config = {
             { label: "Historia", href: "/#historia" },
             { label: "Contacto", href: "/#contacto" },
             { label: "FAQ", href: "/#faq" },
+            { label: "Retroalimentación", href: "/retroalimentacion" },
           ],
         },
         {
