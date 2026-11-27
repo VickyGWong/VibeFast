@@ -54,9 +54,9 @@ export function HeroImage({ src, alt, className = "" }) {
     <ProductImage
       src={src}
       alt={alt}
-      category="kefir"
+      category="kombucha"
       priority
-      temporary
+      temporary={false}
       className={className}
     />
   )

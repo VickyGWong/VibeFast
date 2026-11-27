@@ -4,20 +4,35 @@ import { useState } from "react"
 import { CheckCircle2 } from "lucide-react"
 import { categoryLabels, getAvailableProducts } from "@/data/products"
 
+const FERMENTED_BEFORE_OPTIONS = [
+  { value: "no_conocia", label: "No los conocía / nunca los había escuchado" },
+  { value: "escuchado_no_probado", label: "Los había escuchado, pero no los había probado" },
+  { value: "probado_poco", label: "Los había probado, pero no los consumo frecuentemente" },
+  { value: "consumo_habitual", label: "Ya los consumía de forma habitual" },
+]
+
 const PURCHASE_OPTIONS = [
-  { value: "mercadopago", label: "En línea con Mercado Pago" },
-  { value: "whatsapp", label: "Por WhatsApp" },
+  { value: "en_linea", label: "En línea" },
+  { value: "whatsapp", label: "WhatsApp" },
+  { value: "instagram", label: "Instagram" },
+  { value: "muestra_gratis", label: "Muestra gratis" },
   { value: "otro", label: "Otro" },
 ]
 
-const FERMENTED_BEFORE_OPTIONS = [
-  { value: "si", label: "Sí" },
-  { value: "no", label: "No" },
+const SAMPLE_CHANNEL_OPTIONS = [
+  { value: "evento", label: "Evento" },
+  { value: "popup", label: "Pop Up" },
+  { value: "mercadito", label: "Mercadito" },
+  { value: "otro", label: "Otro" },
 ]
 
 const emptyForm = {
   productId: "",
   fermentedBefore: "",
+  acidityRating: "",
+  creaminessRating: "",
+  sweetnessRating: "",
+  bubblesRating: "",
   tasteRating: "",
   tasteComment: "",
   presentationRating: "",
@@ -25,16 +40,49 @@ const emptyForm = {
   purchaseMethod: "",
   deliveryRating: "",
   deliveryComment: "",
+  sampleChannel: "",
+  sampleChannelOther: "",
   name: "",
   contact: "",
   extraComment: "",
 }
 
-function RatingScale({ id, name, value, onChange, required = false }) {
+function ChoiceGroup({ name, options, value, onChange, required = false, columns = "sm:grid-cols-2" }) {
   return (
-    <fieldset className="mt-3">
-      <legend className="sr-only">Calificación del 1 al 10</legend>
-      <div className="flex flex-wrap gap-1.5 sm:gap-2">
+    <div className={`mt-4 grid gap-2 ${columns}`} role="radiogroup" aria-label={name}>
+      {options.map((opt) => {
+        const selected = value === opt.value
+        return (
+          <label
+            key={opt.value}
+            className={`flex min-h-12 cursor-pointer items-center justify-center rounded-2xl border px-4 py-3 text-center text-sm font-medium leading-snug transition ${
+              selected
+                ? "border-sky bg-sky text-cream shadow-sm"
+                : "border-base-300 bg-white text-deep/75 hover:border-sky/50"
+            }`}
+          >
+            <input
+              type="radio"
+              className="sr-only"
+              name={name}
+              value={opt.value}
+              checked={selected}
+              required={required}
+              onChange={() => onChange(opt.value)}
+            />
+            {opt.label}
+          </label>
+        )
+      })}
+    </div>
+  )
+}
+
+function RatingScale({ id, name, label, value, onChange, required = false }) {
+  return (
+    <fieldset className="mt-5">
+      <legend className="text-sm font-medium text-deep/80">{label}</legend>
+      <div className="mt-2 flex flex-wrap gap-1.5 sm:gap-2">
         {Array.from({ length: 10 }, (_, i) => i + 1).map((n) => {
           const selected = Number(value) === n
           return (
@@ -74,9 +122,37 @@ export default function FeedbackForm() {
   const [error, setError] = useState(null)
 
   const availableProducts = getAvailableProducts()
+  const selectedProduct = availableProducts.find((p) => p.id === form.productId) ?? null
+  const isKefir = selectedProduct?.category === "kefir"
+  const isBubbly =
+    selectedProduct?.category === "kombucha" || selectedProduct?.category === "tibicos"
+  const isFreeSample = form.purchaseMethod === "muestra_gratis"
 
   function update(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }))
+  }
+
+  function handleProductChange(productId) {
+    const next = availableProducts.find((p) => p.id === productId)
+    setForm((prev) => ({
+      ...prev,
+      productId,
+      creaminessRating: next?.category === "kefir" ? prev.creaminessRating : "",
+      bubblesRating:
+        next?.category === "kombucha" || next?.category === "tibicos"
+          ? prev.bubblesRating
+          : "",
+    }))
+  }
+
+  function handlePurchaseChange(purchaseMethod) {
+    setForm((prev) => ({
+      ...prev,
+      purchaseMethod,
+      ...(purchaseMethod === "muestra_gratis"
+        ? { deliveryRating: "", deliveryComment: "" }
+        : { sampleChannel: "", sampleChannelOther: "" }),
+    }))
   }
 
   async function onSubmit(e) {
@@ -133,7 +209,6 @@ export default function FeedbackForm() {
     <form
       onSubmit={onSubmit}
       className="space-y-10 rounded-[1.75rem] border border-base-300/70 bg-white p-6 shadow-sm md:p-10"
-      noValidate={false}
     >
       {/* Producto */}
       <section className="relative z-10">
@@ -151,7 +226,7 @@ export default function FeedbackForm() {
           name="productId"
           required
           value={form.productId}
-          onChange={(e) => update("productId", e.target.value)}
+          onChange={(e) => handleProductChange(e.target.value)}
           className="select select-bordered relative z-20 mt-2 w-full min-h-12 rounded-2xl border-base-300 bg-white"
           disabled={status === "loading"}
         >
@@ -170,41 +245,19 @@ export default function FeedbackForm() {
           Experiencia
         </p>
         <h2 className="font-display mt-2 text-xl font-bold text-deep md:text-2xl">
-          ¿Habías consumido productos fermentados antes?
+          ¿Conocías o habías probado fermentados antes?
         </h2>
         <p className="mt-2 text-sm text-deep/65">
           Kéfir, kombucha, yogurt vivo, chucrut u otros fermentos.
         </p>
-        <div
-          className="mt-4 grid max-w-md gap-2 sm:grid-cols-2"
-          role="radiogroup"
-          aria-label="¿Habías consumido fermentados antes?"
-        >
-          {FERMENTED_BEFORE_OPTIONS.map((opt) => {
-            const selected = form.fermentedBefore === opt.value
-            return (
-              <label
-                key={opt.value}
-                className={`flex min-h-12 cursor-pointer items-center justify-center rounded-2xl border px-4 py-3 text-center text-sm font-medium transition ${
-                  selected
-                    ? "border-sky bg-sky text-cream shadow-sm"
-                    : "border-base-300 bg-white text-deep/75 hover:border-sky/50"
-                }`}
-              >
-                <input
-                  type="radio"
-                  className="sr-only"
-                  name="fermentedBefore"
-                  value={opt.value}
-                  checked={selected}
-                  required
-                  onChange={() => update("fermentedBefore", opt.value)}
-                />
-                {opt.label}
-              </label>
-            )
-          })}
-        </div>
+        <ChoiceGroup
+          name="fermentedBefore"
+          options={FERMENTED_BEFORE_OPTIONS}
+          value={form.fermentedBefore}
+          onChange={(v) => update("fermentedBefore", v)}
+          required
+          columns="sm:grid-cols-1"
+        />
       </section>
 
       {/* Sabor */}
@@ -216,17 +269,66 @@ export default function FeedbackForm() {
           ¿Qué tal estuvo el sabor?
         </h2>
         <p className="mt-2 text-sm text-deep/65">
-          Acidez, dulzor, burbujas, textura… cuéntanos cómo se sintió en el paladar.
+          Califica cada atributo. Las opciones cambian según el tipo de fermento.
         </p>
-        <RatingScale
-          id="taste"
-          name="tasteRating"
-          value={form.tasteRating}
-          required
-          onChange={(v) => update("tasteRating", v)}
-        />
+
+        {!selectedProduct && (
+          <p className="mt-4 rounded-2xl bg-cream/80 px-4 py-3 text-sm text-deep/60">
+            Elige un producto arriba para ver las calificaciones de sabor.
+          </p>
+        )}
+
+        {selectedProduct && (
+          <>
+            <RatingScale
+              id="acidity"
+              name="acidityRating"
+              label="Acidez"
+              value={form.acidityRating}
+              required
+              onChange={(v) => update("acidityRating", v)}
+            />
+            {isKefir && (
+              <RatingScale
+                id="creaminess"
+                name="creaminessRating"
+                label="Cremosidad"
+                value={form.creaminessRating}
+                required
+                onChange={(v) => update("creaminessRating", v)}
+              />
+            )}
+            <RatingScale
+              id="sweetness"
+              name="sweetnessRating"
+              label="Dulzor"
+              value={form.sweetnessRating}
+              required
+              onChange={(v) => update("sweetnessRating", v)}
+            />
+            {isBubbly && (
+              <RatingScale
+                id="bubbles"
+                name="bubblesRating"
+                label="Burbujas / efervescencia"
+                value={form.bubblesRating}
+                required
+                onChange={(v) => update("bubblesRating", v)}
+              />
+            )}
+            <RatingScale
+              id="taste"
+              name="tasteRating"
+              label="Sabor en general"
+              value={form.tasteRating}
+              required
+              onChange={(v) => update("tasteRating", v)}
+            />
+          </>
+        )}
+
         <label htmlFor="tasteComment" className="mt-5 block text-sm font-medium text-deep/80">
-          Detalle de sabor <span className="font-normal text-deep/45">(opcional)</span>
+          Comentario libre de sabor <span className="font-normal text-deep/45">(opcional)</span>
         </label>
         <textarea
           id="tasteComment"
@@ -255,6 +357,7 @@ export default function FeedbackForm() {
         <RatingScale
           id="presentation"
           name="presentationRating"
+          label="Presentación en general"
           value={form.presentationRating}
           required
           onChange={(v) => update("presentationRating", v)}
@@ -284,68 +387,91 @@ export default function FeedbackForm() {
           Compra
         </p>
         <h2 className="font-display mt-2 text-xl font-bold text-deep md:text-2xl">
-          ¿Cómo lo compraste?
+          ¿Cómo lo obtuviste?
         </h2>
-        <div className="mt-4 grid gap-2 sm:grid-cols-3" role="radiogroup" aria-label="Método de compra">
-          {PURCHASE_OPTIONS.map((opt) => {
-            const selected = form.purchaseMethod === opt.value
-            return (
-              <label
-                key={opt.value}
-                className={`flex min-h-12 cursor-pointer items-center justify-center rounded-2xl border px-4 py-3 text-center text-sm font-medium transition ${
-                  selected
-                    ? "border-sky bg-sky text-cream shadow-sm"
-                    : "border-base-300 bg-white text-deep/75 hover:border-sky/50"
-                }`}
-              >
-                <input
-                  type="radio"
-                  className="sr-only"
-                  name="purchaseMethod"
-                  value={opt.value}
-                  checked={selected}
-                  required
-                  onChange={() => update("purchaseMethod", opt.value)}
-                />
-                {opt.label}
-              </label>
-            )
-          })}
-        </div>
+        <ChoiceGroup
+          name="purchaseMethod"
+          options={PURCHASE_OPTIONS}
+          value={form.purchaseMethod}
+          onChange={handlePurchaseChange}
+          required
+          columns="sm:grid-cols-2 lg:grid-cols-3"
+        />
       </section>
 
-      {/* Entrega */}
-      <section>
-        <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
-          Entrega
-        </p>
-        <h2 className="font-display mt-2 text-xl font-bold text-deep md:text-2xl">
-          ¿Cómo fue la entrega?
-        </h2>
-        <p className="mt-2 text-sm text-deep/65">
-          Tiempo, coordinación y si llegó fresco y en buen estado.
-        </p>
-        <RatingScale
-          id="delivery"
-          name="deliveryRating"
-          value={form.deliveryRating}
-          onChange={(v) => update("deliveryRating", v)}
-        />
-        <label htmlFor="deliveryComment" className="mt-5 block text-sm font-medium text-deep/80">
-          Detalle de entrega <span className="font-normal text-deep/45">(opcional)</span>
-        </label>
-        <textarea
-          id="deliveryComment"
-          name="deliveryComment"
-          rows={3}
-          maxLength={1000}
-          value={form.deliveryComment}
-          onChange={(e) => update("deliveryComment", e.target.value)}
-          placeholder="Ej. Llegó frío y a tiempo, me avisaron por WhatsApp…"
-          className="textarea textarea-bordered mt-2 w-full rounded-2xl border-base-300 bg-cream/40"
-          disabled={status === "loading"}
-        />
-      </section>
+      {/* Entrega o muestra */}
+      {isFreeSample ? (
+        <section>
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
+            Muestra
+          </p>
+          <h2 className="font-display mt-2 text-xl font-bold text-deep md:text-2xl">
+            ¿Dónde recibiste tu muestra?
+          </h2>
+          <ChoiceGroup
+            name="sampleChannel"
+            options={SAMPLE_CHANNEL_OPTIONS}
+            value={form.sampleChannel}
+            onChange={(v) => update("sampleChannel", v)}
+            required
+            columns="sm:grid-cols-2"
+          />
+          <label
+            htmlFor="sampleChannelOther"
+            className="mt-4 block text-sm font-medium text-deep/80"
+          >
+            ¿Cuál?
+            {form.sampleChannel !== "otro" && (
+              <span className="font-normal text-deep/45"> (opcional)</span>
+            )}
+          </label>
+          <input
+            id="sampleChannelOther"
+            name="sampleChannelOther"
+            type="text"
+            required={form.sampleChannel === "otro"}
+            maxLength={160}
+            value={form.sampleChannelOther}
+            onChange={(e) => update("sampleChannelOther", e.target.value)}
+            placeholder="Ej. nombre del evento, mercadito o lugar"
+            className="input input-bordered mt-2 w-full min-h-12 rounded-2xl border-base-300 bg-cream/40"
+            disabled={status === "loading"}
+          />
+        </section>
+      ) : (
+        <section>
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-sky">
+            Entrega
+          </p>
+          <h2 className="font-display mt-2 text-xl font-bold text-deep md:text-2xl">
+            ¿Cómo fue la entrega?
+          </h2>
+          <p className="mt-2 text-sm text-deep/65">
+            Tiempo, coordinación y si llegó fresco y en buen estado.
+          </p>
+          <RatingScale
+            id="delivery"
+            name="deliveryRating"
+            label="Entrega en general"
+            value={form.deliveryRating}
+            onChange={(v) => update("deliveryRating", v)}
+          />
+          <label htmlFor="deliveryComment" className="mt-5 block text-sm font-medium text-deep/80">
+            Detalle de entrega <span className="font-normal text-deep/45">(opcional)</span>
+          </label>
+          <textarea
+            id="deliveryComment"
+            name="deliveryComment"
+            rows={3}
+            maxLength={1000}
+            value={form.deliveryComment}
+            onChange={(e) => update("deliveryComment", e.target.value)}
+            placeholder="Ej. Llegó frío y a tiempo, me avisaron por WhatsApp…"
+            className="textarea textarea-bordered mt-2 w-full rounded-2xl border-base-300 bg-cream/40"
+            disabled={status === "loading"}
+          />
+        </section>
+      )}
 
       {/* Contacto + extra */}
       <section>

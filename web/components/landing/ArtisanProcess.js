@@ -17,7 +17,7 @@ const steps = [
     title: "Lotes pequeños",
     body: "Producimos en lotes controlados para cuidar sabor, textura y frescura. Cada entrega sale reciente de nuestro taller. Por ser una elaboración artesanal, el color, la acidez o las burbujas pueden variar ligeramente entre lotes.",
     image: "/images/proceso-lotes.jpg",
-    alt: "Elaboración artesanal de lotes pequeños en The Good Co.",
+    alt: "Botellas de kombucha The Good Co. listas en lotes pequeños",
   },
 ]
 
@@ -40,7 +40,12 @@ export default function ArtisanProcess() {
         {steps.map((step) => (
           <article key={step.title} className="card-lift overflow-hidden rounded-[2rem] border border-base-300/70 bg-white shadow-sm">
             <div className="relative aspect-[4/3]">
-              <ProductImage src={step.image} alt={step.alt} category="kefir" />
+              <ProductImage
+                src={step.image}
+                alt={step.alt}
+                category="kefir"
+                temporary={false}
+              />
             </div>
             <div className="p-6">
               <h3 className="font-display text-xl font-bold text-deep">{step.title}</h3>

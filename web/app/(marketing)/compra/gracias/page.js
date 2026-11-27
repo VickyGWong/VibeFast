@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation"
 import { CheckCircle2 } from "lucide-react"
 import { products } from "@/data/products"
 import { formatPrice, getGeneralWhatsAppUrl } from "@/lib/whatsapp"
+import { resolvePriceCents, resolveSize } from "@/lib/products/pricing"
 import { trackPurchase } from "@/lib/analytics/track"
 import WhatsAppButton from "@/components/landing/WhatsAppButton"
 
@@ -48,7 +49,7 @@ function PurchaseSuccessContent() {
             <p className="mt-1 text-sm text-deep/70">Variante: {variant.label}</p>
           )}
           <p className="mt-2 text-deep/70">
-            {product.size} · ${formatPrice(product.priceCents)} MXN
+            {resolveSize(product, variant)} · ${formatPrice(resolvePriceCents(product, variant))} MXN
           </p>
         </div>
       )}

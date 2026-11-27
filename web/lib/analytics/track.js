@@ -22,10 +22,11 @@ export function trackEvent(name, properties = {}) {
 
 /** Intención de compra — clic en Mercado Pago */
 export function trackBeginCheckout(product, variant = null) {
+  const value = (variant?.priceCents ?? product.priceCents) / 100
   trackEvent("begin_checkout", {
     product_id: product.id,
     variant_id: variant?.id ?? null,
-    value: product.priceCents / 100,
+    value,
     currency: product.currency,
     channel: "mercadopago",
   })
@@ -33,10 +34,11 @@ export function trackBeginCheckout(product, variant = null) {
 
 /** Compra completada (retorno de MP o webhook futuro) */
 export function trackPurchase(product, variant = null) {
+  const value = (variant?.priceCents ?? product.priceCents) / 100
   trackEvent("purchase", {
     product_id: product.id,
     variant_id: variant?.id ?? null,
-    value: product.priceCents / 100,
+    value,
     currency: product.currency,
     channel: "mercadopago",
   })

@@ -1,4 +1,4 @@
-/** @typedef {{ id: string, label: string, messageLabel: string }} ProductVariant */
+/** @typedef {{ id: string, label: string, messageLabel: string, priceCents?: number, size?: string }} ProductVariant */
 
 /**
  * @typedef {Object} Product
@@ -15,7 +15,7 @@
  * @property {string} imageAlt
  * @property {boolean} featured
  * @property {boolean} active
- * @property {boolean} [comingSoon]
+ * @property {boolean} comingSoon
  * @property {string} whatsappName
  * @property {string} sku
  * @property {number | null} stock
@@ -25,10 +25,23 @@
  * @property {ProductVariant[]} variants
  */
 
-/** Productos que ya se pueden pedir (excluye “próximamente”). */
-export function getAvailableProducts(list = products) {
-  return list.filter((p) => p.active && !p.comingSoon)
-}
+/** Presentaciones compartidas de kombucha */
+const kombuchaSizeVariants = [
+  {
+    id: "1l",
+    label: "1 L",
+    messageLabel: "1 L",
+    size: "1 L",
+    priceCents: 13000,
+  },
+  {
+    id: "500ml",
+    label: "500 ml",
+    messageLabel: "500 ml",
+    size: "500 ml",
+    priceCents: 7000,
+  },
+]
 
 /** @type {Product[]} */
 export const products = [
@@ -44,15 +57,15 @@ export const products = [
     priceCents: 9500,
     currency: "MXN",
     imageUrl: "/images/kefir-natural.jpg",
-    imageAlt: "Botella de kéfir natural The Good Co. de 500 ml",
-    featured: true,
+    imageAlt: "Kéfir natural The Good Co. cremoso en cuchara sobre plato azul",
+    featured: false,
     active: true,
     comingSoon: false,
     whatsappName: "Kéfir natural",
     sku: "KEF-NAT-500",
     stock: null,
     seasonal: false,
-    temporaryImage: true,
+    temporaryImage: false,
     sortOrder: 1,
     variants: [
       { id: "endulzado", label: "Endulzado", messageLabel: "endulzado" },
@@ -71,7 +84,7 @@ export const products = [
     priceCents: 10500,
     currency: "MXN",
     imageUrl: "/images/kefir-fresa.jpg",
-    imageAlt: "Botella de kéfir de fresa The Good Co. de 500 ml",
+    imageAlt: "Kéfir de fresa The Good Co. cremoso con fresas frescas",
     featured: false,
     active: true,
     comingSoon: false,
@@ -79,7 +92,7 @@ export const products = [
     sku: "KEF-FRE-500",
     stock: null,
     seasonal: false,
-    temporaryImage: true,
+    temporaryImage: false,
     sortOrder: 2,
     variants: [
       { id: "endulzado", label: "Endulzado", messageLabel: "endulzado" },
@@ -98,7 +111,7 @@ export const products = [
     priceCents: 10500,
     currency: "MXN",
     imageUrl: "/images/kefir-mango.jpg",
-    imageAlt: "Botella de kéfir de mango The Good Co. de 500 ml",
+    imageAlt: "Kéfir de mango The Good Co. cremoso con cubos de mango",
     featured: false,
     active: true,
     comingSoon: false,
@@ -106,7 +119,7 @@ export const products = [
     sku: "KEF-MAN-500",
     stock: null,
     seasonal: false,
-    temporaryImage: true,
+    temporaryImage: false,
     sortOrder: 3,
     variants: [
       { id: "endulzado", label: "Endulzado", messageLabel: "endulzado" },
@@ -119,22 +132,22 @@ export const products = [
     name: "Kombucha natural",
     flavor: "natural",
     description: "Té fermentado burbujeante, equilibrado y refrescante.",
-    size: "750 ml",
+    size: "1 L",
     weight: null,
-    priceCents: 12000,
+    priceCents: 13000,
     currency: "MXN",
     imageUrl: "/images/kombucha-natural.jpg",
-    imageAlt: "Botella de kombucha natural The Good Co. de 750 ml",
-    featured: false,
+    imageAlt: "Botella de kombucha natural The Good Co. con sticker de mascota",
+    featured: true,
     active: true,
     comingSoon: false,
     whatsappName: "Kombucha natural",
-    sku: "KOM-NAT-750",
+    sku: "KOM-NAT-1L",
     stock: null,
     seasonal: false,
-    temporaryImage: true,
+    temporaryImage: false,
     sortOrder: 4,
-    variants: [],
+    variants: kombuchaSizeVariants,
   },
   {
     id: "kombucha-betabel",
@@ -142,22 +155,22 @@ export const products = [
     name: "Kombucha de betabel-arándano",
     flavor: "betabel-arándano",
     description: "Betabel y arándano orgánicos en un té fermentado con notas terrosas, frutales y burbujas vivas.",
-    size: "750 ml",
+    size: "1 L",
     weight: null,
-    priceCents: 12000,
+    priceCents: 13000,
     currency: "MXN",
     imageUrl: "/images/kombucha-betabel.jpg",
-    imageAlt: "Botella de kombucha de betabel-arándano The Good Co. de 750 ml",
+    imageAlt: "Botella de kombucha de betabel-arándano The Good Co.",
     featured: false,
     active: true,
     comingSoon: true,
     whatsappName: "Kombucha de betabel-arándano",
-    sku: "KOM-BET-750",
+    sku: "KOM-BET-1L",
     stock: null,
     seasonal: false,
     temporaryImage: true,
     sortOrder: 5,
-    variants: [],
+    variants: kombuchaSizeVariants,
   },
   {
     id: "kombucha-mango",
@@ -165,22 +178,22 @@ export const products = [
     name: "Kombucha de mango",
     flavor: "mango",
     description: "Mango orgánico con el carácter burbujeante de la kombucha.",
-    size: "750 ml",
+    size: "1 L",
     weight: null,
-    priceCents: 12000,
+    priceCents: 13000,
     currency: "MXN",
     imageUrl: "/images/kombucha-mango.jpg",
-    imageAlt: "Botella de kombucha de mango The Good Co. de 750 ml",
+    imageAlt: "Botella de kombucha de mango The Good Co.",
     featured: false,
     active: true,
     comingSoon: true,
     whatsappName: "Kombucha de mango",
-    sku: "KOM-MAN-750",
+    sku: "KOM-MAN-1L",
     stock: null,
     seasonal: false,
     temporaryImage: true,
     sortOrder: 6,
-    variants: [],
+    variants: kombuchaSizeVariants,
   },
   {
     id: "kombucha-fresa",
@@ -188,22 +201,22 @@ export const products = [
     name: "Kombucha de fresa",
     flavor: "fresa",
     description: "Fresas orgánicas y fermento vivo en cada sorbo.",
-    size: "750 ml",
+    size: "1 L",
     weight: null,
-    priceCents: 12000,
+    priceCents: 13000,
     currency: "MXN",
     imageUrl: "/images/kombucha-fresa.jpg",
-    imageAlt: "Botella de kombucha de fresa The Good Co. de 750 ml",
+    imageAlt: "Botella de kombucha de fresa The Good Co.",
     featured: false,
     active: true,
     comingSoon: true,
     whatsappName: "Kombucha de fresa",
-    sku: "KOM-FRE-750",
+    sku: "KOM-FRE-1L",
     stock: null,
     seasonal: false,
     temporaryImage: true,
     sortOrder: 7,
-    variants: [],
+    variants: kombuchaSizeVariants,
   },
   {
     id: "tibicos-natural",
@@ -276,11 +289,16 @@ export const products = [
   },
 ]
 
+/** Productos que ya se pueden pedir (excluye “próximamente”). */
+export function getAvailableProducts(list = products) {
+  return list.filter((p) => p.active && !p.comingSoon)
+}
+
 export const categoryDetails = {
   kefir: {
     keep: "Mantener refrigerado. Es un producto vivo: consúmelo frío y dentro de los días que te indicamos al confirmar tu pedido.",
     benefits: [
-      "Textura cremosa, tipo yogurt bebible",
+      "Textura cremosa, tipo yogurt griego",
       "Cultivo vivo sin pasteurizar",
       "Ideal para desayuno, smoothie o snack",
     ],
@@ -317,6 +335,7 @@ export const experienceOptions = [
     subtitle: "Kéfir artesanal",
     description: "Textura suave, probióticos vivos y sabores naturales o frutales.",
     accent: "sky",
+    comingSoon: false,
   },
   {
     id: "kombucha",
@@ -325,13 +344,15 @@ export const experienceOptions = [
     subtitle: "Kombucha",
     description: "Fermento de té con burbujas, frescura y personalidad en cada sorbo.",
     accent: "yellow",
+    comingSoon: false,
   },
   {
     id: "tibicos",
     category: "tibicos",
     title: "Algo ligero y refrescante",
-    subtitle: "Tíbicos",
+    subtitle: "Tíbicos · Próximamente",
     description: "Agua de kefir de frutos, ideal para hidratarte con algo vivo.",
     accent: "orange",
+    comingSoon: true,
   },
 ]
