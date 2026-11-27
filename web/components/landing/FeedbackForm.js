@@ -416,28 +416,27 @@ export default function FeedbackForm() {
             required
             columns="sm:grid-cols-2"
           />
-          {form.sampleChannel === "otro" && (
-            <>
-              <label
-                htmlFor="sampleChannelOther"
-                className="mt-4 block text-sm font-medium text-deep/80"
-              >
-                ¿Cuál?
-              </label>
-              <input
-                id="sampleChannelOther"
-                name="sampleChannelOther"
-                type="text"
-                required
-                maxLength={160}
-                value={form.sampleChannelOther}
-                onChange={(e) => update("sampleChannelOther", e.target.value)}
-                placeholder="Cuéntanos dónde la recibiste"
-                className="input input-bordered mt-2 w-full min-h-12 rounded-2xl border-base-300 bg-cream/40"
-                disabled={status === "loading"}
-              />
-            </>
-          )}
+          <label
+            htmlFor="sampleChannelOther"
+            className="mt-4 block text-sm font-medium text-deep/80"
+          >
+            ¿Cuál?
+            {form.sampleChannel !== "otro" && (
+              <span className="font-normal text-deep/45"> (opcional)</span>
+            )}
+          </label>
+          <input
+            id="sampleChannelOther"
+            name="sampleChannelOther"
+            type="text"
+            required={form.sampleChannel === "otro"}
+            maxLength={160}
+            value={form.sampleChannelOther}
+            onChange={(e) => update("sampleChannelOther", e.target.value)}
+            placeholder="Ej. nombre del evento, mercadito o lugar"
+            className="input input-bordered mt-2 w-full min-h-12 rounded-2xl border-base-300 bg-cream/40"
+            disabled={status === "loading"}
+          />
         </section>
       ) : (
         <section>

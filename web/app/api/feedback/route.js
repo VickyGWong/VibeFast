@@ -106,14 +106,12 @@ export async function POST(request) {
           { status: 400 }
         )
       }
-      if (sampleChannel === "otro") {
-        sampleChannelOther = asOptionalText(body.sampleChannelOther, 160)
-        if (!sampleChannelOther) {
-          return NextResponse.json(
-            { error: "Cuéntanos dónde recibiste la muestra." },
-            { status: 400 }
-          )
-        }
+      sampleChannelOther = asOptionalText(body.sampleChannelOther, 160)
+      if (sampleChannel === "otro" && !sampleChannelOther) {
+        return NextResponse.json(
+          { error: "Cuéntanos dónde recibiste la muestra." },
+          { status: 400 }
+        )
       }
     } else {
       deliveryRating =

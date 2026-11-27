@@ -121,13 +121,15 @@ export async function sendFeedbackNotification(row) {
       ? `  Comentario presentación: ${row.presentation_comment}`
       : null,
     `Cómo lo obtuvo: ${PURCHASE_LABELS[row.purchase_method] || row.purchase_method}`,
-    isFreeSample
-      ? `Lugar de la muestra: ${sampleLabel}${
-          row.sample_channel_other ? ` (${row.sample_channel_other})` : ""
-        }`
-      : row.delivery_rating != null
-        ? `Entrega: ${row.delivery_rating}/10`
-        : "Entrega: (sin calificar)",
+    isFreeSample ? `Lugar de la muestra: ${sampleLabel}` : null,
+    isFreeSample && row.sample_channel_other
+      ? `  ¿Cuál?: ${row.sample_channel_other}`
+      : null,
+    !isFreeSample && row.delivery_rating != null
+      ? `Entrega: ${row.delivery_rating}/10`
+      : !isFreeSample
+        ? "Entrega: (sin calificar)"
+        : null,
     !isFreeSample && row.delivery_comment
       ? `  Comentario entrega: ${row.delivery_comment}`
       : null,
