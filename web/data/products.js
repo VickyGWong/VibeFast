@@ -25,11 +25,6 @@
  * @property {ProductVariant[]} variants
  */
 
-/** Productos que ya se pueden pedir (excluye “próximamente”). */
-export function getAvailableProducts(list = products) {
-  return list.filter((p) => p.active && !p.comingSoon)
-}
-
 /** Presentaciones compartidas de kombucha */
 const kombuchaSizeVariants = [
   {
@@ -293,6 +288,11 @@ export const products = [
     variants: [],
   },
 ]
+
+/** Productos que ya se pueden pedir (excluye “próximamente”). */
+export function getAvailableProducts(list = products) {
+  return list.filter((p) => p.active && !p.comingSoon)
+}
 
 export const categoryDetails = {
   kefir: {
