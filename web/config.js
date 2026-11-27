@@ -212,6 +212,7 @@ const config = {
           title: "Productos",
           links: [
             { label: "Catálogo", href: "/#productos" },
+            { label: "Carta / menú", href: "/menu" },
             { label: "Kéfir", href: "/#kefir-spotlight" },
             { label: "Kombucha", href: "/#productos" },
             { label: "Tíbicos", href: "/#productos" },
