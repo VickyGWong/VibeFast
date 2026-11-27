@@ -144,7 +144,7 @@ const config = {
         },
         {
           q: "¿Hacen entregas en Chihuahua?",
-          a: "Sí, coordinamos entrega local en Chihuahua por WhatsApp. Si estás fuera de la ciudad, escríbenos y vemos opciones.",
+          a: "Sí, en Chihuahua capital. En la sección Entrega de la página principal puedes revisar si tu colonia aplica y, si aplica, cotizar el envío. Otras ciudades solo con entrega especial.",
         },
         {
           q: "¿Cuánto duran los fermentos?",

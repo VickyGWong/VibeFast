@@ -48,7 +48,7 @@ export default function PurchaseSteps() {
             className="btn min-h-11 gap-2 rounded-full border-0 bg-sky px-5 font-ui font-bold text-cream hover:bg-sky/90"
           >
             <MapPin className="size-4" aria-hidden />
-            Descubre las zonas de entrega
+            Revisa si llegamos a tu zona
           </Link>
           <WhatsAppButton source="purchase_steps" label="WhatsApp" />
           <Link
