@@ -128,6 +128,7 @@
   display: grid;
   gap: 0;
   flex: 1;
+  align-items: stretch;
 }
 
 @media (min-width: 700px) {
@@ -139,6 +140,7 @@
 .menu-section {
   padding: 1.1rem 1.2rem 1.15rem;
   color: var(--menu-deep);
+  min-height: 100%;
 }
 
 .menu-board--ready:not(.menu-board--capture) .menu-section {
