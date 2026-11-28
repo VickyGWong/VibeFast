@@ -35,16 +35,15 @@
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    @page {
-      size: A4 portrait;
-      margin: 0;
-    }
+    @page { size: A4 portrait; margin: 0; }
 
     html, body {
       background: #d8d0c4;
       color: var(--deep);
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
+      font-family: "Pally", ui-sans-serif, system-ui, sans-serif;
+      font-weight: 500;
     }
 
     body {
@@ -52,12 +51,9 @@
       display: flex;
       justify-content: center;
       padding: 24px;
-      font-family: "Pally", ui-sans-serif, system-ui, sans-serif;
-      font-weight: 500;
     }
 
-    html.export,
-    html.export body {
+    html.export, html.export body {
       background: var(--cream);
       width: 210mm;
       height: 297mm;
@@ -65,189 +61,260 @@
       padding: 0;
       min-height: 0;
       overflow: hidden;
-    }
-
-    html.export body {
       display: block;
     }
 
     .sheet {
       width: 210mm;
       height: 297mm;
-      background:
-        radial-gradient(circle at 8% 6%, rgba(76, 159, 242, 0.14), transparent 28%),
-        radial-gradient(circle at 92% 10%, rgba(255, 182, 54, 0.18), transparent 24%),
-        radial-gradient(circle at 88% 88%, rgba(251, 106, 64, 0.12), transparent 30%),
-        var(--cream);
       overflow: hidden;
       position: relative;
       display: flex;
       flex-direction: column;
-      padding: 7mm 8mm 6mm;
+      background: var(--cream);
       box-shadow: 0 18px 50px rgba(27, 66, 104, 0.18);
     }
 
-    html.export .sheet {
-      box-shadow: none;
+    html.export .sheet { box-shadow: none; }
+
+    .cite {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 5.5pt;
+      font-weight: 600;
+      color: rgba(27, 66, 104, 0.42);
+      vertical-align: super;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      height: 58mm;
+      overflow: hidden;
+      background: var(--deep);
+      color: var(--cream);
+      flex-shrink: 0;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.42;
+    }
+
+    .hero-veil {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(105deg, rgba(27,66,104,0.92) 0%, rgba(27,66,104,0.72) 48%, rgba(76,159,242,0.35) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      padding: 5mm 7mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
     .brand-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 2.5mm;
     }
 
     .brand img {
-      width: 10mm;
-      height: 10mm;
-      border-radius: 3mm;
+      width: 9mm;
+      height: 9mm;
+      border-radius: 2.4mm;
+      background: var(--sky);
     }
 
     .brand-name {
       font-family: "Basique", sans-serif;
-      font-size: 13pt;
+      font-size: 12pt;
       letter-spacing: 0.02em;
-      color: var(--deep);
       line-height: 1;
     }
 
-    .eyebrow {
-      font-family: "Pally", sans-serif;
-      font-weight: 700;
-      font-size: 7.5pt;
-      letter-spacing: 0.16em;
+    .brand-sub {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 6.5pt;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--sky);
+      color: var(--yellow);
+      margin-top: 0.8mm;
     }
 
     .city {
       font-family: "Bahnschrift", sans-serif;
-      font-size: 8pt;
-      color: rgba(27, 66, 104, 0.65);
+      font-size: 7pt;
       text-align: right;
+      color: rgba(248, 241, 231, 0.75);
     }
 
     h1 {
       font-family: "Pally", sans-serif;
       font-weight: 700;
-      font-size: 17.5pt;
-      line-height: 1.08;
-      margin-top: 2.5mm;
-      max-width: 170mm;
-      color: var(--deep);
+      font-size: 16.5pt;
+      line-height: 1.05;
+      max-width: 130mm;
     }
 
-    .lede {
-      margin-top: 1.6mm;
-      font-size: 6.8pt;
-      line-height: 1.35;
-      color: rgba(27, 66, 104, 0.78);
-      max-width: 175mm;
+    .hero-chips {
+      display: flex;
+      gap: 2mm;
+      flex-wrap: wrap;
     }
 
-    .cite {
+    .hero-chip {
       font-family: "Bahnschrift", sans-serif;
       font-size: 6.5pt;
-      font-weight: 600;
-      color: rgba(27, 66, 104, 0.48);
-      vertical-align: super;
-      white-space: nowrap;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--cream);
+      color: var(--deep);
+      border-radius: 999px;
+      padding: 1.1mm 2.6mm;
     }
 
-    .grid-2 {
+    .hero-chip.sky { background: var(--sky); color: var(--cream); }
+    .hero-chip.yellow { background: var(--yellow); color: var(--deep); }
+    .hero-chip.orange { background: var(--orange); color: var(--cream); }
+
+    /* ===== BODY ===== */
+    .body {
+      flex: 1;
+      padding: 4.5mm 7mm 3.5mm;
+      display: flex;
+      flex-direction: column;
+      gap: 3.5mm;
+      min-height: 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 2.5mm;
+    }
+
+    .num {
+      width: 7.5mm;
+      height: 7.5mm;
+      border-radius: 999px;
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 3mm;
-      margin-top: 3mm;
-    }
-
-    .panel {
-      border-radius: 4.5mm;
-      padding: 3mm 3.2mm;
-      border: 1px solid rgba(27, 66, 104, 0.08);
-      background: rgba(255, 255, 255, 0.72);
-    }
-
-    .panel h2,
-    .section-title {
+      place-items: center;
       font-family: "Pally", sans-serif;
       font-weight: 700;
       font-size: 10pt;
-      line-height: 1.15;
-      color: var(--deep);
-    }
-
-    .step {
-      font-family: "Pally", sans-serif;
-      font-weight: 700;
-      font-size: 7pt;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-bottom: 1.2mm;
-    }
-
-    .step.sky { color: var(--sky); }
-    .step.orange { color: var(--orange); }
-    .step.coral { color: var(--coral); }
-
-    .panel p {
-      margin-top: 1.2mm;
-      font-size: 7.5pt;
-      line-height: 1.32;
-      color: rgba(27, 66, 104, 0.78);
-    }
-
-    .aside {
-      background: rgba(76, 159, 242, 0.12);
-      border-color: rgba(76, 159, 242, 0.28);
-    }
-
-    .aside h3 {
-      font-family: "Pally", sans-serif;
-      font-weight: 700;
-      font-size: 8.5pt;
-      margin-bottom: 2mm;
-    }
-
-    .aside ul {
-      list-style: none;
-      display: grid;
-      gap: 1.2mm;
-    }
-
-    .aside li {
-      display: flex;
-      gap: 2mm;
-      align-items: flex-start;
-      font-size: 6.8pt;
-      line-height: 1.3;
-      color: rgba(27, 66, 104, 0.82);
-    }
-
-    .dot {
-      width: 2.2mm;
-      height: 2.2mm;
-      border-radius: 999px;
-      background: var(--yellow);
-      margin-top: 1.4mm;
+      color: var(--cream);
       flex-shrink: 0;
     }
 
-    .benefits {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.2mm;
-      margin-top: 2mm;
+    .num.sky { background: var(--sky); }
+    .num.orange { background: var(--orange); }
+    .num.yellow { background: var(--yellow); color: var(--deep); }
+    .num.coral { background: var(--coral); }
+
+    .section-head h2 {
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 11pt;
+      line-height: 1.1;
     }
 
-    .card {
+    .section-head p {
+      font-size: 7pt;
+      color: rgba(27, 66, 104, 0.65);
+      margin-top: 0.4mm;
+    }
+
+    /* Paso 1: 3 big bubbles */
+    .bubbles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5mm;
+    }
+
+    .bubble {
+      border-radius: 4mm;
+      padding: 3mm 2.8mm;
+      text-align: center;
+      background: #fff;
+      border: 1px solid rgba(27, 66, 104, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bubble::before {
+      content: "";
+      position: absolute;
+      width: 18mm;
+      height: 18mm;
+      border-radius: 999px;
+      top: -6mm;
+      right: -5mm;
+      opacity: 0.35;
+    }
+
+    .bubble.a { background: rgba(76, 159, 242, 0.12); }
+    .bubble.a::before { background: var(--sky); }
+    .bubble.b { background: rgba(255, 182, 54, 0.18); }
+    .bubble.b::before { background: var(--yellow); }
+    .bubble.c { background: rgba(251, 106, 64, 0.12); }
+    .bubble.c::before { background: var(--orange); }
+
+    .bubble-icon {
+      width: 9mm;
+      height: 9mm;
+      margin: 0 auto 1.5mm;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .bubble.a .bubble-icon { background: var(--sky); color: var(--cream); }
+    .bubble.b .bubble-icon { background: var(--yellow); color: var(--deep); }
+    .bubble.c .bubble-icon { background: var(--orange); color: var(--cream); }
+
+    .bubble h3 {
+      position: relative;
+      z-index: 1;
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 9pt;
+      margin-bottom: 1mm;
+    }
+
+    .bubble p {
+      position: relative;
+      z-index: 1;
+      font-size: 6.8pt;
+      line-height: 1.25;
+      color: rgba(27, 66, 104, 0.75);
+    }
+
+    /* Paso 2: product split */
+    .products {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .product {
       border-radius: 4.5mm;
       overflow: hidden;
       background: #fff;
@@ -257,201 +324,257 @@
       min-height: 0;
     }
 
-    .card-head {
-      display: flex;
-      align-items: center;
-      gap: 2.5mm;
-      padding: 2.4mm 2.8mm;
-      color: var(--cream);
+    .product-photo {
+      height: 32mm;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card-head.kefir { background: var(--sky); }
-    .card-head.kombucha { background: var(--yellow); color: var(--deep); }
+    .product-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
 
-    .badge-icon {
-      width: 7mm;
-      height: 7mm;
+    .product-photo .label {
+      position: absolute;
+      left: 2.5mm;
+      bottom: 2.5mm;
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 11pt;
+      padding: 1.2mm 2.8mm;
       border-radius: 999px;
+    }
+
+    .product.kefir .label { background: var(--sky); color: var(--cream); }
+    .product.kombucha .label { background: var(--yellow); color: var(--deep); }
+
+    .product-body {
+      padding: 2.5mm;
       display: grid;
-      place-items: center;
-      background: rgba(255, 255, 255, 0.22);
-      flex-shrink: 0;
+      gap: 1.5mm;
     }
 
-    .card-head h3 {
-      font-family: "Pally", sans-serif;
-      font-weight: 700;
-      font-size: 10.5pt;
-      line-height: 1;
-    }
-
-    .card-head span {
-      display: block;
-      margin-top: 0.8mm;
-      font-size: 7pt;
-      opacity: 0.85;
-    }
-
-    .card ul {
-      list-style: none;
-      padding: 2.4mm 2.8mm 2.6mm;
-      display: grid;
-      gap: 1.6mm;
-    }
-
-    .card li strong {
-      display: block;
-      font-family: "Pally", sans-serif;
-      font-weight: 700;
-      font-size: 7.8pt;
-      color: var(--deep);
-      margin-bottom: 0.6mm;
-    }
-
-    .card li p {
-      font-size: 7pt;
-      line-height: 1.3;
-      color: rgba(27, 66, 104, 0.75);
-    }
-
-    .combo-block {
-      margin-top: 2.6mm;
-    }
-
-    .combo-block > p {
-      margin-top: 1.5mm;
-      font-size: 6.8pt;
-      line-height: 1.32;
-      color: rgba(27, 66, 104, 0.75);
-      max-width: 190mm;
-    }
-
-    .combos {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2.2mm;
-      margin-top: 2mm;
-    }
-
-    .combo {
-      background: #fff;
-      border: 1px solid rgba(27, 66, 104, 0.08);
-      border-radius: 3.5mm;
-      padding: 2mm 2.4mm;
-    }
-
-    .pill {
-      display: inline-block;
-      font-family: "Bahnschrift", sans-serif;
-      font-size: 6.5pt;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border-radius: 999px;
-      padding: 0.8mm 2.2mm;
-      margin-bottom: 1.2mm;
-    }
-
-    .pill.a { background: var(--sky); color: var(--cream); }
-    .pill.b { background: var(--yellow); color: var(--deep); }
-    .pill.c { background: var(--orange); color: var(--cream); }
-    .pill.d { background: var(--coral); color: var(--cream); }
-
-    .combo h4 {
-      font-family: "Pally", sans-serif;
-      font-weight: 700;
-      font-size: 8pt;
-      color: var(--deep);
-    }
-
-    .combo p {
-      margin-top: 0.8mm;
-      font-size: 6.8pt;
-      line-height: 1.28;
-      color: rgba(27, 66, 104, 0.72);
-    }
-
-    .foods {
-      margin-top: 2.5mm;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.8mm;
-    }
-
-    .food {
-      background: rgba(255, 255, 255, 0.85);
-      border: 1px solid rgba(27, 66, 104, 0.08);
-      border-radius: 3.2mm;
-      padding: 1.8mm 2mm;
+    .benefit {
       display: flex;
       gap: 2mm;
       align-items: flex-start;
     }
 
-    .food-icon {
-      width: 6.2mm;
-      height: 6.2mm;
-      border-radius: 2mm;
+    .benefit-mark {
+      width: 4.5mm;
+      height: 4.5mm;
+      border-radius: 999px;
+      flex-shrink: 0;
+      margin-top: 0.4mm;
       display: grid;
       place-items: center;
-      flex-shrink: 0;
-      font-size: 8pt;
-      line-height: 1;
     }
 
-    .food h5 {
+    .product.kefir .benefit-mark { background: rgba(76, 159, 242, 0.2); color: var(--sky); }
+    .product.kombucha .benefit-mark { background: rgba(255, 182, 54, 0.35); color: var(--deep); }
+
+    .benefit strong {
+      display: block;
       font-family: "Pally", sans-serif;
       font-weight: 700;
-      font-size: 7.8pt;
+      font-size: 7.5pt;
+      line-height: 1.15;
+    }
+
+    .benefit span {
+      display: block;
+      font-size: 6.5pt;
+      line-height: 1.2;
+      color: rgba(27, 66, 104, 0.68);
+      margin-top: 0.3mm;
+    }
+
+    /* Paso 3: formula + combos */
+    .formula {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 2mm;
+      align-items: stretch;
+    }
+
+    .formula-card {
+      border-radius: 3.5mm;
+      padding: 2.4mm 2mm;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1mm;
+      min-height: 18mm;
+    }
+
+    .formula-card.live {
+      background: var(--sky);
+      color: var(--cream);
+    }
+
+    .formula-card.fiber {
+      background: var(--yellow);
       color: var(--deep);
     }
 
-    .food p {
-      margin-top: 0.5mm;
-      font-size: 7pt;
-      line-height: 1.25;
-      color: rgba(27, 66, 104, 0.7);
+    .formula-card.result {
+      background: var(--orange);
+      color: var(--cream);
     }
 
-    .tip {
-      margin-top: 2mm;
-      background: rgba(251, 106, 64, 0.12);
+    .formula-card strong {
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 8.5pt;
+      line-height: 1.1;
+    }
+
+    .formula-card span {
+      font-size: 6.2pt;
+      line-height: 1.2;
+      opacity: 0.9;
+    }
+
+    .op {
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 14pt;
+      color: var(--deep);
+      display: grid;
+      place-items: center;
+    }
+
+    .combos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2mm;
+    }
+
+    .combo {
+      border-radius: 3.5mm;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid rgba(27, 66, 104, 0.08);
+      position: relative;
+    }
+
+    .combo-photo {
+      height: 18mm;
+      position: relative;
+    }
+
+    .combo-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .combo-photo .tint {
+      position: absolute;
+      inset: 0;
+      mix-blend-mode: multiply;
+      opacity: 0.35;
+    }
+
+    .combo:nth-child(1) .tint { background: var(--sky); }
+    .combo:nth-child(2) .tint { background: var(--yellow); }
+    .combo:nth-child(3) .tint { background: var(--orange); }
+    .combo:nth-child(4) .tint { background: var(--coral); }
+
+    .combo-body {
+      padding: 1.8mm 2mm 2.2mm;
+    }
+
+    .combo-body .when {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 5.8pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.8mm;
+    }
+
+    .combo:nth-child(1) .when { color: var(--sky); }
+    .combo:nth-child(2) .when { color: #c98900; }
+    .combo:nth-child(3) .when { color: var(--orange); }
+    .combo:nth-child(4) .when { color: var(--coral); }
+
+    .combo-body h3 {
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 7.2pt;
+      line-height: 1.15;
+    }
+
+    /* Paso 4: food row */
+    .foods {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1.8mm;
+    }
+
+    .food {
       border-radius: 3.2mm;
-      padding: 1.8mm 2.4mm;
-      font-size: 7pt;
-      line-height: 1.3;
-      color: rgba(27, 66, 104, 0.8);
+      padding: 2mm 1.2mm;
+      text-align: center;
+      background: #fff;
+      border: 1px solid rgba(27, 66, 104, 0.08);
     }
 
-    .tip strong {
+    .food-icon {
+      width: 8mm;
+      height: 8mm;
+      margin: 0 auto 1.2mm;
+      border-radius: 2.2mm;
+      display: grid;
+      place-items: center;
+    }
+
+    .food:nth-child(1) .food-icon { background: rgba(255,182,54,0.35); color: var(--deep); }
+    .food:nth-child(2) .food-icon { background: rgba(76,159,242,0.22); color: var(--deep); }
+    .food:nth-child(3) .food-icon { background: rgba(255,74,74,0.18); color: var(--deep); }
+    .food:nth-child(4) .food-icon { background: rgba(251,106,64,0.2); color: var(--deep); }
+    .food:nth-child(5) .food-icon { background: rgba(76,159,242,0.16); color: var(--deep); }
+    .food:nth-child(6) .food-icon { background: rgba(255,182,54,0.28); color: var(--deep); }
+
+    .food strong {
+      display: block;
       font-family: "Pally", sans-serif;
       font-weight: 700;
-      color: var(--deep);
+      font-size: 6.8pt;
+      line-height: 1.15;
     }
 
+    /* Footer */
     .footer {
       margin-top: auto;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3mm;
       padding-top: 2mm;
       border-top: 1px solid rgba(27, 66, 104, 0.12);
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 3mm;
-      align-items: end;
     }
 
     .sources {
-      font-size: 5.5pt;
-      line-height: 1.35;
-      color: rgba(27, 66, 104, 0.55);
+      font-size: 5pt;
+      line-height: 1.3;
+      color: rgba(27, 66, 104, 0.5);
+      max-width: 135mm;
     }
 
     .sources strong {
       display: block;
       font-family: "Pally", sans-serif;
       font-weight: 700;
-      font-size: 7pt;
-      color: rgba(27, 66, 104, 0.72);
-      margin-bottom: 0.8mm;
+      font-size: 6pt;
+      color: rgba(27, 66, 104, 0.65);
+      margin-bottom: 0.5mm;
     }
 
     .tagline {
@@ -460,28 +583,21 @@
       font-weight: 700;
       font-size: 8.5pt;
       color: var(--deep);
+      white-space: nowrap;
     }
 
     .tagline small {
       display: block;
-      margin-top: 0.8mm;
+      margin-top: 0.6mm;
       font-family: "Bahnschrift", sans-serif;
       font-weight: 500;
-      font-size: 6.5pt;
+      font-size: 5.8pt;
       color: rgba(27, 66, 104, 0.55);
     }
 
     @media print {
-      body {
-        background: none;
-        padding: 0;
-        display: block;
-      }
-      .sheet {
-        box-shadow: none;
-        width: 210mm;
-        height: 297mm;
-      }
+      body { background: none; padding: 0; display: block; }
+      .sheet { box-shadow: none; }
     }
   </style>
   <script>
@@ -492,225 +608,283 @@
 </head>
 <body>
   <article class="sheet" id="infografia">
-    <header class="brand-row">
-      <div class="brand">
-        <img src="../logo.svg" alt="" />
-        <div>
-          <div class="brand-name">THE GOOD CO.</div>
-          <div class="eyebrow">Infografía · Fermentos vivos</div>
+    <header class="hero">
+      <img class="hero-img" src="./assets/hero.jpg" alt="" />
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="brand-row">
+          <div class="brand">
+            <img src="../logo.svg" alt="" />
+            <div>
+              <div class="brand-name">THE GOOD CO.</div>
+              <div class="brand-sub">Infografía · Fermentos vivos</div>
+            </div>
+          </div>
+          <div class="city">Chihuahua, México<br />@co.thegood</div>
+        </div>
+        <h1>Probióticos, kéfir y kombucha… sin dormirte en la explicación</h1>
+        <div class="hero-chips">
+          <span class="hero-chip sky">Qué son</span>
+          <span class="hero-chip yellow">Beneficios</span>
+          <span class="hero-chip orange">Con qué combinarlos</span>
         </div>
       </div>
-      <div class="city">Chihuahua, México<br />@co.thegood</div>
     </header>
 
-    <h1>Probióticos, kéfir y kombucha… sin que te duerma la explicación</h1>
-    <p class="lede">
-      Lo importante, en español de a diario: qué son esos microorganismos amigables,
-      por qué el kéfir y la kombucha pueden acompañarte, y con qué comiditas se llevan mejor.
-    </p>
-
-    <div class="grid-2">
-      <section class="panel">
-        <div class="step sky">Paso 1 · Lo básico</div>
-        <h2>¿Qué son los probióticos?</h2>
-        <p>
-          Microorganismos vivos que, en la cantidad adecuada, pueden aportar un beneficio a tu salud.
-          <span class="cite">ISAPP, 2014</span>
-          No son magia: son “bichitos buenos” que llegan vivos y, si el contexto ayuda, hacen su chamba.
-        </p>
-        <p>
-          Ojo: un fermento (kéfir o kombucha) trae cultivos vivos, pero no todo fermento se etiqueta
-          automáticamente como “probiótico”; eso pide evidencia específica.
-          <span class="cite">ISAPP, 2021</span>
-        </p>
+    <div class="body">
+      <!-- 1 -->
+      <section>
+        <div class="section-head">
+          <span class="num sky">1</span>
+          <div>
+            <h2>¿Qué son los probióticos?</h2>
+            <p>Bichitos buenos vivos. Así de simple. <span class="cite">ISAPP, 2014</span></p>
+          </div>
+        </div>
+        <div class="bubbles" style="margin-top: 2.2mm;">
+          <div class="bubble a">
+            <div class="bubble-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <h3>Vivos</h3>
+            <p>Llegan activos. Sin pasteurizar a muerte.</p>
+          </div>
+          <div class="bubble b">
+            <div class="bubble-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 14h6v6H4z"/><path d="M10 8h6v12h-6z"/><path d="M16 4h4v16h-4z"/></svg>
+            </div>
+            <h3>En cantidad</h3>
+            <p>No basta “un poquito simbólico”.</p>
+          </div>
+          <div class="bubble c">
+            <div class="bubble-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m5 12 5 5L20 7"/></svg>
+            </div>
+            <h3>Con evidencia</h3>
+            <p>Beneficio documentado, no solo vibes. <span class="cite">ISAPP, 2021</span></p>
+          </div>
+        </div>
       </section>
 
-      <aside class="panel aside">
-        <h3>Traducción casera</h3>
-        <ul>
-          <li><span class="dot"></span><span>Vivos (no pasteurizados a muerte).</span></li>
-          <li><span class="dot"></span><span>En cantidad que importe.</span></li>
-          <li><span class="dot"></span><span>Con beneficio documentado — no solo “suena sano”.</span></li>
-        </ul>
-      </aside>
-    </div>
-
-    <section class="combo-block">
-      <div class="step orange">Paso 2 · Por qué te pueden caer bien</div>
-      <h2 class="section-title">Beneficios de consumir kéfir y kombucha</h2>
-      <p>Sin milagros: lo que sí se ha visto en investigación seria.</p>
-    </section>
-
-    <div class="benefits">
-      <article class="card">
-        <div class="card-head kefir">
-          <div class="badge-icon" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2h8"/><path d="M9 2v2.4a2 2 0 0 1-.4 1.2L7 8h10l-1.6-2.4A2 2 0 0 1 15 4.4V2"/><path d="M7 8h10v11a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3V8z"/></svg>
-          </div>
+      <!-- 2 -->
+      <section>
+        <div class="section-head">
+          <span class="num orange">2</span>
           <div>
-            <h3>Kéfir</h3>
-            <span>Cremoso, lácteo y con carácter</span>
+            <h2>Kéfir y kombucha: qué puedes notar</h2>
+            <p>Ciencia con los pies en la tierra — sin milagros de Instagram.</p>
           </div>
         </div>
-        <ul>
-          <li>
-            <strong>Diversidad intestinal</strong>
-            <p>Dieta rica en fermentados (incluido kéfir) aumentó la diversidad del microbioma en adultos sanos. <span class="cite">Stanford / Cell, 2021</span></p>
-          </li>
-          <li>
-            <strong>Menos señales de inflamación</strong>
-            <p>Bajaron varias proteínas inflamatorias en sangre, entre ellas la IL-6. <span class="cite">Stanford / Cell, 2021</span></p>
-          </li>
-          <li>
-            <strong>Digestión con más evidencia</strong>
-            <p>Uno de los fermentos con más ensayos GI; indicios favorables con lactosa. <span class="cite">King’s College, 2019</span></p>
-          </li>
-        </ul>
-      </article>
+        <div class="products" style="margin-top: 2.2mm;">
+          <article class="product kefir">
+            <div class="product-photo">
+              <img src="./assets/kefir.jpg" alt="Kéfir The Good Co." />
+              <span class="label">Kéfir</span>
+            </div>
+            <div class="product-body">
+              <div class="benefit">
+                <span class="benefit-mark" aria-hidden="true">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+                </span>
+                <div>
+                  <strong>Más diversidad intestinal</strong>
+                  <span>Dieta fermentada ↑ microbioma. <span class="cite">Stanford / Cell, 2021</span></span>
+                </div>
+              </div>
+              <div class="benefit">
+                <span class="benefit-mark" aria-hidden="true">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+                </span>
+                <div>
+                  <strong>Menos señales de inflamación</strong>
+                  <span>Bajaron varias proteínas, incl. IL-6. <span class="cite">Stanford, 2021</span></span>
+                </div>
+              </div>
+              <div class="benefit">
+                <span class="benefit-mark" aria-hidden="true">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+                </span>
+                <div>
+                  <strong>Digestión con más evidencia</strong>
+                  <span>Uno de los fermentos más estudiados. <span class="cite">King’s College, 2019</span></span>
+                </div>
+              </div>
+            </div>
+          </article>
 
-      <article class="card">
-        <div class="card-head kombucha">
-          <div class="badge-icon" aria-hidden="true">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-4-7-11-7-11S5 11 5 15a7 7 0 0 0 7 7z"/></svg>
-          </div>
+          <article class="product kombucha">
+            <div class="product-photo">
+              <img src="./assets/kombucha.jpg" alt="Kombucha The Good Co." />
+              <span class="label">Kombucha</span>
+            </div>
+            <div class="product-body">
+              <div class="benefit">
+                <span class="benefit-mark" aria-hidden="true">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+                </span>
+                <div>
+                  <strong>Parte del pack fermentado</strong>
+                  <span>También sumó diversidad en Stanford. <span class="cite">Cell, 2021</span></span>
+                </div>
+              </div>
+              <div class="benefit">
+                <span class="benefit-mark" aria-hidden="true">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+                </span>
+                <div>
+                  <strong>Apoyo digestivo emergente</strong>
+                  <span>Indicios en síntomas GI. <span class="cite">Revisión, 2025</span></span>
+                </div>
+              </div>
+              <div class="benefit">
+                <span class="benefit-mark" aria-hidden="true">
+                  <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+                </span>
+                <div>
+                  <strong>Aún se investiga más</strong>
+                  <span>Menos ensayos que el kéfir. No es medicamento. <span class="cite">ISAPP, 2021</span></span>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3 -->
+      <section>
+        <div class="section-head">
+          <span class="num yellow">3</span>
           <div>
-            <h3>Kombucha</h3>
-            <span>Té fermentado con burbujas</span>
+            <h2>Combínalos y súmale potencia</h2>
+            <p>Fermento vivo + fibra de plantas = mejor compañía. <span class="cite">ISAPP, 2017 · 2020</span></p>
           </div>
         </div>
-        <ul>
-          <li>
-            <strong>Parte del pack fermentado</strong>
-            <p>También entró en el menú del ensayo de Stanford: más diversidad cuando sube el consumo de fermentos. <span class="cite">Stanford / Cell, 2021</span></p>
-          </li>
-          <li>
-            <strong>Síntomas digestivos</strong>
-            <p>Revisión de ensayos clínicos: indicios de alivio gastrointestinal y cambios modestos en microbiota. <span class="cite">Revisión, 2025</span></p>
-          </li>
-          <li>
-            <strong>Con los pies en la tierra</strong>
-            <p>La evidencia humana aún es más chiquita que la del kéfir. Se investiga; no es tratamiento médico. <span class="cite">ISAPP, 2021</span></p>
-          </li>
-        </ul>
-      </article>
+
+        <div class="formula" style="margin-top: 2mm;">
+          <div class="formula-card live">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="10" r="3"/><circle cx="15" cy="14" r="2.5"/><circle cx="16" cy="7" r="2"/></svg>
+            <strong>Fermento vivo</strong>
+            <span>Kéfir o kombucha</span>
+          </div>
+          <div class="op" aria-hidden="true">+</div>
+          <div class="formula-card fiber">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c4-4 7-8 7-12a5 5 0 0 0-10 0c0 4 3 8 7 12z"/><path d="M12 8V3"/></svg>
+            <strong>Fibra / prebiótico</strong>
+            <span>Comida para tus bichitos</span>
+          </div>
+          <div class="op" aria-hidden="true">=</div>
+          <div class="formula-card result">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 1.8 5.5H20l-4.5 3.4 1.7 5.5L12 14.2 6.8 17.4 8.5 12 4 8.5h6.2z"/></svg>
+            <strong>Equipo completo</strong>
+            <span>Idea tipo sinbiótico</span>
+          </div>
+        </div>
+
+        <div class="combos" style="margin-top: 2.2mm;">
+          <article class="combo">
+            <div class="combo-photo">
+              <img src="./assets/desayuno.jpg" alt="" />
+              <div class="tint" aria-hidden="true"></div>
+            </div>
+            <div class="combo-body">
+              <div class="when">Desayuno</div>
+              <h3>Kéfir + avena + plátano</h3>
+            </div>
+          </article>
+          <article class="combo">
+            <div class="combo-photo">
+              <img src="./assets/comida.jpg" alt="" />
+              <div class="tint" aria-hidden="true"></div>
+            </div>
+            <div class="combo-body">
+              <div class="when">Comida</div>
+              <h3>Kombucha + verduras</h3>
+            </div>
+          </article>
+          <article class="combo">
+            <div class="combo-photo">
+              <img src="./assets/lineup.jpg" alt="" />
+              <div class="tint" aria-hidden="true"></div>
+            </div>
+            <div class="combo-body">
+              <div class="when">Entre horas</div>
+              <h3>Kéfir + granola + fruta</h3>
+            </div>
+          </article>
+          <article class="combo">
+            <div class="combo-photo">
+              <img src="./assets/textura.jpg" alt="" />
+              <div class="tint" aria-hidden="true"></div>
+            </div>
+            <div class="combo-body">
+              <div class="when">Tarde</div>
+              <h3>Kombucha bien fría</h3>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- 4 -->
+      <section>
+        <div class="section-head">
+          <span class="num coral">4</span>
+          <div>
+            <h2>Despensa amiga</h2>
+            <p>Alimentos con fibra tipo prebiótico para acompañarlos. <span class="cite">ISAPP guía</span></p>
+          </div>
+        </div>
+        <div class="foods" style="margin-top: 2mm;">
+          <div class="food">
+            <div class="food-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13c0 4 3 8 8 8s7-2 8-7c1-5-2-10-7-11-1 4-4 7-9 10z"/></svg>
+            </div>
+            <strong>Plátano</strong>
+          </div>
+          <div class="food">
+            <div class="food-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 22 16 8"/><path d="M3.5 15.5c2-2 4-3.5 6.5-4"/><path d="M20 2c-2 4-5 7-10 9"/></svg>
+            </div>
+            <strong>Avena</strong>
+          </div>
+          <div class="food">
+            <div class="food-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20c4-3 7-6 7-10a5 5 0 0 0-10 0c0 4 3 7 7 10z"/><path d="M12 7V3"/></svg>
+            </div>
+            <strong>Manzana</strong>
+          </div>
+          <div class="food">
+            <div class="food-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 7"/><path d="M12.5 4C14 7 14 10 12 13"/><path d="M15 20a7 7 0 0 0 1-10"/></svg>
+            </div>
+            <strong>Cebolla / ajo</strong>
+          </div>
+          <div class="food">
+            <div class="food-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21h10"/><path d="M12 21V11"/><path d="M7 8c2-3 4-4 5-4s3 1 5 4"/><path d="M5 11h14"/></svg>
+            </div>
+            <strong>Hojas verdes</strong>
+          </div>
+          <div class="food">
+            <div class="food-icon" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 1.5 5H19l-4 3 1.5 5L12 13l-4.5 3L9 11 5 8h5.5z"/></svg>
+            </div>
+            <strong>Legumbres</strong>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="sources">
+          <strong>Fuentes · info educativa, no consejo médico</strong>
+          Hill et al. ISAPP 2014 · Gibson et al. ISAPP 2017 · Swanson et al. ISAPP 2020 · Marco et al. ISAPP 2021 ·
+          Wastyk et al. Cell / Stanford 2021 · Dimidi et al. King’s College 2019 · Meta-análisis kéfir 2021 · Revisión kombucha 2025
+        </div>
+        <div class="tagline">
+          Buenos no, excelentes.
+          <small>Fermentos muy vivitos · thegoodco.com.mx</small>
+        </div>
+      </footer>
     </div>
-
-    <section class="combo-block">
-      <div class="step coral">Paso 3 · El dúo dinámico</div>
-      <h2 class="section-title">¿Con qué combinarlos para potenciar beneficios?</h2>
-      <p>
-        Los <strong>prebióticos</strong> son “comida” para tus microorganismos.
-        <span class="cite">ISAPP, 2017</span>
-        Juntar microorganismos vivos + esos sustratos se acerca a la idea de un <strong>sinbiótico</strong>.
-        <span class="cite">ISAPP, 2020</span>
-        En la práctica: acompaña tu fermento con fibra de plantas.
-        <span class="cite">ISAPP guía</span>
-      </p>
-    </section>
-
-    <div class="combos">
-      <div class="combo">
-        <span class="pill a">Desayuno</span>
-        <h4>Kéfir + avena + plátano</h4>
-        <p>Bowl cremoso. Los cultivitos llegan con compañía fibrosa.</p>
-      </div>
-      <div class="combo">
-        <span class="pill b">Comida</span>
-        <h4>Kombucha + verduras</h4>
-        <p>En vez del refresco, un sorbo vivo junto a tu plato de siempre.</p>
-      </div>
-      <div class="combo">
-        <span class="pill c">Entre horas</span>
-        <h4>Kéfir + granola + fruta</h4>
-        <p>Snack sin complicarte: cremoso, fresco y con textura.</p>
-      </div>
-      <div class="combo">
-        <span class="pill d">Tarde</span>
-        <h4>Kombucha bien fría</h4>
-        <p>Burbujas para bajarle al calor. Sin sermón, solo gusto.</p>
-      </div>
-    </div>
-
-    <section class="combo-block">
-      <div class="step sky">Paso 4 · Despensa amiga</div>
-      <h2 class="section-title">Otros alimentos que les caen de perlas</h2>
-    </section>
-
-    <div class="foods">
-      <div class="food">
-        <div class="food-icon" style="background:#ffb63640;color:#1b4268">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 13c0 4 3 8 8 8s7-2 8-7c1-5-2-10-7-11-1 4-4 7-9 10z"/></svg>
-        </div>
-        <div>
-          <h5>Plátano</h5>
-          <p>Fibra amable con el kéfir matutino.</p>
-        </div>
-      </div>
-      <div class="food">
-        <div class="food-icon" style="background:#4c9ff233;color:#1b4268">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 22 16 8"/><path d="M3.5 15.5c2-2 4-3.5 6.5-4"/><path d="M20 2c-2 4-5 7-10 9"/></svg>
-        </div>
-        <div>
-          <h5>Avena</h5>
-          <p>Bowl o smoothie con kéfir natural.</p>
-        </div>
-      </div>
-      <div class="food">
-        <div class="food-icon" style="background:#ff4a4a22;color:#1b4268">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20c4-3 7-6 7-10a5 5 0 0 0-10 0c0 4 3 7 7 10z"/><path d="M12 7V3"/></svg>
-        </div>
-        <div>
-          <h5>Manzana</h5>
-          <p>Pectina y crujiente al lado del fermento.</p>
-        </div>
-      </div>
-      <div class="food">
-        <div class="food-icon" style="background:#fb6a4026;color:#1b4268">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 7"/><path d="M12.5 4C14 7 14 10 12 13"/><path d="M15 20a7 7 0 0 0 1-10"/></svg>
-        </div>
-        <div>
-          <h5>Cebolla y ajo</h5>
-          <p>En comidas reales; la kombucha acompaña.</p>
-        </div>
-      </div>
-      <div class="food">
-        <div class="food-icon" style="background:#4c9ff222;color:#1b4268">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 21h10"/><path d="M12 21V11"/><path d="M7 8c2-3 4-4 5-4s3 1 5 4"/><path d="M5 11h14"/></svg>
-        </div>
-        <div>
-          <h5>Verduras de hoja</h5>
-          <p>Ensalada + kombucha = combo fresco.</p>
-        </div>
-      </div>
-      <div class="food">
-        <div class="food-icon" style="background:#ffb63633;color:#1b4268">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3 1.5 5H19l-4 3 1.5 5L12 13l-4.5 3L9 11 5 8h5.5z"/></svg>
-        </div>
-        <div>
-          <h5>Legumbres</h5>
-          <p>Fibra de verdad para tu microbiota.</p>
-        </div>
-      </div>
-    </div>
-
-    <p class="tip">
-      <strong>Tip cotorro:</strong> un plátano con kéfir, avena en el desayuno o verduras en la comida
-      ya le dan chance a tus cultivitos. Empieza poquito, guárdalos en frío y disfruta.
-      Info educativa; no sustituye consejo médico.
-    </p>
-
-    <footer class="footer">
-      <div class="sources">
-        <strong>Fuentes (discretas, pero firmes)</strong>
-        Hill et al. ISAPP probióticos 2014 · Gibson et al. ISAPP prebióticos 2017 · Swanson et al. ISAPP sinbióticos 2020 ·
-        Marco et al. ISAPP fermentados 2021 · Wastyk et al. Cell / Stanford 2021 · Dimidi et al. Nutrients / King’s College 2019 ·
-        Meta-análisis kéfir glucemia 2021 · Revisión clínica kombucha 2025 · ISAPP guía de prebióticos en alimentos
-      </div>
-      <div class="tagline">
-        Buenos no, excelentes.
-        <small>Fermentos muy vivitos · thegoodco.com.mx</small>
-      </div>
-    </footer>
   </article>
 </body>
 </html>
