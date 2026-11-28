@@ -24,12 +24,12 @@ export default async function HomePage() {
       <Hero />
       <KnowledgeCarousel />
       <PurchaseSteps />
+      <DeliverySection />
       <LandingCatalog products={products} />
       <KefirSpotlight />
       <FermentComparison />
       <ArtisanProcess />
       <ConsumptionMoments />
-      <DeliverySection />
       <Testimonials />
       <BrandStory />
       <ContactSection />
