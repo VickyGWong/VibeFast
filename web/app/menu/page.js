@@ -16,15 +16,15 @@ export const metadata = {
 
 const sectionCopy = {
   kefir: {
-    blurb: "Cremoso, vivo y perfecto frío. Elige endulzado o sin endulzar.",
+    blurb: "Endulzado o sin endulzar.",
     tone: "sky",
   },
   kombucha: {
-    blurb: "Té fermentado con burbujas naturales y carácter propio.",
+    blurb: "Té fermentado burbujeante.",
     tone: "coral",
   },
   tibicos: {
-    blurb: "Agua de kefir de frutos: ligera, refrescante y probiótica.",
+    blurb: "Ligera y refrescante.",
     tone: "orange",
   },
 }
@@ -33,10 +33,7 @@ const sectionCopy = {
 const overnightOatsSection = {
   id: "overnight-oats",
   label: "Overnight Oats",
-  blurb:
-    "Avena trasnochada con chía y kéfir natural, endulzada con monk fruit, un toque de canela y un chirris de leche deslactosada (para adecuar la consistencia).",
-  detail:
-    "Sabores con fresa orgánica y cacao 100% natural orgánico. Disponible solo en eventos.",
+  blurb: "Avena trasnochada con chía y kéfir natural. Monk fruit, canela y leche deslactosada.",
   tone: "yellow",
   featured: true,
   items: [
@@ -52,7 +49,7 @@ const overnightOatsSection = {
       name: "Banana cacao",
       size: "",
       priceCents: 5000,
-      note: "cacao 100% natural orgánico",
+      note: "cacao orgánico",
     },
   ],
 }
@@ -75,8 +72,6 @@ function buildCatalogSections(products) {
 
     const section = byCategory.get(product.category)
     const sizeVariants = (product.variants || []).filter(isSizeVariant)
-    const hasSweeteningVariants =
-      (product.variants || []).length > 0 && sizeVariants.length === 0
 
     if (sizeVariants.length > 0) {
       for (const variant of sizeVariants) {
@@ -90,14 +85,12 @@ function buildCatalogSections(products) {
       continue
     }
 
-    const item = {
+    section.items.push({
       id: product.id,
       name: product.name,
       size: product.size,
       priceCents: product.priceCents,
-    }
-    if (hasSweeteningVariants) item.note = "endulzado o sin endulzar"
-    section.items.push(item)
+    })
   }
 
   const order = ["kefir", "kombucha", "tibicos"]

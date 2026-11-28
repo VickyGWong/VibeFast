@@ -1,7 +1,6 @@
 /* ============================================================
    The Good Co. — Carta landscape (letter horizontal)
-   Colores brandbook: cream #F8F1E7 · sky #4C9FF2 · deep #1B4268
-   Amarillo #FFB636 · Naranja #FB6A40 · Coral #FF4A4A
+   Logo arriba · productos · contacto abajo
    ============================================================ */
 
 .menu-board {
@@ -13,8 +12,8 @@
   --menu-coral: #ff4a4a;
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 70% 45% at 8% -8%, color-mix(in oklch, var(--menu-yellow) 20%, transparent), transparent),
-    radial-gradient(ellipse 55% 40% at 100% 0%, color-mix(in oklch, var(--menu-sky) 16%, transparent), transparent),
+    radial-gradient(ellipse 70% 45% at 8% -8%, color-mix(in oklch, var(--menu-yellow) 18%, transparent), transparent),
+    radial-gradient(ellipse 55% 40% at 100% 0%, color-mix(in oklch, var(--menu-sky) 14%, transparent), transparent),
     var(--menu-cream);
   color: var(--menu-deep);
   padding: 1rem 1rem 2rem;
@@ -38,66 +37,42 @@
   height: 8.5in;
   min-height: 8.5in;
   margin: 0;
-  grid-template-columns: 0.72fr 2.4fr;
-}
-
-.menu-board--capture .menu-rail {
-  border-bottom: none;
-  border-right: 2px solid color-mix(in oklch, var(--menu-deep) 12%, transparent);
 }
 
 .menu-board--capture .menu-bubbles {
   display: none;
 }
 
-.menu-board--capture .menu-section--featured {
-  flex: 1.15;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.menu-board--capture .menu-list--hero {
-  grid-template-columns: 1fr 1fr;
-}
-
-.menu-board--capture .menu-grid {
-  grid-template-columns: 1.15fr 1fr;
-}
-
-.menu-board--capture .menu-foot {
-  margin-top: auto;
-  flex-direction: column;
-  align-items: stretch;
-}
-
 .menu-board--capture .menu-hero {
-  padding: 0.75rem 0.7rem 0.45rem;
+  padding: 0.55rem 1rem 0.4rem;
+}
+
+.menu-board--capture .menu-hero__logo-wrap {
+  max-width: 15.5rem;
 }
 
 .menu-board--capture .menu-section--featured {
-  padding: 0.9rem 1.1rem 1rem;
-}
-
-.menu-board--capture .menu-section__title--hero {
-  font-size: 3.55rem;
-}
-
-.menu-board--capture .menu-item__name--hero {
-  font-size: 2.85rem;
-}
-
-.menu-board--capture .menu-item__price--hero {
-  font-size: 4rem;
-}
-
-.menu-board--capture .menu-section__blurb--featured {
-  font-size: 0.86rem;
-  max-width: 40rem;
+  padding: 0.7rem 1rem 0.75rem;
 }
 
 .menu-board--capture .menu-section {
-  padding: 0.85rem 1rem 0.9rem;
+  padding: 0.7rem 0.9rem 0.75rem;
+}
+
+.menu-board--capture .menu-section__title--hero {
+  font-size: 2.35rem;
+}
+
+.menu-board--capture .menu-item__name--hero {
+  font-size: 1.85rem;
+}
+
+.menu-board--capture .menu-item__price--hero {
+  font-size: 2.55rem;
+}
+
+.menu-board--capture .menu-foot {
+  padding: 0.55rem 0.85rem 0.65rem;
 }
 
 .menu-chrome {
@@ -150,37 +125,17 @@
   border-radius: 1.5rem;
   background: var(--menu-cream);
   border: 2px solid color-mix(in oklch, var(--menu-deep) 12%, transparent);
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 900px) {
-  .menu-sheet {
-    grid-template-columns: minmax(13rem, 0.85fr) 2.4fr;
-    min-height: 42rem;
-  }
-}
-
-.menu-rail {
   display: flex;
   flex-direction: column;
-  background: var(--menu-cream);
-  border-bottom: 2px solid color-mix(in oklch, var(--menu-deep) 10%, transparent);
-}
-
-@media (min-width: 900px) {
-  .menu-rail {
-    border-bottom: none;
-    border-right: 2px solid color-mix(in oklch, var(--menu-deep) 10%, transparent);
-  }
 }
 
 .menu-hero {
   position: relative;
   overflow: hidden;
-  padding: 1.35rem 1.15rem 1rem;
+  background: var(--menu-cream);
+  padding: 1rem 1.25rem 0.75rem;
   text-align: center;
-  flex: 1;
+  border-bottom: 2px solid color-mix(in oklch, var(--menu-deep) 10%, transparent);
 }
 
 .menu-bubbles {
@@ -202,11 +157,12 @@
   animation: menu-bubble-rise linear infinite;
 }
 
-.menu-bubble--0 { left: 10%; width: 12px; height: 12px; animation-duration: 11s; animation-delay: 0.2s; }
-.menu-bubble--1 { left: 28%; width: 18px; height: 18px; animation-duration: 14s; animation-delay: 1.4s; }
-.menu-bubble--2 { left: 48%; width: 10px; height: 10px; animation-duration: 9s; animation-delay: 0.8s; }
-.menu-bubble--3 { left: 68%; width: 22px; height: 22px; animation-duration: 16s; animation-delay: 2.1s; }
-.menu-bubble--4 { left: 86%; width: 14px; height: 14px; animation-duration: 12s; animation-delay: 0.5s; }
+.menu-bubble--0 { left: 8%; width: 12px; height: 12px; animation-duration: 11s; animation-delay: 0.2s; }
+.menu-bubble--1 { left: 24%; width: 18px; height: 18px; animation-duration: 14s; animation-delay: 1.4s; }
+.menu-bubble--2 { left: 42%; width: 10px; height: 10px; animation-duration: 9s; animation-delay: 0.8s; }
+.menu-bubble--3 { left: 60%; width: 22px; height: 22px; animation-duration: 16s; animation-delay: 2.1s; }
+.menu-bubble--4 { left: 78%; width: 14px; height: 14px; animation-duration: 12s; animation-delay: 0.5s; }
+.menu-bubble--5 { left: 90%; width: 11px; height: 11px; animation-duration: 10s; animation-delay: 1.1s; }
 
 @keyframes menu-bubble-rise {
   0% {
@@ -225,13 +181,7 @@
 .menu-hero__logo-wrap {
   position: relative;
   margin: 0 auto;
-  max-width: 15rem;
-}
-
-@media (min-width: 900px) {
-  .menu-hero__logo-wrap {
-    max-width: 100%;
-  }
+  max-width: 18rem;
 }
 
 .menu-hero__logo {
@@ -250,20 +200,11 @@
   50% { transform: translateY(-4px); }
 }
 
-.menu-hero__place {
-  position: relative;
-  margin: 0.7rem 0 0;
-  font-family: var(--font-ui);
-  font-size: 0.82rem;
-  font-weight: 600;
-  line-height: 1.35;
-  color: var(--menu-deep);
-}
-
 .menu-main {
   display: flex;
   flex-direction: column;
-  min-width: 0;
+  flex: 1;
+  min-height: 0;
 }
 
 .menu-grid {
@@ -279,7 +220,7 @@
 }
 
 .menu-section {
-  padding: 1.25rem 1.25rem 1.35rem;
+  padding: 1rem 1.15rem 1.1rem;
   color: var(--menu-deep);
 }
 
@@ -291,7 +232,7 @@
 @keyframes menu-rise {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
@@ -299,7 +240,6 @@
   }
 }
 
-/* Kéfir: sky de marca sólido + texto crema (alto contraste, color fiel) */
 .menu-section--sky {
   background: var(--menu-sky);
   color: var(--menu-cream);
@@ -315,23 +255,24 @@
   opacity: 1;
 }
 
-/* Overnight Oats: amarillo de marca, tipografía hero */
 .menu-section--yellow {
   background: var(--menu-yellow);
   color: var(--menu-deep);
 }
 
 .menu-section--featured {
-  padding: 1.5rem 1.35rem 1.6rem;
+  padding: 1.1rem 1.25rem 1.15rem;
 }
 
-@media (min-width: 900px) {
-  .menu-section--featured {
-    flex: 1.15;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 1.6rem 1.75rem 1.75rem;
+.menu-featured__layout {
+  display: grid;
+  gap: 0.85rem 1.25rem;
+  align-items: center;
+}
+
+@media (min-width: 800px) {
+  .menu-featured__layout {
+    grid-template-columns: 1.05fr 1.15fr;
   }
 }
 
@@ -344,7 +285,6 @@
   border-bottom-color: color-mix(in oklch, var(--menu-cream) 45%, transparent);
 }
 
-/* Kombucha: coral (intercambio con oats) */
 .menu-section--coral {
   background: var(--menu-coral);
   color: var(--menu-cream);
@@ -363,19 +303,19 @@
 }
 
 .menu-section__head {
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .menu-section__head--featured {
-  margin-bottom: 1.15rem;
+  margin-bottom: 0;
 }
 
 .menu-section__eyebrow {
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.3rem;
   font-family: var(--font-ui);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--menu-deep);
 }
@@ -383,39 +323,30 @@
 .menu-section__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.55rem;
+  font-size: 1.45rem;
   font-weight: 700;
   line-height: 1;
 }
 
 .menu-section__title--hero {
-  font-size: clamp(2.4rem, 5.5vw, 3.6rem);
+  font-size: clamp(1.85rem, 3.8vw, 2.55rem);
   letter-spacing: -0.02em;
   line-height: 0.95;
 }
 
 .menu-section__blurb {
-  margin: 0.5rem 0 0;
-  max-width: 42rem;
-  font-size: 0.88rem;
-  line-height: 1.4;
+  margin: 0.4rem 0 0;
+  max-width: 28rem;
+  font-size: 0.84rem;
+  line-height: 1.35;
   opacity: 0.9;
 }
 
 .menu-section__blurb--featured {
-  font-size: clamp(0.92rem, 1.5vw, 1.05rem);
-  line-height: 1.4;
-  max-width: 46rem;
-  opacity: 0.92;
-}
-
-.menu-section__detail {
-  margin: 0.45rem 0 0;
-  max-width: 42rem;
-  font-family: var(--font-ui);
-  font-size: clamp(0.82rem, 1.3vw, 0.95rem);
+  font-size: clamp(0.84rem, 1.35vw, 0.95rem);
   line-height: 1.35;
-  font-weight: 700;
+  max-width: 28rem;
+  opacity: 0.92;
 }
 
 .menu-list {
@@ -424,31 +355,25 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.65rem;
 }
 
 .menu-list--hero {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.85rem;
-}
-
-@media (min-width: 640px) {
-  .menu-list--hero {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem 1.25rem;
-  }
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem 1rem;
+  margin: 0;
 }
 
 .menu-item__row {
   display: flex;
   align-items: baseline;
-  gap: 0.55rem;
+  gap: 0.5rem;
 }
 
 .menu-item__name {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 1rem;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -462,7 +387,7 @@
 
 .menu-item__price {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.12rem;
   font-weight: 700;
   flex-shrink: 0;
   letter-spacing: -0.02em;
@@ -470,8 +395,8 @@
 }
 
 .menu-item__meta {
-  margin: 0.25rem 0 0;
-  font-size: 0.8rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.76rem;
   opacity: 0.85;
 }
 
@@ -484,37 +409,36 @@
   opacity: 0.75;
 }
 
-/* Tipografía a distancia: nombres y precios de oats (deep sobre amarillo) */
 .menu-item--hero {
-  padding: 0.35rem 0.15rem 0.45rem;
-  border-top: 3px solid color-mix(in oklch, var(--menu-deep) 18%, transparent);
+  padding: 0.2rem 0;
+  border-top: 2.5px solid color-mix(in oklch, var(--menu-deep) 16%, transparent);
 }
 
 .menu-item__hero-top {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.15rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.65rem;
 }
 
 .menu-item__name--hero {
-  font-size: clamp(2rem, 4.4vw, 3rem);
+  font-size: clamp(1.45rem, 3vw, 1.95rem);
   line-height: 0.95;
   letter-spacing: -0.02em;
   color: var(--menu-deep);
 }
 
 .menu-item__price--hero {
-  font-size: clamp(2.8rem, 6vw, 4.25rem);
-  line-height: 0.88;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.85rem, 3.8vw, 2.55rem);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
   color: var(--menu-deep);
 }
 
 .menu-item__meta--hero {
-  margin-top: 0.2rem;
+  margin-top: 0.15rem;
   font-family: var(--font-ui);
-  font-size: clamp(0.78rem, 1.2vw, 0.92rem);
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--menu-deep);
   opacity: 0.8;
@@ -525,31 +449,21 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 0.45rem 0.55rem;
-  padding: 1rem 1rem 1.15rem;
+  gap: 0.5rem 0.65rem;
+  padding: 0.85rem 1rem 1rem;
   background: var(--menu-deep);
   color: var(--menu-cream);
 }
 
-@media (min-width: 900px) {
-  .menu-foot {
-    margin-top: auto;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.5rem;
-    padding: 1rem 0.95rem 1.15rem;
-  }
-}
-
 .menu-foot__pill {
   font-family: var(--font-ui);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 600;
   text-decoration: none;
   text-align: center;
   color: var(--menu-deep);
   background: var(--menu-cream);
-  padding: 0.5rem 0.8rem;
+  padding: 0.48rem 0.85rem;
   border-radius: 9999px;
   transition: transform 0.2s ease;
 }
@@ -565,14 +479,6 @@
 
 .menu-foot__pill:hover {
   transform: translateY(-1px);
-}
-
-.menu-foot__city {
-  margin: 0.15rem 0 0;
-  width: 100%;
-  text-align: center;
-  font-size: 0.75rem;
-  color: color-mix(in oklch, var(--menu-cream) 75%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -608,12 +514,6 @@
     border: none;
     max-width: none;
     min-height: calc(8.5in - 0.56in);
-    grid-template-columns: 0.78fr 2.35fr;
-  }
-
-  .menu-rail {
-    border-bottom: none;
-    border-right: 2px solid color-mix(in oklch, var(--menu-deep) 12%, transparent);
   }
 
   .menu-hero,
@@ -633,63 +533,62 @@
   }
 
   .menu-hero {
-    padding: 0.7rem 0.65rem 0.5rem;
+    padding: 0.4rem 0.75rem 0.35rem;
   }
 
   .menu-hero__logo {
     animation: none !important;
   }
 
-  .menu-hero__place {
-    font-size: 0.7rem;
+  .menu-hero__logo-wrap {
+    max-width: 14rem;
   }
 
   .menu-section {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
+    padding: 0.55rem 0.75rem 0.6rem;
   }
 
   .menu-section--featured {
-    padding: 0.85rem 1rem 0.95rem;
+    padding: 0.6rem 0.85rem 0.65rem;
+  }
+
+  .menu-featured__layout {
+    grid-template-columns: 1.05fr 1.15fr;
   }
 
   .menu-section__title--hero {
-    font-size: 40pt;
+    font-size: 26pt;
   }
 
   .menu-item__name--hero {
-    font-size: 30pt;
+    font-size: 18pt;
   }
 
   .menu-item__price--hero {
-    font-size: 48pt;
-  }
-
-  .menu-item--hero {
-    border-top-width: 2.5px;
-    padding-top: 0.35rem;
+    font-size: 26pt;
   }
 
   .menu-section__blurb--featured {
-    font-size: 9.5pt;
+    font-size: 9pt;
   }
 
-  .menu-section__detail,
   .menu-item__meta--hero {
-    font-size: 8.5pt;
+    font-size: 8pt;
   }
 
   .menu-section__title {
-    font-size: 16pt;
+    font-size: 15pt;
   }
 
   .menu-item__name {
-    font-size: 11pt;
+    font-size: 10.5pt;
   }
 
   .menu-item__price {
-    font-size: 13pt;
+    font-size: 12pt;
   }
 
   .menu-section__blurb,
@@ -706,24 +605,18 @@
   }
 
   .menu-foot {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.35rem;
-    padding: 0.65rem 0.55rem 0.75rem;
+    padding: 0.45rem 0.7rem 0.55rem;
+    gap: 0.4rem 0.55rem;
   }
 
   .menu-foot__pill {
-    font-size: 7.5pt;
-    padding: 0.35rem 0.5rem;
+    font-size: 8pt;
+    padding: 0.32rem 0.65rem;
     color: var(--menu-deep) !important;
   }
 
   .menu-foot__pill--web {
     color: var(--menu-cream) !important;
-  }
-
-  .menu-foot__city {
-    font-size: 7pt;
   }
 
   a {
