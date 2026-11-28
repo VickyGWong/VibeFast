@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import Image from "next/image"
 import config from "@/config"
 import { formatPrice, getGeneralWhatsAppUrl } from "@/lib/whatsapp"
 
@@ -61,24 +60,6 @@ export default function MenuBoard({ sections, captureMode = false }) {
       </div>
 
       <article className="menu-sheet" aria-label="Menú The Good Co.">
-        <header className="menu-hero">
-          <div className="menu-bubbles" aria-hidden>
-            {[0, 1, 2, 3, 4, 5].map((i) => (
-              <span key={i} className={`menu-bubble menu-bubble--${i}`} />
-            ))}
-          </div>
-          <div className="menu-hero__logo-wrap">
-            <Image
-              src="/brand/logotipo-horizontal.png"
-              alt={config.app.name}
-              width={2063}
-              height={599}
-              className="menu-hero__logo"
-              priority
-            />
-          </div>
-        </header>
-
         <div className="menu-main">
           {featured.map((section, index) => (
             <FeaturedOatsBlock
@@ -134,6 +115,8 @@ export default function MenuBoard({ sections, captureMode = false }) {
  * @param {{ section: MenuSection, delay: number }} props
  */
 function FeaturedOatsBlock({ section, delay }) {
+  const priceCents = section.items[0]?.priceCents ?? 0
+
   return (
     <section
       className={`menu-section menu-section--${section.tone} menu-section--featured`}
@@ -146,22 +129,13 @@ function FeaturedOatsBlock({ section, delay }) {
           <p className="menu-section__blurb menu-section__blurb--featured">{section.blurb}</p>
         </div>
 
-        <ul className="menu-list menu-list--hero">
-          {section.items.map((item) => (
-            <li key={item.id} className="menu-item menu-item--hero">
-              <div className="menu-item__hero-top">
-                <span className="menu-item__name menu-item__name--hero">{item.name}</span>
-                <span className="menu-item__price menu-item__price--hero">
-                  ${formatPrice(item.priceCents)}
-                  <span className="menu-item__currency">MXN</span>
-                </span>
-              </div>
-              {item.note && (
-                <p className="menu-item__meta menu-item__meta--hero">{item.note}</p>
-              )}
-            </li>
-          ))}
-        </ul>
+        <div className="menu-featured__price">
+          <span className="menu-item__price menu-item__price--hero">
+            ${formatPrice(priceCents)}
+            <span className="menu-item__currency">MXN</span>
+          </span>
+          <p className="menu-item__meta menu-item__meta--hero">c/u</p>
+        </div>
       </div>
     </section>
   )

@@ -33,23 +33,16 @@ const sectionCopy = {
 const overnightOatsSection = {
   id: "overnight-oats",
   label: "Overnight Oats",
-  blurb: "Avena trasnochada con chía y kéfir natural. Monk fruit, canela y leche deslactosada.",
+  blurb:
+    "Avena trasnochada con chía y kéfir natural, monk fruit, canela y leche deslactosada. Opción con fresa orgánica o banana cacao (cacao orgánico).",
   tone: "yellow",
   featured: true,
   items: [
     {
-      id: "oats-fresa",
-      name: "Fresa",
+      id: "oats-porcion",
+      name: "Overnight Oats",
       size: "",
       priceCents: 5000,
-      note: "fresa orgánica",
-    },
-    {
-      id: "oats-banana-cacao",
-      name: "Banana cacao",
-      size: "",
-      priceCents: 5000,
-      note: "cacao orgánico",
     },
   ],
 }
