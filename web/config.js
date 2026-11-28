@@ -93,6 +93,7 @@ const config = {
     topBar: "Hechos artesanalmente en Chihuahua",
     nav: [
       { label: "Productos", href: "/#productos" },
+      { label: "Infografía", href: "/#infografia" },
       { label: "Cómo comprar", href: "/#como-comprar" },
       { label: "Entrega", href: "/#entrega" },
       { label: "Historia", href: "/#historia" },
@@ -221,6 +222,7 @@ const config = {
         {
           title: "Marca",
           links: [
+            { label: "Infografía", href: "/#infografia" },
             { label: "Entrega", href: "/#entrega" },
             { label: "Historia", href: "/#historia" },
             { label: "Contacto", href: "/#contacto" },
