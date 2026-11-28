@@ -137,19 +137,20 @@ function FeaturedOatsBlock({ section, delay }) {
       style={{ "--delay": `${delay}s` }}
     >
       <div className="menu-featured__layout">
-        <div className="menu-section__head menu-section__head--featured">
-          <p className="menu-section__eyebrow">Solo en eventos</p>
-          <h2 className="menu-section__title menu-section__title--hero">{section.label}</h2>
-          <p className="menu-section__blurb menu-section__blurb--featured">{section.blurb}</p>
+        <div className="menu-featured__top">
+          <div className="menu-section__head menu-section__head--featured">
+            <p className="menu-section__eyebrow">Solo en eventos</p>
+            <h2 className="menu-section__title menu-section__title--hero">{section.label}</h2>
+          </div>
+          <div className="menu-featured__price">
+            <span className="menu-item__price menu-item__price--hero">
+              ${formatPrice(priceCents)}
+              <span className="menu-item__currency">MXN</span>
+            </span>
+            <p className="menu-item__meta menu-item__meta--hero">c/u</p>
+          </div>
         </div>
-
-        <div className="menu-featured__price">
-          <span className="menu-item__price menu-item__price--hero">
-            ${formatPrice(priceCents)}
-            <span className="menu-item__currency">MXN</span>
-          </span>
-          <p className="menu-item__meta menu-item__meta--hero">c/u</p>
-        </div>
+        <p className="menu-section__blurb menu-section__blurb--featured">{section.blurb}</p>
       </div>
     </section>
   )
