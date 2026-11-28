@@ -21,7 +21,7 @@ const sectionCopy = {
   },
   kombucha: {
     blurb: "Té fermentado con burbujas naturales y carácter propio.",
-    tone: "yellow",
+    tone: "coral",
   },
   tibicos: {
     blurb: "Agua de kefir de frutos: ligera, refrescante y probiótica.",
@@ -37,7 +37,7 @@ const overnightOatsSection = {
     "Avena trasnochada con chía y kéfir natural, endulzada con monk fruit, un toque de canela y un chirris de leche deslactosada (para adecuar la consistencia).",
   detail:
     "Sabores con fresa orgánica y cacao 100% natural orgánico. Disponible solo en eventos.",
-  tone: "featured",
+  tone: "yellow",
   featured: true,
   items: [
     {
@@ -104,10 +104,12 @@ function buildCatalogSections(products) {
   return order.map((id) => byCategory.get(id)).filter(Boolean)
 }
 
-export default function MenuPage() {
+export default async function MenuPage({ searchParams }) {
   const available = getAvailableProducts()
   const catalogSections = buildCatalogSections(available)
   const sections = [overnightOatsSection, ...catalogSections]
+  const params = await searchParams
+  const captureMode = params?.capture === "1"
 
-  return <MenuBoard sections={sections} />
+  return <MenuBoard sections={sections} captureMode={captureMode} />
 }

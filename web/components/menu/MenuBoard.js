@@ -13,26 +13,23 @@ import { formatPrice, getGeneralWhatsAppUrl } from "@/lib/whatsapp"
  *   label: string,
  *   blurb: string,
  *   detail?: string,
- *   tone: 'sky' | 'yellow' | 'orange' | 'featured',
+ *   tone: 'sky' | 'yellow' | 'orange' | 'coral',
  *   featured?: boolean,
  *   items: MenuItem[]
  * }} MenuSection
  */
 
 /**
- * @param {{ sections: MenuSection[] }} props
+ * @param {{ sections: MenuSection[], captureMode?: boolean }} props
  */
-export default function MenuBoard({ sections }) {
+export default function MenuBoard({ sections, captureMode = false }) {
   const [ready, setReady] = useState(false)
-  const [captureMode, setCaptureMode] = useState(false)
   const whatsappUrl = getGeneralWhatsAppUrl()
   const siteUrl = `https://${config.app.domain}`
   const featured = sections.filter((section) => section.featured)
   const rest = sections.filter((section) => !section.featured)
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    setCaptureMode(params.get("capture") === "1")
     const id = requestAnimationFrame(() => setReady(true))
     return () => cancelAnimationFrame(id)
   }, [])
@@ -64,81 +61,76 @@ export default function MenuBoard({ sections }) {
       </div>
 
       <article className="menu-sheet" aria-label="Menú The Good Co.">
-        <header className="menu-hero">
-          <div className="menu-bubbles" aria-hidden>
-            {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-              <span key={i} className={`menu-bubble menu-bubble--${i}`} />
-            ))}
-          </div>
+        <aside className="menu-rail">
+          <header className="menu-hero">
+            <div className="menu-bubbles" aria-hidden>
+              {[0, 1, 2, 3, 4].map((i) => (
+                <span key={i} className={`menu-bubble menu-bubble--${i}`} />
+              ))}
+            </div>
+            <div className="menu-hero__logo-wrap">
+              <Image
+                src="/brand/logotipo-horizontal.png"
+                alt={config.app.name}
+                width={2063}
+                height={599}
+                className="menu-hero__logo"
+                priority
+              />
+            </div>
+            <p className="menu-hero__place">
+              Hechos artesanalmente en {config.contact.city}
+            </p>
+          </header>
 
-          <div className="menu-hero__logo-wrap">
-            <Image
-              src="/brand/logotipo-horizontal.png"
-              alt={config.app.name}
-              width={2063}
-              height={599}
-              className="menu-hero__logo"
-              priority
-            />
-          </div>
-
-          <p className="menu-hero__place">
-            Hechos artesanalmente en {config.contact.city}
-          </p>
-        </header>
-
-        {featured.map((section, index) => (
-          <MenuSectionBlock
-            key={section.id}
-            section={section}
-            delay={0.08 + index * 0.08}
-          />
-        ))}
-
-        <div className="menu-grid">
-          {rest.map((section, index) => (
-            <MenuSectionBlock
-              key={section.id}
-              section={section}
-              delay={0.18 + index * 0.1}
-            />
-          ))}
-        </div>
-
-        <aside className="menu-aside">
-          <p className="menu-aside__tagline">{config.app.tagline}</p>
-          <p className="menu-aside__note">
-            Cultivos vivos, lotes pequeños e ingredientes reales. Conservar refrigerado.
-          </p>
+          <footer className="menu-foot">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="menu-foot__pill menu-foot__pill--wa"
+            >
+              WhatsApp {config.contact.whatsappDisplay}
+            </a>
+            <a
+              href={config.contact.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="menu-foot__pill"
+            >
+              {config.contact.instagramHandle}
+            </a>
+            <a
+              href={siteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="menu-foot__pill menu-foot__pill--web"
+            >
+              {config.app.domain}
+            </a>
+            <p className="menu-foot__city">{config.contact.city}, México</p>
+          </footer>
         </aside>
 
-        <footer className="menu-foot">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="menu-foot__pill menu-foot__pill--wa"
-          >
-            WhatsApp {config.contact.whatsappDisplay}
-          </a>
-          <a
-            href={config.contact.instagram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="menu-foot__pill"
-          >
-            {config.contact.instagramHandle}
-          </a>
-          <a
-            href={siteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="menu-foot__pill menu-foot__pill--web"
-          >
-            {config.app.domain}
-          </a>
-          <p className="menu-foot__city">{config.contact.city}, México</p>
-        </footer>
+        <div className="menu-main">
+          {featured.map((section, index) => (
+            <FeaturedOatsBlock
+              key={section.id}
+              section={section}
+              delay={0.08 + index * 0.08}
+            />
+          ))}
+
+          <div className="menu-grid">
+            {rest.map((section, index) => (
+              <CatalogSectionBlock
+                key={section.id}
+                section={section}
+                delay={0.18 + index * 0.1}
+              />
+            ))}
+          </div>
+        </div>
       </article>
     </div>
   )
@@ -147,17 +139,51 @@ export default function MenuBoard({ sections }) {
 /**
  * @param {{ section: MenuSection, delay: number }} props
  */
-function MenuSectionBlock({ section, delay }) {
+function FeaturedOatsBlock({ section, delay }) {
   return (
     <section
-      className={`menu-section menu-section--${section.tone}${section.featured ? " menu-section--featured" : ""}`}
+      className={`menu-section menu-section--${section.tone} menu-section--featured`}
+      style={{ "--delay": `${delay}s` }}
+    >
+      <div className="menu-section__head menu-section__head--featured">
+        <p className="menu-section__eyebrow">Lo de hoy · eventos</p>
+        <h2 className="menu-section__title menu-section__title--hero">{section.label}</h2>
+        <p className="menu-section__blurb menu-section__blurb--featured">{section.blurb}</p>
+        {section.detail && (
+          <p className="menu-section__detail">{section.detail}</p>
+        )}
+      </div>
+
+      <ul className="menu-list menu-list--hero">
+        {section.items.map((item) => (
+          <li key={item.id} className="menu-item menu-item--hero">
+            <div className="menu-item__hero-top">
+              <span className="menu-item__name menu-item__name--hero">{item.name}</span>
+              <span className="menu-item__price menu-item__price--hero">
+                ${formatPrice(item.priceCents)}
+                <span className="menu-item__currency">MXN</span>
+              </span>
+            </div>
+            {item.note && <p className="menu-item__meta menu-item__meta--hero">{item.note}</p>}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+/**
+ * @param {{ section: MenuSection, delay: number }} props
+ */
+function CatalogSectionBlock({ section, delay }) {
+  return (
+    <section
+      className={`menu-section menu-section--${section.tone}`}
       style={{ "--delay": `${delay}s` }}
     >
       <div className="menu-section__head">
-        {section.featured && <p className="menu-section__eyebrow">Lo de hoy · eventos</p>}
         <h2 className="menu-section__title">{section.label}</h2>
         <p className="menu-section__blurb">{section.blurb}</p>
-        {section.detail && <p className="menu-section__detail">{section.detail}</p>}
       </div>
 
       <ul className="menu-list">
