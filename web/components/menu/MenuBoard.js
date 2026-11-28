@@ -8,7 +8,15 @@ import { formatPrice, getGeneralWhatsAppUrl } from "@/lib/whatsapp"
 
 /**
  * @typedef {{ id: string, name: string, size: string, priceCents: number, note?: string }} MenuItem
- * @typedef {{ id: string, label: string, blurb: string, tone: 'sky' | 'yellow' | 'orange', items: MenuItem[] }} MenuSection
+ * @typedef {{
+ *   id: string,
+ *   label: string,
+ *   blurb: string,
+ *   detail?: string,
+ *   tone: 'sky' | 'yellow' | 'orange' | 'featured',
+ *   featured?: boolean,
+ *   items: MenuItem[]
+ * }} MenuSection
  */
 
 /**
@@ -18,6 +26,9 @@ export default function MenuBoard({ sections }) {
   const [ready, setReady] = useState(false)
   const [captureMode, setCaptureMode] = useState(false)
   const whatsappUrl = getGeneralWhatsAppUrl()
+  const siteUrl = `https://${config.app.domain}`
+  const featured = sections.filter((section) => section.featured)
+  const rest = sections.filter((section) => !section.featured)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search)
@@ -60,56 +71,37 @@ export default function MenuBoard({ sections }) {
             ))}
           </div>
 
-          <div className="menu-hero__mark">
+          <div className="menu-hero__logo-wrap">
             <Image
-              src={config.brand.logoSrc}
-              alt=""
-              width={96}
-              height={96}
-              className="menu-hero__icon"
+              src="/brand/logotipo-horizontal.png"
+              alt={config.app.name}
+              width={2063}
+              height={599}
+              className="menu-hero__logo"
               priority
             />
-            <p className="font-brand menu-hero__brand">{config.brand.logoText}</p>
           </div>
 
-          <p className="menu-hero__claim">{config.app.claim}</p>
-          <h1 className="menu-hero__title">Carta de hoy</h1>
           <p className="menu-hero__place">
             Hechos artesanalmente en {config.contact.city}
           </p>
         </header>
 
-        <div className="menu-grid">
-          {sections.map((section, index) => (
-            <section
-              key={section.id}
-              className={`menu-section menu-section--${section.tone}`}
-              style={{ "--delay": `${0.12 + index * 0.1}s` }}
-            >
-              <div className="menu-section__head">
-                <h2 className="menu-section__title">{section.label}</h2>
-                <p className="menu-section__blurb">{section.blurb}</p>
-              </div>
+        {featured.map((section, index) => (
+          <MenuSectionBlock
+            key={section.id}
+            section={section}
+            delay={0.08 + index * 0.08}
+          />
+        ))}
 
-              <ul className="menu-list">
-                {section.items.map((item) => (
-                  <li key={item.id} className="menu-item">
-                    <div className="menu-item__row">
-                      <span className="menu-item__name">{item.name}</span>
-                      <span className="menu-item__rule" aria-hidden />
-                      <span className="menu-item__price">
-                        ${formatPrice(item.priceCents)}
-                        <span className="menu-item__currency"> MXN</span>
-                      </span>
-                    </div>
-                    <p className="menu-item__meta">
-                      {item.size}
-                      {item.note ? ` · ${item.note}` : ""}
-                    </p>
-                  </li>
-                ))}
-              </ul>
-            </section>
+        <div className="menu-grid">
+          {rest.map((section, index) => (
+            <MenuSectionBlock
+              key={section.id}
+              section={section}
+              delay={0.18 + index * 0.1}
+            />
           ))}
         </div>
 
@@ -137,9 +129,56 @@ export default function MenuBoard({ sections }) {
           >
             {config.contact.instagramHandle}
           </a>
+          <a
+            href={siteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="menu-foot__pill menu-foot__pill--web"
+          >
+            {config.app.domain}
+          </a>
           <p className="menu-foot__city">{config.contact.city}, México</p>
         </footer>
       </article>
     </div>
+  )
+}
+
+/**
+ * @param {{ section: MenuSection, delay: number }} props
+ */
+function MenuSectionBlock({ section, delay }) {
+  return (
+    <section
+      className={`menu-section menu-section--${section.tone}${section.featured ? " menu-section--featured" : ""}`}
+      style={{ "--delay": `${delay}s` }}
+    >
+      <div className="menu-section__head">
+        {section.featured && <p className="menu-section__eyebrow">Lo de hoy · eventos</p>}
+        <h2 className="menu-section__title">{section.label}</h2>
+        <p className="menu-section__blurb">{section.blurb}</p>
+        {section.detail && <p className="menu-section__detail">{section.detail}</p>}
+      </div>
+
+      <ul className="menu-list">
+        {section.items.map((item) => (
+          <li key={item.id} className="menu-item">
+            <div className="menu-item__row">
+              <span className="menu-item__name">{item.name}</span>
+              <span className="menu-item__rule" aria-hidden />
+              <span className="menu-item__price">
+                ${formatPrice(item.priceCents)}
+                <span className="menu-item__currency"> MXN</span>
+              </span>
+            </div>
+            {(item.size || item.note) && (
+              <p className="menu-item__meta">
+                {[item.size, item.note].filter(Boolean).join(" · ")}
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }

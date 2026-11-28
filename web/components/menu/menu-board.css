@@ -94,10 +94,11 @@
 .menu-hero {
   position: relative;
   overflow: hidden;
-  background: var(--menu-sky);
-  color: var(--menu-cream);
-  padding: 2.75rem 1.75rem 2.25rem;
+  background: var(--menu-cream);
+  color: var(--menu-deep);
+  padding: 2rem 1.5rem 1.5rem;
   text-align: center;
+  border-bottom: 2px solid color-mix(in oklch, var(--menu-deep) 10%, transparent);
 }
 
 .menu-bubbles {
@@ -111,7 +112,7 @@
   position: absolute;
   bottom: -12%;
   border-radius: 9999px;
-  background: color-mix(in oklch, var(--menu-cream) 22%, transparent);
+  background: color-mix(in oklch, var(--menu-sky) 28%, transparent);
   opacity: 0;
 }
 
@@ -141,22 +142,20 @@
   }
 }
 
-.menu-hero__mark {
+.menu-hero__logo-wrap {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
+  margin: 0 auto;
+  max-width: 28rem;
 }
 
-.menu-hero__icon {
-  width: 5.25rem;
-  height: 5.25rem;
-  object-fit: contain;
+.menu-hero__logo {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
-.menu-board--ready .menu-hero__icon {
-  animation: menu-bob 4.5s ease-in-out infinite;
+.menu-board--ready .menu-hero__logo {
+  animation: menu-bob 5s ease-in-out infinite;
 }
 
 @keyframes menu-bob {
@@ -165,44 +164,17 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
   }
-}
-
-.menu-hero__brand {
-  margin: 0;
-  font-size: clamp(2rem, 7vw, 3.35rem);
-  letter-spacing: 0.04em;
-  line-height: 1;
-  color: var(--menu-cream);
-}
-
-.menu-hero__claim {
-  position: relative;
-  margin: 1.15rem 0 0;
-  font-family: var(--font-display);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: color-mix(in oklch, var(--menu-cream) 82%, transparent);
-}
-
-.menu-hero__title {
-  position: relative;
-  margin: 0.65rem 0 0;
-  font-family: var(--font-display);
-  font-size: clamp(1.85rem, 5vw, 2.65rem);
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--menu-cream);
 }
 
 .menu-hero__place {
   position: relative;
   margin: 0.85rem 0 0;
-  font-size: 1rem;
-  color: color-mix(in oklch, var(--menu-cream) 88%, transparent);
+  font-family: var(--font-ui);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: color-mix(in oklch, var(--menu-deep) 78%, transparent);
 }
 
 .menu-grid {
@@ -262,8 +234,33 @@
   opacity: 0.88;
 }
 
+.menu-section--featured {
+  background: var(--menu-coral);
+  color: var(--menu-cream);
+}
+
+.menu-section--featured .menu-item__rule {
+  border-bottom-color: color-mix(in oklch, var(--menu-cream) 45%, transparent);
+}
+
+.menu-section--featured .menu-item__meta,
+.menu-section--featured .menu-section__blurb,
+.menu-section--featured .menu-section__detail {
+  opacity: 0.92;
+}
+
 .menu-section__head {
   margin-bottom: 1.25rem;
+}
+
+.menu-section__eyebrow {
+  margin: 0 0 0.45rem;
+  font-family: var(--font-ui);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.88;
 }
 
 .menu-section__title {
@@ -274,12 +271,24 @@
   line-height: 1;
 }
 
+.menu-section--featured .menu-section__title {
+  font-size: clamp(1.9rem, 4vw, 2.35rem);
+}
+
 .menu-section__blurb {
   margin: 0.55rem 0 0;
-  max-width: 22rem;
+  max-width: 36rem;
   font-size: 0.95rem;
   line-height: 1.45;
   opacity: 0.88;
+}
+
+.menu-section__detail {
+  margin: 0.55rem 0 0;
+  max-width: 36rem;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  font-weight: 600;
 }
 
 .menu-list {
@@ -383,6 +392,11 @@
   background: var(--menu-yellow);
 }
 
+.menu-foot__pill--web {
+  background: var(--menu-sky);
+  color: var(--menu-cream);
+}
+
 .menu-foot__pill:hover {
   transform: translateY(-1px);
 }
@@ -397,7 +411,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .menu-board--ready .menu-bubble,
-  .menu-board--ready .menu-hero__icon,
+  .menu-board--ready .menu-hero__logo,
   .menu-board--ready .menu-section {
     animation: none !important;
   }
@@ -432,6 +446,7 @@
   .menu-hero,
   .menu-section--sky,
   .menu-section--yellow,
+  .menu-section--featured,
   .menu-aside,
   .menu-foot {
     -webkit-print-color-adjust: exact;
@@ -443,8 +458,7 @@
     display: none !important;
   }
 
-  .menu-hero__icon {
-    filter: none;
+  .menu-hero__logo {
     animation: none !important;
   }
 
