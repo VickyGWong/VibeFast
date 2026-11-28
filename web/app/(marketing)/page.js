@@ -1,5 +1,5 @@
 import Hero from "@/components/landing/Hero"
-import ProbioticsInfographic from "@/components/landing/ProbioticsInfographic"
+import KnowledgeCarousel from "@/components/landing/KnowledgeCarousel"
 import PurchaseSteps from "@/components/landing/PurchaseSteps"
 import LandingCatalog from "@/components/landing/LandingCatalog"
 import KefirSpotlight from "@/components/landing/KefirSpotlight"
@@ -22,7 +22,7 @@ export default async function HomePage() {
     <>
       <JsonLd products={products} />
       <Hero />
-      <ProbioticsInfographic />
+      <KnowledgeCarousel />
       <PurchaseSteps />
       <LandingCatalog products={products} />
       <KefirSpotlight />
