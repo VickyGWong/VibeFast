@@ -39,6 +39,10 @@
   margin: 0;
 }
 
+.menu-board--capture .menu-main {
+  flex: 0 0 auto;
+}
+
 .menu-board--capture .menu-section--featured {
   padding: 1rem 1.15rem 1.05rem;
 }
