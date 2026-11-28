@@ -33,42 +33,53 @@
   border-radius: 0;
   border: none;
   max-width: none;
-  width: 297mm;
-  min-height: 0;
-  height: auto;
+  /* Encuadre exacto A4 horizontal @96dpi: 297×210 mm = 1123×794 px */
+  width: 1123px;
+  height: 794px;
+  min-height: 794px;
+  max-height: 794px;
+  aspect-ratio: auto;
   margin: 0;
 }
 
 .menu-board--capture .menu-main {
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .menu-board--capture .menu-hero {
-  padding: 0.4rem 0.85rem 0.3rem;
+  padding: 5mm 8mm 4mm;
+  flex: 0 0 auto;
 }
 
 .menu-board--capture .menu-hero__logo-wrap {
-  max-width: 11.5rem;
+  max-width: 52mm;
 }
 
 .menu-board--capture .menu-section--featured {
-  padding: 0.75rem 1rem 0.8rem;
+  padding: 8mm 10mm;
+  flex: 0 0 auto;
 }
 
 .menu-board--capture .menu-section {
-  padding: 0.7rem 0.9rem 0.75rem;
+  padding: 8mm 9mm;
 }
 
 .menu-board--capture .menu-section__title--hero {
-  font-size: 2.25rem;
+  font-size: 28pt;
 }
 
 .menu-board--capture .menu-item__price--hero {
-  font-size: 2.85rem;
+  font-size: 36pt;
+}
+
+.menu-board--capture .menu-section__blurb--featured {
+  font-size: 11pt;
 }
 
 .menu-board--capture .menu-foot {
-  padding: 0.5rem 0.9rem 0.6rem;
+  padding: 5mm 8mm;
+  flex: 0 0 auto;
 }
 
 .menu-chrome {
@@ -115,7 +126,10 @@
 }
 
 .menu-sheet {
-  max-width: 68rem;
+  /* Vista digital: proporciones A4 landscape */
+  width: min(100%, 68rem);
+  aspect-ratio: 297 / 210;
+  max-height: calc(100vh - 6rem);
   margin: 0 auto;
   overflow: hidden;
   border-radius: 1.5rem;
@@ -123,6 +137,14 @@
   border: 2px solid color-mix(in oklch, var(--menu-deep) 12%, transparent);
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 699px) {
+  .menu-sheet {
+    aspect-ratio: auto;
+    max-height: none;
+    height: auto;
+  }
 }
 
 .menu-hero {
@@ -166,7 +188,15 @@
 .menu-section {
   padding: 1.1rem 1.2rem 1.15rem;
   color: var(--menu-deep);
+}
+
+.menu-grid > .menu-section {
   min-height: 100%;
+}
+
+.menu-section--featured {
+  flex: 0 0 auto;
+  min-height: 0;
 }
 
 .menu-board--ready:not(.menu-board--capture) .menu-section {
@@ -205,7 +235,7 @@
   color: var(--menu-deep);
 }
 
-.menu-section--featured {
+.menu-section.menu-section--featured {
   padding: 1.25rem 1.35rem 1.3rem;
 }
 
@@ -417,15 +447,17 @@
   }
 }
 
-/* ——— Impresión A4 horizontal ——— */
+/* ——— Impresión A4 horizontal (hoja completa) ——— */
 @media print {
   @page {
     size: A4 landscape;
-    margin: 8mm;
+    margin: 0;
   }
 
   html,
   body {
+    width: 297mm;
+    height: 210mm;
     background: white !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -435,13 +467,24 @@
     min-height: auto;
     padding: 0;
     background: white;
+    width: 297mm;
+    height: 210mm;
   }
 
   .menu-sheet {
     border-radius: 0;
     border: none;
+    width: 297mm;
+    height: 210mm;
+    min-height: 210mm;
+    max-height: 210mm;
     max-width: none;
-    min-height: calc(210mm - 16mm);
+    aspect-ratio: auto;
+  }
+
+  .menu-main {
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   .menu-hero,
@@ -460,22 +503,22 @@
   }
 
   .menu-hero {
-    padding: 4mm 6mm 3mm;
+    padding: 5mm 8mm 4mm;
   }
 
   .menu-hero__logo-wrap {
-    max-width: 48mm;
+    max-width: 52mm;
   }
 
   .menu-section {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
-    padding: 5mm 6mm 5.5mm;
+    padding: 8mm 9mm;
   }
 
   .menu-section--featured {
-    padding: 5.5mm 7mm 6mm;
+    padding: 8mm 10mm;
   }
 
   .menu-featured__layout {
@@ -483,53 +526,54 @@
   }
 
   .menu-section__title--hero {
-    font-size: 24pt;
+    font-size: 28pt;
   }
 
   .menu-item__price--hero {
-    font-size: 30pt;
+    font-size: 36pt;
   }
 
   .menu-section__blurb--featured {
-    font-size: 9.5pt;
+    font-size: 11pt;
   }
 
   .menu-item__meta--hero {
-    font-size: 8pt;
+    font-size: 9pt;
   }
 
   .menu-section__title {
-    font-size: 15pt;
+    font-size: 18pt;
   }
 
   .menu-item__name {
-    font-size: 10.5pt;
+    font-size: 13pt;
   }
 
   .menu-item__price {
-    font-size: 12pt;
+    font-size: 15pt;
   }
 
   .menu-section__blurb,
   .menu-item__meta {
-    font-size: 8pt;
+    font-size: 10pt;
   }
 
   .menu-grid {
     grid-template-columns: 1.15fr 1fr;
+    flex: 1 1 auto;
   }
 
   .menu-foot {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 3.5mm 6mm 4mm;
+    padding: 5mm 8mm;
     gap: 3mm 5mm;
   }
 
   .menu-foot__pill {
-    font-size: 8pt;
-    padding: 2.5mm 5mm;
+    font-size: 10pt;
+    padding: 3mm 6mm;
     color: var(--menu-deep) !important;
   }
 
