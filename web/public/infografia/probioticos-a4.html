@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Good Co. · Probióticos (carta)</title>
+  <style>
+    @font-face {
+      font-family: "Basique";
+      src: url("../fonts/Basique.ttf") format("truetype");
+      font-weight: 400 900;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Pally";
+      src: url("../fonts/Pally-Variable.ttf") format("truetype");
+      font-weight: 400 700;
+      font-display: block;
+    }
+    @font-face {
+      font-family: "Bahnschrift";
+      src: url("../fonts/Bahnschrift.ttf") format("truetype");
+      font-weight: 300 700;
+      font-display: block;
+    }
+
+    :root {
+      --cream: #f8f1e7;
+      --sky: #4c9ff2;
+      --deep: #1b4268;
+      --yellow: #ffb636;
+      --orange: #fb6a40;
+      --coral: #ff4a4a;
+      --ink: #163552;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    @page {
+      size: letter portrait;
+      margin: 0;
+    }
+
+    html, body {
+      background: #cfc6b8;
+      color: var(--ink);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      font-family: "Pally", ui-sans-serif, system-ui, sans-serif;
+      font-weight: 500;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    html.export, html.export body {
+      background: var(--cream);
+      width: 8.5in;
+      height: 11in;
+      margin: 0;
+      padding: 0;
+      min-height: 0;
+      overflow: hidden;
+      display: block;
+    }
+
+    .sheet {
+      width: 8.5in;
+      height: 11in;
+      background:
+        radial-gradient(circle at 8% 12%, rgba(76,159,242,0.10), transparent 22%),
+        radial-gradient(circle at 92% 18%, rgba(255,182,54,0.16), transparent 20%),
+        radial-gradient(circle at 80% 88%, rgba(255,74,74,0.08), transparent 24%),
+        var(--cream);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(22, 53, 82, 0.18);
+    }
+
+    html.export .sheet { box-shadow: none; }
+
+    .deco { position: absolute; pointer-events: none; z-index: 0; }
+
+    .mark {
+      background: var(--yellow);
+      padding: 0 0.12em;
+      border-radius: 0.15em;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
+    }
+
+    .cite {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: rgba(22, 53, 82, 0.45);
+      vertical-align: super;
+    }
+
+    .top {
+      position: relative;
+      z-index: 2;
+      padding: 0.2in 0.3in 0 0.3in;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.08in;
+    }
+
+    .brand img {
+      width: 0.42in;
+      height: 0.42in;
+      border-radius: 0.1in;
+    }
+
+    .brand-name {
+      font-family: "Basique", sans-serif;
+      font-size: 11.5pt;
+      color: var(--deep);
+      line-height: 1;
+    }
+
+    .brand-tag {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 8pt;
+      letter-spacing: 0.04em;
+      color: var(--sky);
+      margin-top: 0.04in;
+    }
+
+    .city {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 9pt;
+      text-align: right;
+      color: rgba(22, 53, 82, 0.55);
+      line-height: 1.25;
+    }
+
+    .hero-title {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin-top: 0.05in;
+      padding: 0 0.25in;
+    }
+
+    .hero-title h1 {
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 46pt;
+      letter-spacing: -0.02em;
+      line-height: 0.9;
+      color: var(--deep);
+      transform: rotate(-2deg);
+      text-shadow: 0.03in 0.03in 0 rgba(76, 159, 242, 0.25);
+    }
+
+    .ribbon {
+      display: inline-block;
+      margin-top: 0.08in;
+      transform: rotate(1.5deg);
+      background: var(--coral);
+      color: #fff;
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 14pt;
+      padding: 0.08in 0.28in;
+      border-radius: 999px;
+      box-shadow: 0.08in 0.08in 0 var(--yellow);
+      position: relative;
+      z-index: 2;
+    }
+
+    .grid {
+      position: relative;
+      z-index: 2;
+      padding: 0.12in 0.3in 0.12in;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 0.1in 0.12in;
+    }
+
+    .blob {
+      position: relative;
+      background: #fff;
+      border: 0.045in solid var(--deep);
+      padding: 0.12in 0.14in 0.1in;
+    }
+
+    .blob.coral {
+      border-color: var(--coral);
+      border-radius: 1.1in 0.55in 0.9in 0.7in / 0.75in 1in 0.55in 0.9in;
+      background: linear-gradient(160deg, #fff 60%, rgba(255,74,74,0.08));
+    }
+
+    .blob.yellow {
+      border-color: var(--yellow);
+      border-radius: 0.7in 1.1in 0.65in 0.95in / 1in 0.7in 0.95in 0.55in;
+      background: linear-gradient(200deg, #fff 55%, rgba(255,182,54,0.14));
+    }
+
+    .blob.sky {
+      border-color: var(--sky);
+      border-radius: 0.85in 0.75in 1in 0.65in / 0.65in 0.95in 0.7in 0.9in;
+      background: linear-gradient(180deg, #fff 50%, rgba(76,159,242,0.10));
+      grid-column: 1 / -1;
+    }
+
+    .blob.deep {
+      border-color: var(--deep);
+      border-radius: 0.75in 0.95in 0.7in 1.05in / 0.9in 0.65in 0.95in 0.7in;
+      background: var(--deep);
+      color: var(--cream);
+      grid-column: 1 / -1;
+    }
+
+    .blob.orange {
+      border-color: var(--orange);
+      border-radius: 1in 0.65in 0.85in 0.75in / 0.7in 0.95in 0.65in 0.9in;
+      background: linear-gradient(180deg, #fff 60%, rgba(251,106,64,0.10));
+      grid-column: 1 / -1;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 11.5pt;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      padding: 0.05in 0.16in;
+      border-radius: 999px;
+      margin-bottom: 0.06in;
+      transform: rotate(-2deg);
+    }
+
+    .badge.coral { background: var(--coral); color: #fff; }
+    .badge.yellow { background: var(--yellow); color: var(--deep); }
+    .badge.sky { background: var(--sky); color: #fff; }
+    .badge.cream { background: var(--cream); color: var(--deep); }
+    .badge.orange { background: var(--orange); color: #fff; }
+
+    .blob p, .blob li {
+      font-size: 11pt;
+      line-height: 1.28;
+      color: var(--ink);
+    }
+
+    .blob.deep p, .blob.deep li { color: rgba(248,241,231,0.92); }
+
+    .blob-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.1in;
+      align-items: center;
+    }
+
+    .chars { display: flex; gap: 0.06in; align-items: flex-end; }
+
+    .benefits {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.08in;
+      margin-top: 0.05in;
+    }
+
+    .benefit {
+      text-align: center;
+      padding: 0.08in 0.06in;
+      background: rgba(248, 241, 231, 0.85);
+      border-radius: 0.28in;
+      border: 0.025in dashed var(--sky);
+    }
+
+    .benefit strong {
+      display: block;
+      font-size: 11pt;
+      margin-top: 0.04in;
+      color: var(--deep);
+    }
+
+    .benefit span {
+      display: block;
+      font-size: 9.5pt;
+      line-height: 1.2;
+      margin-top: 0.03in;
+      color: rgba(22, 53, 82, 0.75);
+    }
+
+    .split-extra {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.08in;
+      margin-top: 0.08in;
+    }
+
+    .mini {
+      background: #fff;
+      border-radius: 0.22in;
+      padding: 0.1in 0.12in;
+      border: 0.03in solid rgba(27, 66, 104, 0.12);
+    }
+
+    .mini h4 {
+      font-size: 11.5pt;
+      color: var(--deep);
+      margin-bottom: 0.03in;
+    }
+
+    .mini.kefir h4 { color: var(--sky); }
+    .mini.kombucha h4 { color: #d88900; }
+
+    .mini p {
+      font-size: 10.5pt !important;
+      line-height: 1.22 !important;
+      color: rgba(22, 53, 82, 0.78) !important;
+    }
+
+    .combo-grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.14in;
+      align-items: center;
+    }
+
+    .food-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.06in;
+      margin-top: 0.05in;
+    }
+
+    .pill {
+      font-family: "Bahnschrift", sans-serif;
+      font-weight: 700;
+      font-size: 11pt;
+      background: var(--yellow);
+      color: var(--deep);
+      border-radius: 999px;
+      padding: 0.05in 0.12in;
+    }
+
+    .pill:nth-child(2n) { background: var(--sky); color: #fff; }
+    .pill:nth-child(3n) { background: var(--orange); color: #fff; }
+    .pill:nth-child(4n) { background: var(--coral); color: #fff; }
+
+    .moments {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.08in;
+      margin-top: 0.1in;
+    }
+
+    .moment {
+      background: rgba(248,241,231,0.2);
+      border: 0.03in solid rgba(248,241,231,0.35);
+      border-radius: 0.18in;
+      padding: 0.06in;
+      text-align: center;
+    }
+
+    .moment strong {
+      display: block;
+      font-size: 11pt;
+      color: var(--yellow);
+      margin-bottom: 0.02in;
+    }
+
+    .moment span {
+      display: block;
+      font-size: 10pt;
+      line-height: 1.2;
+      color: var(--cream);
+    }
+
+    .why-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.08in;
+      align-items: center;
+    }
+
+    .footer {
+      position: absolute;
+      left: 0.3in;
+      right: 0.3in;
+      bottom: 0.12in;
+      z-index: 2;
+      border-top: 0.03in solid rgba(27, 66, 104, 0.2);
+      padding-top: 0.08in;
+      display: flex;
+      justify-content: space-between;
+      gap: 0.08in;
+      align-items: flex-end;
+    }
+
+    .sources {
+      font-family: "Bahnschrift", sans-serif;
+      font-size: 7.5pt;
+      line-height: 1.3;
+      color: rgba(22, 53, 82, 0.55);
+      max-width: 5.6in;
+    }
+
+    .sources strong {
+      display: block;
+      font-family: "Pally", sans-serif;
+      font-size: 8.5pt;
+      color: rgba(22, 53, 82, 0.7);
+      margin-bottom: 0.02in;
+    }
+
+    .tagline {
+      text-align: right;
+      font-family: "Pally", sans-serif;
+      font-weight: 700;
+      font-size: 11pt;
+      color: var(--deep);
+      white-space: nowrap;
+    }
+
+    .tagline small {
+      display: block;
+      font-family: "Bahnschrift", sans-serif;
+      font-weight: 500;
+      font-size: 8pt;
+      color: rgba(22, 53, 82, 0.55);
+      margin-top: 0.02in;
+    }
+
+    @media print {
+      body { background: none; padding: 0; display: block; }
+      .sheet { box-shadow: none; }
+    }
+  </style>
+  <script>
+    if (new URLSearchParams(location.search).has("export")) {
+      document.documentElement.classList.add("export");
+    }
+  </script>
+</head>
+<body>
+  <article class="sheet">
+    <svg class="deco" style="left:0.15in;top:1.55in;width:0.55in;height:0.55in" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <circle cx="20" cy="22" r="8" fill="#4c9ff2" opacity="0.35"/>
+      <circle cx="38" cy="34" r="11" fill="#4c9ff2" opacity="0.22"/>
+      <circle cx="48" cy="16" r="6" fill="#ffb636" opacity="0.45"/>
+    </svg>
+    <svg class="deco" style="right:0.2in;top:1.35in;width:0.7in;height:0.7in" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+      <path d="M40 6l4 14h14l-11 8 4 14-11-8-11 8 4-14-11-8h14z" fill="#ffb636"/>
+    </svg>
+    <svg class="deco" style="left:0.2in;bottom:1.35in;width:0.5in;height:0.5in" viewBox="0 0 60 60" fill="none" aria-hidden="true">
+      <path d="M8 30c8-18 18-24 22-24s14 6 22 24c-8 18-18 24-22 24S16 48 8 30z" stroke="#ff4a4a" stroke-width="4" fill="none"/>
+    </svg>
+    <svg class="deco" style="right:0.15in;bottom:2.1in;width:0.6in;height:0.6in" viewBox="0 0 70 70" fill="none" aria-hidden="true">
+      <path d="M10 35c12-4 20-16 25-28 5 12 13 24 25 28-12 4-20 16-25 28-5-12-13-24-25-28z" fill="#4c9ff2" opacity="0.35"/>
+    </svg>
+
+    <header class="top">
+      <div class="brand">
+        <img src="../logo.svg" alt="" />
+        <div>
+          <div class="brand-name">THE GOOD CO.</div>
+          <div class="brand-tag">Fermentos muy vivitos</div>
+        </div>
+      </div>
+      <div class="city">Chihuahua, México<br />@co.thegood</div>
+    </header>
+
+    <div class="hero-title">
+      <h1>PROBIÓTICOS</h1>
+      <div class="ribbon">Pequeños organismos, grandes aliados</div>
+    </div>
+
+    <div class="grid">
+      <section class="blob coral">
+        <span class="badge coral">¿Qué son?</span>
+        <div class="blob-row">
+          <div>
+            <p>
+              Son <span class="mark">microorganismos vivos</span> que, en la cantidad adecuada,
+              pueden aportar un beneficio a tu salud.
+              <span class="cite">ISAPP, 2014</span>
+            </p>
+            <p style="margin-top:0.08in;">
+              O sea: <strong>bichitos buenos</strong> que llegan vivos y hacen su chamba…
+              si el contexto les ayuda.
+            </p>
+            <p style="margin-top:0.05in;font-size:10pt;color:rgba(22,53,82,0.72);">
+              Tip: fermento vivo ≠ automáticamente “probiótico”; eso pide evidencia.
+              <span class="cite">ISAPP, 2021</span>
+            </p>
+          </div>
+          <div class="chars" aria-hidden="true">
+            <svg width="48" height="58" viewBox="0 0 90 110">
+              <ellipse cx="45" cy="58" rx="30" ry="34" fill="#fff" stroke="#1b4268" stroke-width="3"/>
+              <circle cx="34" cy="52" r="5" fill="#1b4268"/>
+              <circle cx="56" cy="52" r="5" fill="#1b4268"/>
+              <path d="M33 68c6 7 18 7 24 0" stroke="#1b4268" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <rect x="24" y="40" width="18" height="7" rx="3" fill="#1b4268" transform="rotate(-18 33 43)"/>
+              <rect x="48" y="40" width="18" height="7" rx="3" fill="#1b4268" transform="rotate(18 57 43)"/>
+              <circle cx="20" cy="40" r="5" fill="#4c9ff2"/>
+              <circle cx="70" cy="38" r="4" fill="#ffb636"/>
+              <circle cx="18" cy="70" r="4" fill="#ff4a4a"/>
+            </svg>
+            <svg width="42" height="52" viewBox="0 0 80 100">
+              <ellipse cx="40" cy="55" rx="26" ry="30" fill="#4c9ff2" stroke="#1b4268" stroke-width="3"/>
+              <circle cx="31" cy="50" r="4.5" fill="#fff"/>
+              <circle cx="49" cy="50" r="4.5" fill="#fff"/>
+              <circle cx="31" cy="50" r="2" fill="#1b4268"/>
+              <circle cx="49" cy="50" r="2" fill="#1b4268"/>
+              <path d="M30 64c5 6 15 6 20 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/>
+              <path d="M28 22c4-10 12-14 12-14s4 8 2 16" stroke="#ff4a4a" stroke-width="4" fill="none" stroke-linecap="round"/>
+              <circle cx="40" cy="10" r="7" fill="#ff4a4a" stroke="#1b4268" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <section class="blob yellow">
+        <span class="badge yellow">¿Dónde encontrarlos?</span>
+        <p>
+          En fermentos vivos como el <span class="mark">kéfir</span> y la
+          <span class="mark">kombucha</span> de The Good Co.
+        </p>
+        <p style="margin-top:0.07in;font-size:11.5pt;">
+          Cremoso o burbujeante: dos personalidades, misma vibra de cultivo vivo.
+        </p>
+        <div class="chars" style="justify-content:center;margin-top:0.1in;" aria-hidden="true">
+          <svg width="44" height="72" viewBox="0 0 70 120">
+            <rect x="22" y="8" width="26" height="12" rx="3" fill="#1b4268"/>
+            <path d="M20 20h30l4 14H16z" fill="#4c9ff2"/>
+            <rect x="14" y="34" width="42" height="72" rx="14" fill="#fff" stroke="#1b4268" stroke-width="3"/>
+            <text x="35" y="58" text-anchor="middle" font-family="Pally,sans-serif" font-size="11" font-weight="700" fill="#4c9ff2">Kéfir</text>
+            <circle cx="28" cy="72" r="3.5" fill="#1b4268"/>
+            <circle cx="42" cy="72" r="3.5" fill="#1b4268"/>
+            <path d="M28 82c4 5 10 5 14 0" stroke="#1b4268" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+          <svg width="44" height="72" viewBox="0 0 70 120">
+            <rect x="24" y="6" width="22" height="12" rx="3" fill="#1b4268"/>
+            <path d="M22 18h26l5 16H17z" fill="#ffb636"/>
+            <rect x="14" y="34" width="42" height="72" rx="14" fill="#fb6a40" stroke="#1b4268" stroke-width="3"/>
+            <text x="35" y="56" text-anchor="middle" font-family="Pally,sans-serif" font-size="8.5" font-weight="700" fill="#fff">Kombucha</text>
+            <rect x="22" y="64" width="12" height="5" rx="2" fill="#1b4268" transform="rotate(-12 28 66)"/>
+            <rect x="36" y="64" width="12" height="5" rx="2" fill="#1b4268" transform="rotate(12 42 66)"/>
+            <circle cx="28" cy="74" r="2.5" fill="#fff"/>
+            <circle cx="42" cy="74" r="2.5" fill="#fff"/>
+            <path d="M28 84c4 4 10 4 14 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </section>
+
+      <section class="blob sky">
+        <span class="badge sky">¿Qué beneficios pueden aportar?</span>
+        <p style="margin-bottom:0.08in;">
+          La ciencia no promete milagros de Instagram, pero sí hay hallazgos serios:
+        </p>
+        <div class="benefits">
+          <div class="benefit">
+            <svg width="44" height="34" viewBox="0 0 90 70" aria-hidden="true">
+              <path d="M18 35c0-14 10-24 22-24 7 0 12 3 15 8 3-5 8-8 15-8 12 0 22 10 22 24 0 18-20 30-37 38C38 65 18 53 18 35z" fill="#ff8f7a" stroke="#1b4268" stroke-width="3"/>
+              <circle cx="38" cy="34" r="3" fill="#1b4268"/>
+              <circle cx="54" cy="34" r="3" fill="#1b4268"/>
+              <path d="M38 44c5 5 12 5 17 0" stroke="#1b4268" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>
+            <strong>Digestión</strong>
+            <span>Apoyan una digestión más amable. El kéfir destaca en ensayos GI. <span class="cite">King’s College, 2019</span></span>
+          </div>
+          <div class="benefit">
+            <svg width="44" height="34" viewBox="0 0 90 70" aria-hidden="true">
+              <circle cx="28" cy="36" r="14" fill="none" stroke="#4c9ff2" stroke-width="5"/>
+              <circle cx="62" cy="36" r="14" fill="none" stroke="#ffb636" stroke-width="5"/>
+              <path d="M20 36h56" stroke="#1b4268" stroke-width="3"/>
+              <circle cx="45" cy="36" r="5" fill="#1b4268"/>
+            </svg>
+            <strong>Equilibrio</strong>
+            <span>Una dieta rica en fermentados ↑ diversidad del microbioma. <span class="cite">Stanford / Cell, 2021</span></span>
+          </div>
+          <div class="benefit">
+            <svg width="38" height="34" viewBox="0 0 70 70" aria-hidden="true">
+              <path d="M35 8c14 8 22 14 22 28 0 16-12 26-22 30-10-4-22-14-22-30 0-14 8-20 22-28z" fill="#ff4a4a" stroke="#1b4268" stroke-width="3"/>
+              <path d="M35 28c-5-8-14-3-10 6 3 6 10 10 10 10s7-4 10-10c4-9-5-14-10-6z" fill="#fff"/>
+            </svg>
+            <strong>Señales inflamatorias</strong>
+            <span>En Stanford bajaron varias proteínas inflamatorias (incl. IL-6). <span class="cite">Cell, 2021</span></span>
+          </div>
+        </div>
+
+        <div class="split-extra">
+          <div class="mini kefir">
+            <h4>Kéfir · el cremoso</h4>
+            <p>
+              Uno de los fermentos con más ensayos clínicos. Indicios favorables para digerir lactosa
+              y marcadores metabólicos en meta-análisis de RCTs.
+              <span class="cite">Dimidi 2019 · Meta-análisis 2021</span>
+            </p>
+          </div>
+          <div class="mini kombucha">
+            <h4>Kombucha · la burbujeante</h4>
+            <p>
+              También sumó en dietas fermentadas. Hay indicios en síntomas digestivos, aunque la
+              evidencia humana aún es más chiquita que la del kéfir.
+              <span class="cite">Revisión 2025 · ISAPP 2021</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="blob deep">
+        <span class="badge cream">El combo ideal</span>
+        <div class="combo-grid">
+          <svg width="90" height="74" viewBox="0 0 160 130" aria-hidden="true">
+            <ellipse cx="80" cy="98" rx="55" ry="12" fill="#163552"/>
+            <path d="M30 70c0-20 22-34 50-34s50 14 50 34v18H30z" fill="#f8f1e7" stroke="#ffb636" stroke-width="4"/>
+            <ellipse cx="80" cy="70" rx="50" ry="16" fill="#fff"/>
+            <circle cx="58" cy="68" r="7" fill="#4c9ff2"/>
+            <circle cx="78" cy="62" r="6" fill="#ff4a4a"/>
+            <circle cx="96" cy="70" r="7" fill="#1b4268"/>
+            <circle cx="70" cy="76" r="5" fill="#ffb636"/>
+            <path d="M118 42c8-18 18-26 18-26s2 14-2 28" stroke="#ff4a4a" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <ellipse cx="128" cy="48" rx="12" ry="14" fill="#ff4a4a"/>
+            <path d="M124 42c4-2 8 0 10 4" stroke="#fff" stroke-width="2" fill="none"/>
+          </svg>
+          <div>
+            <p>
+              Combina tus fermentos con <span class="mark" style="background:#ffb636;color:#1b4268;">fibra de plantas</span>
+              (prebióticos): “comida” para tus bichitos.
+              <span class="cite">ISAPP, 2017</span>
+            </p>
+            <p style="margin-top:0.06in;">
+              Eso se acerca a la idea de un <strong>sinbiótico</strong>: vivos + sustrato selectivo.
+              <span class="cite">ISAPP, 2020</span>
+            </p>
+            <div class="food-pills">
+              <span class="pill">Plátano</span>
+              <span class="pill">Avena</span>
+              <span class="pill">Manzana</span>
+              <span class="pill">Cebolla / ajo</span>
+              <span class="pill">Hojas verdes</span>
+              <span class="pill">Legumbres</span>
+            </div>
+          </div>
+        </div>
+        <div class="moments">
+          <div class="moment">
+            <strong>Desayuno</strong>
+            <span>Kéfir + avena + plátano</span>
+          </div>
+          <div class="moment">
+            <strong>Comida</strong>
+            <span>Kombucha + verduras</span>
+          </div>
+          <div class="moment">
+            <strong>Entre horas</strong>
+            <span>Kéfir + granola + fruta</span>
+          </div>
+          <div class="moment">
+            <strong>Tarde</strong>
+            <span>Kombucha bien fría</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="blob orange" style="padding:0.1in 0.14in;">
+        <div style="display:flex;gap:0.1in;align-items:center;">
+          <span class="badge orange" style="margin:0;flex-shrink:0;">¿Por qué importa?</span>
+          <p style="font-size:10.5pt;line-height:1.25;margin:0;">
+            No es moda: más fermentados se asociaron con <span class="mark">más diversidad intestinal</span>
+            y menos señales inflamatorias. Empieza poquito, guárdalos en frío y elige lo rico.
+            Info educativa; no sustituye consejo médico.
+            <span class="cite">Stanford / Cell, 2021</span>
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="sources">
+        <strong>Fuentes</strong>
+        Hill et al. ISAPP 2014 · Gibson et al. ISAPP 2017 · Swanson et al. ISAPP 2020 · Marco et al. ISAPP 2021 ·
+        Wastyk et al. Cell / Stanford 2021 · Dimidi et al. King’s College 2019 · Meta-análisis kéfir 2021 · Revisión kombucha 2025
+      </div>
+      <div class="tagline">
+        Buenos no, excelentes.
+        <small>thegoodco.com.mx</small>
+      </div>
+    </footer>
+  </article>
+</body>
+</html>
