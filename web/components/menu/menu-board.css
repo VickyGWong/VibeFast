@@ -1,6 +1,6 @@
 /* ============================================================
-   The Good Co. — Carta landscape (letter horizontal)
-   Sin logo · productos · contacto horizontal abajo
+   The Good Co. — Carta landscape (A4 horizontal)
+   Logo compacto arriba · productos · contacto abajo
    ============================================================ */
 
 .menu-board {
@@ -33,7 +33,7 @@
   border-radius: 0;
   border: none;
   max-width: none;
-  width: 11in;
+  width: 297mm;
   min-height: 0;
   height: auto;
   margin: 0;
@@ -43,24 +43,32 @@
   flex: 0 0 auto;
 }
 
+.menu-board--capture .menu-hero {
+  padding: 0.4rem 0.85rem 0.3rem;
+}
+
+.menu-board--capture .menu-hero__logo-wrap {
+  max-width: 11.5rem;
+}
+
 .menu-board--capture .menu-section--featured {
-  padding: 1rem 1.15rem 1.05rem;
+  padding: 0.75rem 1rem 0.8rem;
 }
 
 .menu-board--capture .menu-section {
-  padding: 0.85rem 1rem 0.9rem;
+  padding: 0.7rem 0.9rem 0.75rem;
 }
 
 .menu-board--capture .menu-section__title--hero {
-  font-size: 2.6rem;
+  font-size: 2.25rem;
 }
 
 .menu-board--capture .menu-item__price--hero {
-  font-size: 3.4rem;
+  font-size: 2.85rem;
 }
 
 .menu-board--capture .menu-foot {
-  padding: 0.6rem 1rem 0.7rem;
+  padding: 0.5rem 0.9rem 0.6rem;
 }
 
 .menu-chrome {
@@ -115,6 +123,24 @@
   border: 2px solid color-mix(in oklch, var(--menu-deep) 12%, transparent);
   display: flex;
   flex-direction: column;
+}
+
+.menu-hero {
+  padding: 0.65rem 1.1rem 0.5rem;
+  text-align: center;
+  background: var(--menu-cream);
+  border-bottom: 2px solid color-mix(in oklch, var(--menu-deep) 10%, transparent);
+}
+
+.menu-hero__logo-wrap {
+  margin: 0 auto;
+  max-width: 14rem;
+}
+
+.menu-hero__logo {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .menu-main {
@@ -391,11 +417,11 @@
   }
 }
 
-/* ——— Impresión letter horizontal ——— */
+/* ——— Impresión A4 horizontal ——— */
 @media print {
   @page {
-    size: letter landscape;
-    margin: 0.28in;
+    size: A4 landscape;
+    margin: 8mm;
   }
 
   html,
@@ -415,9 +441,10 @@
     border-radius: 0;
     border: none;
     max-width: none;
-    min-height: calc(8.5in - 0.56in);
+    min-height: calc(210mm - 16mm);
   }
 
+  .menu-hero,
   .menu-section--sky,
   .menu-section--yellow,
   .menu-section--coral,
@@ -432,15 +459,23 @@
     display: none !important;
   }
 
+  .menu-hero {
+    padding: 4mm 6mm 3mm;
+  }
+
+  .menu-hero__logo-wrap {
+    max-width: 48mm;
+  }
+
   .menu-section {
     opacity: 1 !important;
     transform: none !important;
     animation: none !important;
-    padding: 0.7rem 0.85rem 0.75rem;
+    padding: 5mm 6mm 5.5mm;
   }
 
   .menu-section--featured {
-    padding: 0.8rem 1rem 0.85rem;
+    padding: 5.5mm 7mm 6mm;
   }
 
   .menu-featured__layout {
@@ -448,15 +483,15 @@
   }
 
   .menu-section__title--hero {
-    font-size: 28pt;
+    font-size: 24pt;
   }
 
   .menu-item__price--hero {
-    font-size: 36pt;
+    font-size: 30pt;
   }
 
   .menu-section__blurb--featured {
-    font-size: 10pt;
+    font-size: 9.5pt;
   }
 
   .menu-item__meta--hero {
@@ -464,20 +499,20 @@
   }
 
   .menu-section__title {
-    font-size: 16pt;
+    font-size: 15pt;
   }
 
   .menu-item__name {
-    font-size: 11pt;
+    font-size: 10.5pt;
   }
 
   .menu-item__price {
-    font-size: 13pt;
+    font-size: 12pt;
   }
 
   .menu-section__blurb,
   .menu-item__meta {
-    font-size: 8.5pt;
+    font-size: 8pt;
   }
 
   .menu-grid {
@@ -488,13 +523,13 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 0.5rem 0.75rem 0.6rem;
-    gap: 0.45rem 0.65rem;
+    padding: 3.5mm 6mm 4mm;
+    gap: 3mm 5mm;
   }
 
   .menu-foot__pill {
-    font-size: 8.5pt;
-    padding: 0.35rem 0.75rem;
+    font-size: 8pt;
+    padding: 2.5mm 5mm;
     color: var(--menu-deep) !important;
   }
 

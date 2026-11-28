@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import config from "@/config"
 import { formatPrice, getGeneralWhatsAppUrl } from "@/lib/whatsapp"
 
@@ -60,6 +61,19 @@ export default function MenuBoard({ sections, captureMode = false }) {
       </div>
 
       <article className="menu-sheet" aria-label="Menú The Good Co.">
+        <header className="menu-hero">
+          <div className="menu-hero__logo-wrap">
+            <Image
+              src="/brand/logotipo-horizontal.png"
+              alt={config.app.name}
+              width={2063}
+              height={599}
+              className="menu-hero__logo"
+              priority
+            />
+          </div>
+        </header>
+
         <div className="menu-main">
           {featured.map((section, index) => (
             <FeaturedOatsBlock
