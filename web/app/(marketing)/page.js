@@ -24,8 +24,8 @@ export default async function HomePage() {
       <Hero />
       <KnowledgeCarousel />
       <PurchaseSteps />
-      <DeliverySection />
       <LandingCatalog products={products} />
+      <DeliverySection />
       <KefirSpotlight />
       <FermentComparison />
       <ArtisanProcess />
